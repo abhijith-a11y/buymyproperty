@@ -11,6 +11,7 @@
 ?>
 
 <footer class="footer-section test_class">
+    
     <div class="wrap">
         <!-- Main Footer Content - Single Parent Container -->
         <div class="footer-main">

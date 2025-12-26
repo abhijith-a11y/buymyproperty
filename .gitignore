@@ -1,4 +1,10 @@
 # Compiled CSS files (generated from SCSS)
+# Ignore compiled CSS files in root directory
+style.css
+style.css.map
+styles.css
+styles.css.map
+
 # Ignore CSS in assets/styles (compiled from SCSS)
 assets/styles/*.css
 assets/styles/*.css.map
@@ -7,8 +13,7 @@ assets/styles/*.css.map
 sass/*.css
 sass/*.css.map
 
-# Keep root style.css (WordPress theme requirement) and third-party CSS files
-!style.css
+# Keep third-party CSS files (not compiled from SCSS)
 !assets/fonts/fonts.css
 !assets/styles/aos.css
 !assets/styles/sumoselect-custom.css
