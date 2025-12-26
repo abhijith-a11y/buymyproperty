@@ -1,0 +1,63 @@
+# Compiled CSS files (generated from SCSS)
+# Ignore CSS in assets/styles (compiled from SCSS)
+assets/styles/*.css
+assets/styles/*.css.map
+
+# Ignore CSS in sass directory (compiled from SCSS)
+sass/*.css
+sass/*.css.map
+
+# Keep root style.css (WordPress theme requirement) and third-party CSS files
+!style.css
+!assets/fonts/fonts.css
+!assets/styles/aos.css
+!assets/styles/sumoselect-custom.css
+
+# Dependencies
+node_modules/
+vendor/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# WordPress specific
+.htaccess.backup
+wp-config.php.backup
+
+# Build files
+*.zip
+*.tar.gz
+
+# Environment files
+.env
+.env.local
+.env.*.local
+

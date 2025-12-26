@@ -1,0 +1,290 @@
+// ========================================
+// FONT CONFIGURATION
+// ========================================
+// This file contains all font imports and configurations for:
+// - Gotham (local files)
+// - Montserrat (Google Fonts)
+// - Poppins (Google Fonts)
+
+// ========================================
+// GOOGLE FONTS IMPORTS
+// ========================================
+
+// Montserrat - All weights (100-900) with italic variants
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+// Poppins - All weights (100-900) with italic variants
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+// ========================================
+// GOTHAM FONT FACE DECLARATIONS
+// ========================================
+// Based on actual font files available in assets/fonts/ directory
+
+// Gotham Thin (100)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Extra Light (200)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/GothamExtraLight.ttf") format("truetype");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Light (300)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Book/Regular (400)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Book.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Medium (500)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Semibold (600) - Using Bold as fallback since we don't have a separate semibold file
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Bold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Bold (700)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Black (900)
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Gotham Ultra (950) - Ultra heavy weight
+@font-face {
+    font-family: "Gotham";
+    src: url("../fonts/Gotham-Ultra.ttf") format("truetype");
+    font-weight: 950;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+// ========================================
+// CSS CUSTOM PROPERTIES (VARIABLES)
+// ========================================
+
+:root {
+    // Font families
+    --font-gotham: "Gotham", sans-serif;
+    --font-montserrat: "Montserrat", sans-serif;
+    --font-poppins: "Poppins", sans-serif;
+    
+    // Primary font assignments
+    --font-heading: "Gotham", sans-serif;
+    --font-default: "Montserrat", sans-serif;
+    --font-secondary: "Poppins", sans-serif;
+}
+
+// ========================================
+// UTILITY CLASSES
+// ========================================
+
+// Font family utilities
+.font-gotham {
+    font-family: var(--font-gotham) !important;
+}
+
+.font-montserrat {
+    font-family: var(--font-montserrat) !important;
+}
+
+.font-poppins {
+    font-family: var(--font-poppins) !important;
+}
+
+// Font weight utilities
+.font-thin {
+    font-weight: 100 !important;
+}
+
+.font-extralight {
+    font-weight: 200 !important;
+}
+
+.font-light {
+    font-weight: 300 !important;
+}
+
+.font-normal {
+    font-weight: 400 !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-semibold {
+    font-weight: 600 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.font-extrabold {
+    font-weight: 800 !important;
+}
+
+.font-black {
+    font-weight: 900 !important;
+}
+
+// Font style utilities
+.font-italic {
+    font-style: italic !important;
+}
+
+.font-normal-style {
+    font-style: normal !important;
+}
+
+// ========================================
+// GOTHAM FONT WEIGHT TEST CLASSES
+// ========================================
+
+.gotham-100 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 100 !important;
+}
+
+.gotham-200 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 200 !important;
+}
+
+.gotham-300 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 300 !important;
+}
+
+.gotham-400 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 400 !important;
+}
+
+.gotham-500 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 500 !important;
+}
+
+.gotham-600 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 600 !important;
+}
+
+.gotham-700 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 700 !important;
+}
+
+.gotham-900 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 900 !important;
+}
+
+.gotham-950 {
+    font-family: "Gotham", sans-serif !important;
+    font-weight: 950 !important;
+}
+
+// ========================================
+// FONT DEBUGGING CLASSES
+// ========================================
+
+.font-debug {
+    border: 2px solid red !important;
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    background: yellow !important;
+    color: black !important;
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+}
+
+.font-debug::before {
+    content: "Font Weight: " attr(data-weight) " | ";
+    font-weight: bold !important;
+    color: red !important;
+}
+
+// ========================================
+// USAGE EXAMPLES
+// ========================================
+
+/*
+HTML Usage Examples:
+
+<!-- Using Gotham font -->
+<h1 class="font-gotham font-bold">Gotham Bold Heading</h1>
+<p class="font-gotham font-light">Gotham Light Text</p>
+
+<!-- Using Montserrat font -->
+<h2 class="font-montserrat font-semibold">Montserrat Semibold</h2>
+<p class="font-montserrat font-normal">Montserrat Regular Text</p>
+
+<!-- Using Poppins font -->
+<h3 class="font-poppins font-medium">Poppins Medium</h3>
+<p class="font-poppins font-light font-italic">Poppins Light Italic</p>
+
+CSS Usage Examples:
+
+.my-heading {
+    font-family: var(--font-gotham);
+    font-weight: 700;
+}
+
+.my-body-text {
+    font-family: var(--font-montserrat);
+    font-weight: 400;
+}
+
+.my-accent-text {
+    font-family: var(--font-poppins);
+    font-weight: 500;
+}
+*/

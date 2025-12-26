@@ -1,0 +1,34 @@
+@use "sass:math";
+// @mixin rem($px) {
+//   $base: 16; // Default base value (16px is common)
+//   $rem: $px / $base;
+//   // Apply the rem value directly where the mixin is used
+//   font-size: #{$rem}rem;
+// }
+
+// @mixin max($res) {
+//   @media (max-width: $res+px) {
+//     @content;
+//   }
+// }
+
+
+$base-font-size: 16 !default; // Define once, can be overridden
+
+// Flexible rem mixin
+@mixin rem($px, $property: font-size) {
+  #{$property}: #{math.div($px, $base-font-size)}rem;
+}
+
+// Media query helpers
+@mixin max($res) {
+  @media (max-width: #{$res}px) {
+    @content;
+  }
+}
+
+@mixin min($res) {
+  @media (min-width: #{$res}px) {
+    @content;
+  }
+}

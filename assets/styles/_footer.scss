@@ -1,0 +1,420 @@
+// ========================================
+// FOOTER SECTION
+// ========================================
+// Footer implementation using existing design system classes
+
+.footer-section {
+	padding: 18px 0 28px;
+
+	@media (max-width: 1024px) {
+		padding: 60px 0 30px;
+	}
+
+	@media (max-width: 768px) {
+		padding: 50px 0 25px;
+	}
+
+	// Ensure proper container behavior
+	.wrap {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+}
+
+// ========================================
+// FOOTER MAIN CONTENT - SINGLE PARENT CONTAINER
+// ========================================
+
+.footer-main {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 35px;
+	align-items: start;
+	width: 100%;
+
+	@media (max-width: 1400px) {
+		gap: 60px;
+	}
+
+	@media (max-width: 1024px) {
+		gap: 40px;
+	}
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+		gap: 40px;
+		text-align: center;
+	}
+}
+
+// ========================================
+// FOOTER LEFT SECTION
+// ========================================
+
+.footer-left {
+	display: flex;
+	flex-direction: column;
+	gap: 44px;
+
+	@media (max-width: 768px) {
+		align-items: center;
+		gap: 20px;
+	}
+}
+
+// ========================================
+// FOOTER BRAND AND NAVIGATION SECTION
+// ========================================
+
+.footer-top {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 135px;
+	align-items: start;
+	padding-top: 48px;
+
+	@media (max-width: 1024px) {
+		gap: 60px;
+	}
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		gap: 40px;
+		padding-top: 0;
+		width: 100%;
+	}
+}
+
+// ========================================
+// FOOTER BRAND SECTION
+// ========================================
+
+.footer-brand {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	min-width: 300px;
+
+	@media (max-width: 1024px) {
+		min-width: 200px;
+	}
+
+	@media (max-width: 768px) {
+		align-items: center;
+		gap: 25px;
+		min-width: auto;
+	}
+}
+
+.footer-logo {
+	.footer-brand-logo {
+		max-width: 341px;
+		height: auto;
+		max-height: 109px;
+
+		@media (max-width: 1400px) {
+			max-width: 180px;
+		}
+
+		@media (max-width: 820px) {
+			max-width: 160px;
+		}
+	}
+}
+
+.footer-social {
+	display: flex;
+	gap: 8px;
+
+	@media (max-width: 768px) {
+		justify-content: center;
+	}
+}
+
+.social-link {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border: 0.5px solid var(--color-primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--color-primary);
+	transition: all 0.3s ease;
+
+	&:hover {
+		background-color: var(--color-primary);
+		color: var(--color-white) !important;
+		transform: translateY(-2px);
+	}
+	@media (max-width: 768px) {
+		width: 32px;
+		height: 32px;
+	}
+}
+
+// ========================================
+// FOOTER NAVIGATION - UNIFIED COLUMNS
+// ========================================
+
+.footer-nav {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 135px;
+	justify-content: start;
+
+	@media (max-width: 1024px) {
+		gap: 60px;
+	}
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+		gap: 30px;
+		justify-content: center;
+	}
+
+	.footer-nav-column {
+		a {
+			@include text-poppins-regular;
+		}
+	}
+}
+
+.mobile_sell {
+	display: none !important;
+	@media (max-width: 768px) {
+		display: block !important;
+	}
+}
+
+.mobile_hide {
+	display: block !important;
+	@media (max-width: 768px) {
+		display: none !important;
+	}
+}
+
+// .footer-nav-column uses existing typography classes, no additional styles needed
+
+.footer-nav-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+
+	@media (max-width: 768px) {
+		gap: 15px;
+		align-items: flex-start;
+	}
+
+	li {
+		margin: 0;
+
+		a {
+			text-decoration: none;
+			transition: color 0.3s ease;
+
+			&:hover {
+				color: var(--color-primary);
+			}
+		}
+	}
+}
+
+// ========================================
+// FOOTER BOTTOM - LEFT SIDE LEGAL SECTION
+// ========================================
+
+.footer-bottom {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(7, 85, 73, 0.2);
+
+	@media (max-width: 768px) {
+		align-items: center;
+		text-align: center;
+	}
+}
+
+.footer-copyright {
+	p {
+		margin: 0;
+	}
+}
+
+.footer-legal {
+	nav {
+		// Uses existing navigation styles
+	}
+}
+
+.footer-legal-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 24px;
+
+	@media (max-width: 768px) {
+		gap: 20px;
+		justify-content: center;
+	}
+
+	.terms-link {
+		padding-left: 24px;
+		border-left: 1.5px solid rgba(110, 110, 110, 1);
+	}
+
+	li {
+		margin: 0;
+
+		a {
+			@include text-body-regular;
+			color: #535353;
+			text-decoration: none;
+			transition: color 0.3s ease;
+
+			&:hover {
+				color: var(--color-primary);
+			}
+		}
+	}
+}
+
+.footer-right {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-self: end;
+	width: 442px; // fixed size
+	height: 305px;
+	padding: 67px 0 0 37px;
+	background-color: rgba(167, 202, 194, 0.1);
+	border-radius: 20px;
+	overflow: hidden;
+
+	@media #{$media-1024} {
+		margin-bottom: 20px;
+		width: 420px;
+		height: auto;
+
+		@media #{$media-992} {
+			width: 360px; // reduced width
+			height: 235px; // reduced height (adjust proportionally)
+			padding: 40px 0 0 25px;
+		}
+
+		@media #{$media-768} {
+			margin-right: auto;
+		}
+
+		@media #{$media-480} {
+			width: 98%;
+		}
+	}
+
+	.footer-cta-content {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		align-items: flex-start;
+		text-align: left;
+		max-width: 280px;
+		position: relative;
+		z-index: 2;
+
+		h3 {
+			max-width: 212px;
+		}
+
+		@media (max-width: 768px) {
+			gap: 20px;
+			max-width: none;
+		}
+	}
+
+	.footer-decor {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		z-index: 1;
+		max-width: 239px;
+		aspect-ratio: 239/266;
+
+		@media #{$media-768} {
+			max-width: 200px;
+		}
+
+		img {
+			display: block;
+			max-width: 100%; // keeps it responsive
+			max-height: 100%; // ensures it never overflows
+			height: auto;
+			width: auto;
+		}
+	}
+
+	// ========================================
+	// RTL SUPPORT
+	// ========================================
+
+	:lang(ar),
+	body.rtl {
+		.footer-main {
+			direction: rtl;
+			grid-template-columns: auto 1fr;
+		}
+
+		.footer-left {
+			order: 2;
+		}
+
+		.footer-right {
+			order: 1;
+			align-items: flex-start;
+			justify-self: start;
+
+			@media (max-width: 768px) {
+				align-items: center;
+				justify-self: center;
+			}
+		}
+
+		.footer-cta-content {
+			align-items: flex-start;
+			text-align: left;
+
+			@media (max-width: 768px) {
+				align-items: center;
+				text-align: center;
+			}
+		}
+
+		.footer-social {
+			flex-direction: row-reverse;
+		}
+
+		.footer-legal-list {
+			flex-direction: row-reverse;
+		}
+
+		.footer-cta-btn {
+			.btn-arrow {
+				transform: scaleX(-1);
+			}
+
+			&:hover {
+				.btn-arrow {
+					transform: scaleX(-1) translateX(3px);
+				}
+			}
+		}
+	}
+}
