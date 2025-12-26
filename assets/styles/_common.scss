@@ -238,7 +238,6 @@
 	border: 1px solid #ccc;
 	border-radius: 40px;
 	overflow: hidden;
-
 	position: relative;
 	width: 100%;
 	border-radius: 30px;
@@ -248,6 +247,17 @@
 	padding-left: 5%;
 	cursor: pointer;
 	min-height: 45px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+
+	// @media #{$media-1440} {
+	// 	font-size: 14px;
+	// }
+	@media #{$media-820} {
+		font-size: 10px;
+	}
 
 	input[type="file"] {
 		position: absolute;
@@ -277,6 +287,18 @@
 		border-radius: 50px;
 		font-family: var(--font-heading);
 		color: #fff;
+		font-family: "Montserrat", sans-serif;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1;
+
+		@media #{$media-1440} {
+			font-size: 14px;
+		}
+
+		@media #{$media-820} {
+			font-size: 12px;
+		}
 	}
 
 	.browse-btn:hover {
@@ -287,7 +309,7 @@
 }
 
 .default_btn {
-	background-color: var(--color-primary);
+	background-color: var(--color-primary) !important;
 	min-height: 48px;
 	border-radius: 50px;
 	width: fit-content;
@@ -301,6 +323,14 @@
 	font-family: var(--font-heading);
 	transition: all 0.3s ease;
 	font-size: 16px;
+
+	@media #{$media-1440} {
+		font-size: 14px;
+	}
+
+	@media #{$media-820} {
+		font-size: 12px;
+	}
 
 	&:hover,
 	&:focus {

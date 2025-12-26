@@ -147,11 +147,17 @@
 		background-color: var(--color-primary);
 		color: var(--color-white) !important;
 		transform: translateY(-2px);
+
+		img {
+			filter: brightness(0) invert(1);
+		}
 	}
 	@media (max-width: 768px) {
 		width: 32px;
 		height: 32px;
 	}
+
+
 }
 
 // ========================================
