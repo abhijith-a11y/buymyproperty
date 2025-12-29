@@ -52,7 +52,7 @@
 			padding-top: 255px;
 			padding-left: calc((100% - 1400px) / 2);
 
-			@media #{$media-1400} {
+			@media (max-width: 1470px) {
 				padding-left: 2%;
 				flex: 1;
 				padding-top: 100px;
@@ -692,7 +692,7 @@
 	left: 0;
 	right: 0;
 	border-radius: 20px;
-	padding: 17px 37px;
+	padding: 17px 37px 50px 37px;
 	// box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 	z-index: 2;
 	transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -700,7 +700,8 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
+	// justify-content: start;
+	justify-content: space-between;
 	border: 1.3px solid #016c5133;
 	background: white;
 	overflow: hidden;
@@ -722,15 +723,30 @@
 
 	.step-number {
 		font-family: "Montserrat", sans-serif;
-		font-size: 80px;
-		font-weight: 250;
+		font-size: 56px;
+		font-weight: 100;
 		color: var(--color-primary);
-		margin-bottom: 40px;
+		margin-bottom: 30px;
 		line-height: 140%;
 		z-index: 3;
 
-		@media #{$media-1400} {
-			font-size: 70px;
+		@media #{$media-1440} {
+			font-size: 48px;
+			margin-bottom: 20px;
+		}
+		@media #{$media-1200} {
+			font-size: 44px;
+		}
+		@media #{$media-1024} {
+			font-size: 40px;
+		}
+		@media #{$media-820} {
+			font-size: 36px;
+			margin-bottom: 15px;
+		}
+
+		@media #{$media-480} {
+			font-size: 32px;
 		}
 	}
 }
@@ -746,17 +762,9 @@ h3 {
 }
 
 p {
-	font-family: "Montserrat", sans-serif;
-	font-size: 18px;
-	line-height: 1.6;
-	color: #666;
+	@include text-para;
 	margin: 0;
 	z-index: 3;
-
-	@media (max-width: 1400px) {
-		font-size: 16px;
-		line-height: 1.5;
-	}
 }
 
 // Image Card Styling
