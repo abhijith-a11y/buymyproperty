@@ -76,20 +76,13 @@ get_header(); ?>
                             ?>
                             <div class="swiper-slide">
                                 <div class="marquee-content">
-                                    <?php
-                                    $item_index = 0;
-                                    while (have_rows('marquee_items')):
+                                    <?php while (have_rows('marquee_items')):
                                         the_row();
                                         $text = get_sub_field('marquee_text');
-                                        // Add 'bold' class to alternative items (every other item)
-                                        $bold_class = ($item_index % 2 == 1) ? 'bold' : '';
                                         ?>
-                                        <span
-                                            class="marquee-text <?php echo esc_attr($bold_class); ?>"><?php echo esc_html($text); ?></span>
+                                        <span class="marquee-text"><?php echo esc_html($text); ?></span>
                                         <span class="marquee-separator">|</span>
-                                        <?php
-                                        $item_index++;
-                                    endwhile; ?>
+                                    <?php endwhile; ?>
                                 </div>
                             </div>
                         <?php endfor; ?>

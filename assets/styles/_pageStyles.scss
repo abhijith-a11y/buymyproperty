@@ -515,7 +515,6 @@
 
 	// Responsive Design
 	@media (max-width: 1400px) {
-
 		.marquee-separator {
 			font-size: 15px;
 			margin: 0 12px;
@@ -528,7 +527,6 @@
 	}
 
 	@media (max-width: 992px) {
-
 		.marquee-separator {
 			font-size: 14px;
 			margin: 0 10px;
@@ -541,7 +539,6 @@
 	}
 
 	@media (max-width: 768px) {
-
 		.marquee-separator {
 			font-size: 13px;
 			margin: 0 8px;
@@ -554,7 +551,6 @@
 	}
 
 	@media (max-width: 480px) {
-
 		.marquee-text {
 			font-size: 12px;
 		}
@@ -930,7 +926,7 @@ p {
 // ========================================
 
 .why_sell_to_us {
-	background: #F6FAF9;
+	background: #f6faf9;
 	position: relative;
 	overflow: hidden;
 
@@ -991,7 +987,6 @@ p {
 		@media #{$media-768} {
 			gap: 45px;
 		}
-
 	}
 
 	// Left Border Indicator
@@ -1191,7 +1186,6 @@ p {
 			align-items: center;
 			justify-content: center;
 			overflow: hidden;
-
 		}
 
 		.pagination-number {
@@ -1900,8 +1894,6 @@ p {
 			}
 		}
 	}
-
-	
 }
 
 // Referal Banner
@@ -2033,7 +2025,6 @@ p {
 			border-radius: 15px;
 			overflow: hidden;
 
-
 			&:hover {
 				img {
 					transform: scale(1.05);
@@ -2046,9 +2037,7 @@ p {
 				object-fit: cover;
 				object-position: bottom;
 				transition: all 0.3s ease;
-
 			}
-			
 		}
 
 		.mission_images_bottom {
@@ -2066,7 +2055,7 @@ p {
 				transition: all 0.3s ease;
 
 				&:hover {
-					 img {
+					img {
 						transform: scale(1.05);
 					}
 				}
@@ -2076,7 +2065,6 @@ p {
 					height: 100%;
 					object-fit: cover;
 					transition: all 0.3s ease;
-
 				}
 			}
 		}
@@ -3051,7 +3039,6 @@ p {
 		overflow: hidden;
 		border-radius: 30px;
 
-
 		img {
 			width: 100%;
 			height: auto;
@@ -3116,45 +3103,42 @@ p {
 		ul {
 			margin-top: 20px;
 
-
 			li {
-			@include text-para;
-			position: relative;
-			padding-left: 20px;
-			margin-bottom: 10px;
+				@include text-para;
+				position: relative;
+				padding-left: 20px;
+				margin-bottom: 10px;
 
-			&:last-child {
-				margin-bottom: 0;
-			}
+				&:last-child {
+					margin-bottom: 0;
+				}
 
-			&:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				top: 10px;
-				width: 8px;
-				height: 8px;
-				background-color: var(--color-primary);
-				border-radius: 50%;
-				overflow: hidden;
+				&:before {
+					content: "";
+					position: absolute;
+					left: 0;
+					top: 10px;
+					width: 8px;
+					height: 8px;
+					background-color: var(--color-primary);
+					border-radius: 50%;
+					overflow: hidden;
 
 					@media #{$media-1440} {
 						width: 6px;
 						height: 6px;
 					}
-			}
+				}
 
-			@media #{$media-1440} {
-				margin-top: 15px;
-			}
+				@media #{$media-1440} {
+					margin-top: 15px;
+				}
 
-			@media #{$media-820} {
-				margin-top: 10px;
+				@media #{$media-820} {
+					margin-top: 10px;
+				}
 			}
 		}
-	}
-
-		
 	}
 
 	.trust-features {
@@ -3365,14 +3349,18 @@ p {
 					content: "STEP";
 					position: absolute;
 					top: 0;
-					left: -31px;
-					font-family: "Poppins", sans-serif;
+					left: -29px;
+					font-family: "Gotham", sans-serif;
 					font-size: 14px;
-					font-weight: 400;
+					font-weight: 500;
 					color: var(--color-primary);
 					letter-spacing: 1px;
 					text-transform: uppercase;
 					font-weight: 120%;
+
+					@media #{$media-820} {
+						font-size: 12px;
+					}
 				}
 
 				@media #{$media-1400} {
@@ -3878,6 +3866,15 @@ p {
 			height: auto;
 			display: flex;
 			justify-content: center;
+			opacity: 1 !important;
+			visibility: visible !important;
+
+			// Prevent AOS from interfering
+			&[data-aos] {
+				opacity: 1 !important;
+				visibility: visible !important;
+				transform: none !important;
+			}
 		}
 	}
 
@@ -3999,7 +3996,6 @@ p {
 
 	// Responsive Design
 	@media (max-width: 1440px) {
-
 		.property-type-card {
 			max-width: 320px;
 			// height: 420px;
@@ -4047,8 +4043,6 @@ p {
 	}
 
 	@media (max-width: 768px) {
-		
-
 		// .property-type-card {
 		//   max-width: 280px;
 		//   height: 380px;

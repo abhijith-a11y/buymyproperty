@@ -1162,45 +1162,148 @@ function initPropertyTypesSwiper() {
 		return;
 	}
 
-	// Initialize Swiper for property types
-	const swiper = new Swiper(propertyTypesSwiper, {
-		slidesPerView: 3,
-		spaceBetween: 20,
-		loop: true,
-		centeredSlides: true,
-		// autoplay: {
-		//     delay: 4000,
-		//     disableOnInteraction: false,
-		//     pauseOnMouseEnter: true
-		// },
-		navigation: {
-			nextEl: ".property-types-next",
-			prevEl: ".property-types-prev",
-		},
-		speed: 800,
-		grabCursor: true,
-		watchSlidesProgress: true,
-		watchSlidesVisibility: true,
-		breakpoints: {
-			320: {
-				slidesPerView: 1,
-				spaceBetween: 20,
-				centeredSlides: true,
-			},
-			768: {
-				slidesPerView: 2,
-				spaceBetween: 25,
-				centeredSlides: true,
-			},
-			1024: {
-				slidesPerView: 3,
-				spaceBetween: 30,
-				centeredSlides: true,
-			},
-		},
+	// Function to duplicate slides when data is loaded
+	function duplicateSlidesWhenReady() {
+		const wrapper = propertyTypesSwiper.querySelector(".swiper-wrapper");
+		if (!wrapper) {
+			return;
+		}
+
+		// Get original slides (only once, when data is loaded)
+		const originalSlides = Array.from(
+			wrapper.querySelectorAll(".swiper-slide")
+		);
+		const originalCount = originalSlides.length;
+
+		// Duplicate slides if there are less than 4 slides (only do this once on load)
+		if (originalCount < 4 && originalCount > 0) {
+			const needed = 6 - originalCount;
+
+			// Duplicate slides to reach at least 4
+			for (let i = 0; i < needed; i++) {
+				const slideToClone = originalSlides[i % originalCount];
+				const clone = slideToClone.cloneNode(true);
+				// Remove any AOS attributes from cloned slides
+				clone.removeAttribute("data-aos");
+				const clonedElements = clone.querySelectorAll("[data-aos]");
+				clonedElements.forEach((el) => {
+					el.removeAttribute("data-aos");
+					el.style.opacity = "1";
+					el.style.visibility = "visible";
+					el.style.transform = "none";
+				});
+				wrapper.appendChild(clone);
+			}
+		}
+
+		return wrapper.querySelectorAll(".swiper-slide").length;
+	}
+
+	// Disable AOS on slider elements to prevent interference
+	const sliderElements = propertyTypesSwiper.querySelectorAll("[data-aos]");
+	sliderElements.forEach((el) => {
+		el.removeAttribute("data-aos");
+		el.style.opacity = "1";
+		el.style.visibility = "visible";
+		el.style.transform = "none";
 	});
 
-	console.log("✅ Property types slider initialized with Swiper");
+	// Wait for images to load, then duplicate slides and initialize Swiper
+	const images = propertyTypesSwiper.querySelectorAll("img");
+	let imagesLoaded = 0;
+	const totalImages = images.length;
+
+	if (totalImages === 0) {
+		// No images, duplicate immediately
+		const finalSlideCount = duplicateSlidesWhenReady();
+		initializeSwiper(finalSlideCount);
+	} else {
+		// Wait for all images to load before duplicating
+		images.forEach((img) => {
+			if (img.complete) {
+				imagesLoaded++;
+				checkAndInit();
+			} else {
+				img.addEventListener("load", () => {
+					imagesLoaded++;
+					checkAndInit();
+				});
+				img.addEventListener("error", () => {
+					imagesLoaded++;
+					checkAndInit();
+				});
+			}
+		});
+	}
+
+	function checkAndInit() {
+		if (imagesLoaded === totalImages) {
+			// All images loaded, now duplicate slides and initialize
+			const finalSlideCount = duplicateSlidesWhenReady();
+			initializeSwiper(finalSlideCount);
+		}
+	}
+
+	function initializeSwiper(finalSlideCount) {
+		// Swiper loop mode needs more slides than slidesPerView to work properly
+		// Enable loop only if we have more than 3 slides (since slidesPerView is 3)
+		const shouldUseLoop = finalSlideCount > 3;
+
+		// Initialize Swiper for property types
+		const swiper = new Swiper(propertyTypesSwiper, {
+			slidesPerView: 3,
+			spaceBetween: 20,
+			loop: shouldUseLoop,
+			centeredSlides: true,
+			autoplay: {
+				delay: 4000,
+				disableOnInteraction: false,
+				pauseOnMouseEnter: true,
+			},
+			navigation: {
+				nextEl: ".property-types-next",
+				prevEl: ".property-types-prev",
+			},
+			speed: 800,
+			grabCursor: true,
+			watchSlidesProgress: true,
+			watchSlidesVisibility: true,
+			breakpoints: {
+				320: {
+					slidesPerView: 1,
+					spaceBetween: 20,
+					centeredSlides: true,
+				},
+				768: {
+					slidesPerView: 2,
+					spaceBetween: 25,
+					centeredSlides: true,
+				},
+				1024: {
+					slidesPerView: 3,
+					spaceBetween: 30,
+					centeredSlides: true,
+				},
+			},
+			on: {
+				init: function () {
+					// Ensure all slides are visible after initialization
+					this.slides.forEach((slide) => {
+						slide.style.opacity = "1";
+						slide.style.visibility = "visible";
+					});
+					// Force update to ensure proper rendering
+					this.update();
+					// Refresh AOS to prevent interference
+					if (typeof AOS !== "undefined") {
+						AOS.refresh();
+					}
+				},
+			},
+		});
+
+		console.log("✅ Property types slider initialized with Swiper");
+	}
 }
 
 // =============================================================================
