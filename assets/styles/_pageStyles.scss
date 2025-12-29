@@ -1461,7 +1461,6 @@ p {
 	}
 
 	@media (max-width: 992px) {
-
 		.testimonial-card {
 			padding: 30px 20px;
 		}
@@ -1569,6 +1568,8 @@ p {
 		// max-width: 1200px;
 		// margin: 0 auto;
 		margin-left: 86px;
+		overflow: visible;
+		width: calc(100% - 86px);
 	}
 
 	.recently-closed-deals-swiper {
@@ -1577,6 +1578,7 @@ p {
 		.swiper-wrapper {
 			align-items: stretch;
 			height: 629px;
+			display: flex;
 
 			@media (max-width: 1400px) {
 				height: 500px;
@@ -1594,6 +1596,7 @@ p {
 		.swiper-slide {
 			height: 100%;
 			border: 0.7px solid #ffffff;
+			flex-shrink: 0;
 			// overflow: hidden;
 		}
 	}
@@ -1752,6 +1755,7 @@ p {
 			svg {
 				width: 20px;
 				height: 20px;
+				transform: rotate(180deg);
 			}
 
 			&:hover {
@@ -1789,7 +1793,6 @@ p {
 			svg {
 				width: 20px;
 				height: 20px;
-				transform: rotate(180deg);
 			}
 
 			&:hover {
@@ -1824,10 +1827,7 @@ p {
 		}
 	}
 
-
-
 	@media (max-width: 992px) {
-
 		.deal-image {
 			height: 240px;
 		}
@@ -1842,7 +1842,6 @@ p {
 	}
 
 	@media (max-width: 768px) {
-
 		.deal-image {
 			height: 200px;
 		}
