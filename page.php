@@ -18,8 +18,8 @@ get_header();
 	<main id="primary" class="site-main">
     <?php get_template_part('template-parts/banner'); ?>
 
-<section class="sub-banner">
-    	<div class="container">
+<section class="sub-banner wrap">
+    	<div class="">
       		<h1><?php the_title(); ?></h1>
            			<?php the_content(); ?>
 
