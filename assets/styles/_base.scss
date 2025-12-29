@@ -978,7 +978,7 @@ body {
 .pt_50 {
 	padding-top: 50px;
 
-	@media #{$media-1024} {
+	@media #{$media-1440} {
 		padding-top: 35px;
 	}
 
@@ -990,7 +990,7 @@ body {
 .pb_50 {
 	padding-bottom: 50px;
 
-	@media #{$media-1024} {
+	@media #{$media-1440} {
 		padding-bottom: 35px;
 	}
 
@@ -1070,7 +1070,11 @@ body {
 .pb_70 {
 	padding-bottom: 70px;
 
-	@media #{$media-1024} {
+	@media #{$media-1440} {
+		padding-bottom: 50px;
+	}
+
+	@media #{$media-820} {
 		padding-bottom: 35px;
 	}
 
@@ -1082,7 +1086,11 @@ body {
 .pt_70 {
 	padding-top: 70px;
 
-	@media #{$media-1024} {
+	@media #{$media-1440} {
+		padding-top: 50px;
+	}
+
+	@media #{$media-820} {
 		padding-top: 35px;
 	}
 

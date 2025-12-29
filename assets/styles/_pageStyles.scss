@@ -3818,6 +3818,18 @@ p {
 		text-align: center;
 		margin-bottom: 80px;
 
+		@media #{$media-1440} {
+			margin-bottom: 50px;
+		}
+
+		@media #{$media-820} {
+			margin-bottom: 30px;
+		}
+
+		@media #{$media-480} {
+			margin-bottom: 20px;
+		}
+
 		h2 {
 			@include heading-medium-primary;
 			margin-top: 10px;
@@ -3827,7 +3839,21 @@ p {
 			@include text-para;
 			font-weight: 500;
 			max-width: 581px;
-			margin: 0 auto 10px auto;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 30px;
+
+			@media #{$media-1440} {
+				margin-top: 20px;
+			}
+
+			@media #{$media-820} {
+				margin-top: 15px;
+			}
+
+			@media #{$media-480} {
+				margin-top: 10px;
+			}
 		}
 	}
 
@@ -3972,10 +3998,7 @@ p {
 	}
 
 	// Responsive Design
-	@media (max-width: 1400px) {
-		.section-header {
-			margin-bottom: 50px;
-		}
+	@media (max-width: 1440px) {
 
 		.property-type-card {
 			max-width: 320px;
@@ -4024,18 +4047,7 @@ p {
 	}
 
 	@media (max-width: 768px) {
-		.section-header {
-			margin-bottom: 30px;
-
-			h2 {
-				font-size: 32px;
-			}
-
-			.section-subtitle {
-				font-size: 16px;
-				margin-top: 10px;
-			}
-		}
+		
 
 		// .property-type-card {
 		//   max-width: 280px;

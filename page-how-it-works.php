@@ -81,7 +81,7 @@ get_header();
 
 <?php if(get_field('pl_title') || have_rows('properties')): ?>
     <section class="pt_100">
-   <div class="property_types_section pt_50">
+   <div class="property_types_section pt_50 pb_50">
     <div class="wrap">
         <div class="section-header">
             <h2><?php echo esc_html(get_field('pl_title')); ?></h2>
