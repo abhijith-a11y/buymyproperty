@@ -46,10 +46,9 @@ get_header(); ?>
 
             <div class="hero-right overlay-1">
                 <span class="overlay"></span>
-                <div class="hero-background"
-                    style="background-image:url(<?php if (get_field('hm_bnr_image')) {
-                        echo get_field('hm_bnr_image')['url'];
-                    } ?>);">
+                <div class="hero-background" style="background-image:url(<?php if (get_field('hm_bnr_image')) {
+                    echo get_field('hm_bnr_image')['url'];
+                } ?>);">
                     <?php if (get_field('vertical_video_')) { ?>
                         <video autoplay muted loop playsinline>
                             <source src="<?php echo get_field('vertical_video_')['url']; ?>" type="video/mp4">
@@ -77,13 +76,20 @@ get_header(); ?>
                             ?>
                             <div class="swiper-slide">
                                 <div class="marquee-content">
-                                    <?php while (have_rows('marquee_items')):
+                                    <?php
+                                    $item_index = 0;
+                                    while (have_rows('marquee_items')):
                                         the_row();
                                         $text = get_sub_field('marquee_text');
+                                        // Add 'bold' class to alternative items (every other item)
+                                        $bold_class = ($item_index % 2 == 1) ? 'bold' : '';
                                         ?>
-                                        <span class="marquee-text"><?php echo esc_html($text); ?></span>
+                                        <span
+                                            class="marquee-text <?php echo esc_attr($bold_class); ?>"><?php echo esc_html($text); ?></span>
                                         <span class="marquee-separator">|</span>
-                                    <?php endwhile; ?>
+                                        <?php
+                                        $item_index++;
+                                    endwhile; ?>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -279,7 +285,7 @@ get_header(); ?>
                                         </div>
                                     </div>
                                 </div>
-                            <?php
+                                <?php
                             endforeach;
                             wp_reset_postdata();
                         endif;
@@ -351,7 +357,7 @@ get_header(); ?>
                         </div>
                         <div class="swiper-button-next deals-next">
                             <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path 
+                                <path
                                     d="M16 8.36401C16.5523 8.36401 17 7.9163 17 7.36401C17 6.81173 16.5523 6.36401 16 6.36401L16 7.36401L16 8.36401ZM0.292893 6.65691C-0.0976314 7.04743 -0.0976315 7.68059 0.292892 8.07112L6.65685 14.4351C7.04738 14.8256 7.68054 14.8256 8.07107 14.4351C8.46159 14.0446 8.46159 13.4114 8.07107 13.0209L2.41421 7.36401L8.07107 1.70716C8.46159 1.31663 8.46159 0.68347 8.07107 0.292945C7.68054 -0.0975793 7.04738 -0.0975793 6.65685 0.292945L0.292893 6.65691ZM16 7.36401L16 6.36401L0.999999 6.36401L0.999999 7.36401L0.999999 8.36401L16 8.36401L16 7.36401Z"
                                     fill="currentColor" />
                             </svg>

@@ -987,6 +987,10 @@ function initMarqueeSwiper() {
 				this.setTranslate(0);
 				// Add CSS class for additional styling
 				marqueeSwiper.classList.add("marquee-initialized");
+				// Ensure autoplay starts
+				if (this.autoplay && this.autoplay.running === false) {
+					this.autoplay.start();
+				}
 			},
 
 			slideChange: function () {
@@ -1003,21 +1007,34 @@ function initMarqueeSwiper() {
 		},
 	});
 
+	// Ensure autoplay is running
+	if (swiper.autoplay) {
+		swiper.autoplay.start();
+	}
+
 	// Pause marquee on hover (optional)
 	marqueeSwiper.addEventListener("mouseenter", function () {
-		swiper.autoplay.stop();
+		if (swiper.autoplay) {
+			swiper.autoplay.stop();
+		}
 	});
 
 	marqueeSwiper.addEventListener("mouseleave", function () {
-		swiper.autoplay.start();
+		if (swiper.autoplay) {
+			swiper.autoplay.start();
+		}
 	});
 
 	// Handle visibility change to pause/resume when tab is not active
 	document.addEventListener("visibilitychange", function () {
 		if (document.hidden) {
-			swiper.autoplay.stop();
+			if (swiper.autoplay) {
+				swiper.autoplay.stop();
+			}
 		} else {
-			swiper.autoplay.start();
+			if (swiper.autoplay) {
+				swiper.autoplay.start();
+			}
 		}
 	});
 
