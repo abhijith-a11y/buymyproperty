@@ -19,7 +19,7 @@ get_header();
 <?php if( have_rows('guiding_principles') ): ?>
    <section class="why_choose_top_stack wrap pt_100">
     <!-- Header Section -->
-    <div class="why_choose_header">
+    <div class="why_choose_header pb_100">
         <h2 class="why_choose_title"><?php echo esc_html(get_field('wcu_ov_title')); ?></h2>
         <div class="why_choose_description">
             <?php echo wp_kses_post(get_field('wcu_ov_description')); ?>
@@ -66,7 +66,7 @@ get_header();
 <?php endif; ?>
 
 <?php if( have_rows('impact_stories') ): ?>
-   <section class="made_difference wrap pt_80 pb_140">
+   <section class="made_difference wrap pt_80 pb_100">
     <!-- Header Section -->
     <div class="made_difference_header">
         <h2 class="made_difference_title">

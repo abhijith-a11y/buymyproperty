@@ -5697,7 +5697,6 @@ p {
 	// Header Section
 	.why_choose_header {
 		text-align: center;
-		margin-bottom: 60px;
 		position: relative;
 		z-index: 10;
 
@@ -5743,12 +5742,16 @@ p {
 		height: 460px;
 		transform-style: preserve-3d;
 
-		@media #{$media-1400} {
+		@media #{$media-1440} {
 			height: 400px;
 		}
 
 		@media #{$media-1200} {
 			height: 380px;
+		}
+
+		@media (max-width: 998px) {
+			height: auto;
 		}
 
 		.card_content {
@@ -5813,16 +5816,34 @@ p {
 				line-height: 150%;
 				color: var(--color-text-light);
 
-				@media #{$media-1400} {
+				@media #{$media-1440} {
 					font-size: 16px;
 				}
 
-				@media #{$media-1024} {
-					font-size: 15px;
+				@media #{$media-820} {
+					font-size: 14px;
 				}
 
-				@media #{$media-480} {
-					font-size: 14px;
+				ul {
+					margin-block: 20px;
+
+					li {
+						@include text-para;
+						position: relative;
+						padding-left: 20px;
+
+						&:before {
+							content: "";
+							position: absolute;
+							left: 0;
+							top: 8px;
+							width: 6px;
+							height: 6px;
+							background-color: var(--color-primary);
+							border-radius: 50%;
+							overflow: hidden;
+						}
+					}
 				}
 			}
 
@@ -5937,30 +5958,9 @@ p {
 		}
 	}
 
-	// Responsive: Why Choose Us Top Stack
-	@media #{$media-1400} {
-		.why_choose_header {
-			margin-bottom: 45px;
-		}
-		.why_choose_card {
-			height: 420px;
-		}
-	}
-
-	@media #{$media-1024} {
-		.why_choose_card {
-			height: 400px;
-		}
-	}
-
 	// Switch to stacked layout on narrow widths (align with existing 968px usage)
 	@media (max-width: 968px) {
-		.why_choose_header {
-			margin-bottom: 30px;
-		}
-		.why_choose_card {
-			height: auto;
-		}
+		
 		.why_choose_card .card_content {
 			position: relative;
 			min-height: auto;
@@ -5979,12 +5979,6 @@ p {
 		.why_choose_card .card_image_section {
 			width: 100%;
 			max-width: 700px;
-		}
-	}
-
-	@media #{$media-768} {
-		.why_choose_header {
-			margin-bottom: 25px;
 		}
 	}
 }
@@ -6293,7 +6287,7 @@ p {
 					line-height: 140%;
 					color: var(--color-white);
 
-					@media #{$media-1400} {
+					@media #{$media-1440} {
 						font-size: 75px;
 						line-height: 120%;
 					}
@@ -6327,17 +6321,14 @@ p {
 					font-size: 18px;
 					line-height: 150%;
 					color: var(--color-white);
-
 					margin: 0;
 
-					@media #{$media-1400} {
+					@media #{$media-1440} {
 						font-size: 16px;
-						line-height: 1.5;
 					}
 
-					@media #{$media-1200} {
-						font-size: 15px;
-						line-height: 1.4;
+					@media #{$media-820} {
+						font-size: 14px;
 					}
 				}
 			}
@@ -6455,6 +6446,10 @@ p {
 		margin-bottom: 0;
 		margin-bottom: 33px;
 
+		@media #{$media-1440} {
+			margin-bottom: 20px;
+		}
+
 		@media #{$media-768} {
 			padding: 18px 25px;
 		}
@@ -6497,15 +6492,11 @@ p {
 		font-size: 18px;
 		line-height: 150%;
 
-		@media #{$media-1400} {
-			padding-bottom: 40px;
-		}
-
-		@media #{$media-768} {
+		@media #{$media-1440} {
 			padding-bottom: 30px;
 		}
 
-		@media #{$media-480} {
+		@media #{$media-820} {
 			padding-bottom: 20px;
 		}
 

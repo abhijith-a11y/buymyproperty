@@ -1444,19 +1444,16 @@ function initMadeDifferenceSwiper() {
 		breakpoints: {
 			0: {
 				slidesPerView: 1,
-				spaceBetween: 20,
 			},
 			480: {
 				slidesPerView: 2,
-				spaceBetween: 25,
 			},
 			768: {
 				slidesPerView: 3,
-				spaceBetween: 30,
 			},
 			1200: {
 				slidesPerView: 4,
-				spaceBetween: 30,
+				spaceBetween: 18,
 			},
 		},
 		effect: "slide",
