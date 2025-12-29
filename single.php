@@ -15,7 +15,7 @@ get_header();
 <main id="primary" class="site-main mt_default">
 
     <?php get_template_part( 'template-parts/banner' ); ?>
-    <section class="blog_detail_content wrap pt_100 pb_120">
+    <section class="blog_detail_content wrap pt_100 pb_100">
         <div class="blog-detail-container">
             <article class="blog-detail-article">
                 <!-- Blog Meta -->

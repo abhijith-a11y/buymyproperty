@@ -1271,11 +1271,11 @@ body {
 	}
 
 	@media #{$media-820} {
-		padding-top: 60px;
+		padding-top: 50px;
 	}
 
 	@media #{$media-480} {
-		padding-top: 40px;
+		padding-top: 30px;
 	}
 }
 
@@ -1291,11 +1291,11 @@ body {
 	}
 
 	@media #{$media-820} {
-		padding-bottom: 60px;
+		padding-bottom: 50px;
 	}
 
 	@media #{$media-480} {
-		padding-bottom: 40px;
+		padding-bottom: 30px;
 	}
 }
 
@@ -2812,13 +2812,17 @@ body {
 			position: absolute;
 			height: fit-content;
 			bottom: 70px;
-			left: 90px;
+			left: 48px;
 			color: white !important;
 			text-align: left;
 			z-index: 10;
 			line-height: 60px;
 			@include heading-large-light;
 			font-weight: 500;
+
+			@media (max-width : 1500px) {
+				left: 25px;
+			}
 		}
 	}
 
@@ -2854,5 +2858,6 @@ body {
 
 	@media (max-width: 820px) {
 		height: 300px;
+		border-radius: 15px;
 	}
 }
