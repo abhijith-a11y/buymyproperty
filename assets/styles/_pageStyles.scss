@@ -1306,16 +1306,9 @@ p {
 		margin-bottom: 36px;
 
 		p {
-			font-family: "Montserrat", sans-serif;
-			font-size: 18px;
-			line-height: 28px;
+			@include text-para;
+			font-weight: 400;
 			color: #273035;
-			margin: 0;
-
-			@media #{$media-1400} {
-				font-size: 16px;
-				line-height: 24px;
-			}
 		}
 
 		@media #{$media-1400} {
@@ -1364,6 +1357,10 @@ p {
 		color: #273035;
 		margin: 0;
 		line-height: 28px;
+
+		@media #{$media-1440} {
+			font-size: 14px;
+		}
 	}
 
 	// Navigation Buttons
@@ -1476,9 +1473,6 @@ p {
 			font-size: 15px;
 		}
 
-		.author-title {
-			font-size: 13px;
-		}
 
 		.testimonials-navigation {
 			.swiper-button-prev,

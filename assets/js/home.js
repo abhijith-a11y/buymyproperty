@@ -627,15 +627,15 @@ function initTestimonialsSwiper() {
 
     // Initialize Swiper for testimonials
     const swiper = new Swiper(testimonialsSwiper, {
-        slidesPerView: 1,
+        slidesPerView: 3.5,
         centeredSlides: false,
         spaceBetween: 30,
-        // loop: true,
-        // autoplay: {
-        //     delay: 5000,
-        //     disableOnInteraction: false,
-        //     pauseOnMouseEnter: true
-        // },
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
         navigation: {
             nextEl: '.testimonials-next',
             prevEl: '.testimonials-prev',
