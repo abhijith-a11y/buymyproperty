@@ -1229,33 +1229,79 @@ p {
 		text-align: center;
 		margin-bottom: 45px;
 
+		@media #{$media-1440} {
+			margin-bottom: 30px;
+		}
+
+		@media #{$media-820} {
+			margin-bottom: 20px;
+		}
+
 		h2 {
 			margin: 0;
 			color: var(--color-primary);
 		}
 	}
 
-	// .testimonials-slider-container {
-	//     position: relative;
-	//     max-width: 1200px;
-	//     margin: 0 auto;
-	// }
+	.testimonials-slider-container {
+		overflow: hidden;
+		// Prevent layout shift before JS loads
+		min-height: 300px;
+	}
 
 	.testimonials-swiper {
-		padding: 20px 0 60px 0;
+		padding: 0px 0 60px 0;
 		overflow: hidden;
 
-		@media #{$media-1400} {
-			padding: 15px 0 30px 0;
+		@media #{$media-1440} {
+			padding: 0px 0 30px 0;
 		}
 
 		.swiper-wrapper {
 			align-items: stretch;
+			// Hide initially to prevent FOUC and spacing issues
+			opacity: 0;
+			// Prevent initial spacing issues before Swiper initializes
+			display: flex;
+			// Enable animation after Swiper initializes
+			&.swiper-wrapper-initialized {
+				opacity: 1;
+				animation: testimonialsScroll 12s linear infinite;
+
+				// @media (min-width: 768px) {
+				// 	animation: testimonialsScroll 2s linear infinite;
+				// }
+			}
 		}
 
 		.swiper-slide {
 			// height: auto;
 			display: flex;
+			// Prevent initial spacing issues
+			flex-shrink: 0;
+			// Set initial width to prevent ugly spacing
+			width: 100%;
+
+			@media (min-width: 768px) {
+				width: 50%;
+			}
+
+			@media (min-width: 992px) {
+				width: 33.333%;
+			}
+
+			@media (min-width: 1200px) {
+				width: 28.571%; // ~3.5 slides per view
+			}
+		}
+	}
+
+	@keyframes testimonialsScroll {
+		0% {
+			transform: translateX(var(--slide-set-width, -50%));
+		}
+		100% {
+			transform: translateX(0);
 		}
 	}
 
@@ -1409,19 +1455,12 @@ p {
 
 	// Responsive Design
 	@media (max-width: 1400px) {
-		padding: 100px 0;
-
-		.section-header {
-			margin-bottom: 60px;
-		}
-
 		.testimonial-card {
 			padding: 35px 25px;
 		}
 	}
 
 	@media (max-width: 992px) {
-		padding: 80px 0;
 
 		.testimonial-card {
 			padding: 30px 20px;
@@ -1437,16 +1476,6 @@ p {
 	}
 
 	@media (max-width: 768px) {
-		padding: 60px 0;
-
-		.section-header {
-			margin-bottom: 40px;
-
-			h2 {
-				font-size: 32px;
-			}
-		}
-
 		.testimonial-card {
 			padding: 25px 20px;
 		}
@@ -1472,7 +1501,6 @@ p {
 		.author-name {
 			font-size: 15px;
 		}
-
 
 		.testimonials-navigation {
 			.swiper-button-prev,
@@ -1516,7 +1544,19 @@ p {
 
 	.section-header {
 		text-align: center;
-		margin-bottom: 80px;
+		margin-bottom: 40px;
+
+		@media #{$media-1440} {
+			margin-bottom: 30px;
+		}
+
+		@media #{$media-820} {
+			margin-bottom: 20px;
+		}
+
+		@media #{$media-480} {
+			margin-bottom: 20px;
+		}
 
 		h2 {
 			margin: 0;
@@ -1532,7 +1572,6 @@ p {
 	}
 
 	.recently-closed-deals-swiper {
-		padding: 20px 0 0 0;
 		overflow: visible;
 
 		.swiper-wrapper {
@@ -1785,17 +1824,9 @@ p {
 		}
 	}
 
-	// Responsive Design
-	@media (max-width: 1200px) {
-		padding: 100px 0;
 
-		.section-header {
-			margin-bottom: 60px;
-		}
-	}
 
 	@media (max-width: 992px) {
-		padding: 80px 0;
 
 		.deal-image {
 			height: 240px;
@@ -1811,15 +1842,6 @@ p {
 	}
 
 	@media (max-width: 768px) {
-		padding: 60px 0;
-
-		.section-header {
-			margin-bottom: 40px;
-
-			h2 {
-				font-size: 32px;
-			}
-		}
 
 		.deal-image {
 			height: 200px;
@@ -5048,7 +5070,6 @@ p {
 		}
 
 		.blog-detail-body .blog-content {
-
 			h2 {
 				margin: 30px 0 15px 0;
 			}
