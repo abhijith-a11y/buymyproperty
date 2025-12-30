@@ -4,13 +4,13 @@
   position: relative;
 }
 
-.SumoSelect > select {
+.SumoSelect>select {
   display: none !important;
 }
 
-.SumoSelect:hover > .CaptionCont,
-.SumoSelect:focus > .CaptionCont,
-.SumoSelect.open > .CaptionCont {
+.SumoSelect:hover>.CaptionCont,
+.SumoSelect:focus>.CaptionCont,
+.SumoSelect.open>.CaptionCont {
   box-shadow: none !important;
   border-color: #bebebe !important;
 }
@@ -31,11 +31,11 @@
   background: white !important;
   box-sizing: border-box !important;
   position: relative;
-  z-index: 11 ;
+  z-index: 11;
   margin: 0 !important;
 }
 
-.SumoSelect .CaptionCont > span {
+.SumoSelect .CaptionCont>span {
   font-family: "Montserrat", sans-serif !important;
   font-weight: 500 !important;
   font-size: 12px !important;
@@ -52,7 +52,7 @@
   font-style: normal !important;
 }
 
-.SumoSelect .CaptionCont > label {
+.SumoSelect .CaptionCont>label {
   position: absolute;
   top: 0;
   right: 10px;
@@ -61,14 +61,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 !important;
+
 }
 
-.SumoSelect .CaptionCont > label > i {
+.SumoSelect .CaptionCont>label>i {
   transition: transform 0.2s ease;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wMdBhAJ/fwnjwAAAGFJREFUKM9jYBh+gBFKuzEwMKQwMDB8xaOWlYGB4T4DA0MrsuapDAwM//HgNwwMDDbYTJuGQ8MHBgYGJ1xOYGNgYJiBpuEpAwODHSF/siDZ+ISBgcGClEDqZ2Bg8B6CkQsAPRga0cpRtDEAAAAASUVORK5CYII=') !important;
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M1 0.999512L6.66 6.65951L12.32 0.999512" stroke="%23273035" stroke-width="1.99922" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/svg%3E') !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 14px;
+  height: 8px;
+  display: block;
 }
 
-.SumoSelect.open .CaptionCont > label > i {
+@media (max-width: 1200px) {
+  .SumoSelect .CaptionCont>label>i {
+    width: 10px;
+    height: 6px;
+  }
+}
+
+.SumoSelect.open .CaptionCont>label>i {
   transform: rotate(180deg);
 }
 
@@ -100,18 +115,18 @@
   box-shadow: none !important;
 }
 
-.SumoSelect.open > .optWrapper {
+.SumoSelect.open>.optWrapper {
   top: 40% !important;
   display: block !important;
 }
 
-.SumoSelect.open > .optWrapper.up {
+.SumoSelect.open>.optWrapper.up {
   top: auto !important;
   bottom: 100% !important;
   margin-bottom: 5px !important;
 }
 
-.SumoSelect .optWrapper > .options {
+.SumoSelect .optWrapper>.options {
   max-height: 200px !important;
   overflow-y: auto !important;
   border-radius: 20px !important;
@@ -120,13 +135,13 @@
   margin: 0 !important;
 }
 
-.SumoSelect .optWrapper.okCancelInMulti > .options,
-.SumoSelect .optWrapper.selall > .options,
-.SumoSelect .optWrapper.selall.okCancelInMulti > .options {
+.SumoSelect .optWrapper.okCancelInMulti>.options,
+.SumoSelect .optWrapper.selall>.options,
+.SumoSelect .optWrapper.selall.okCancelInMulti>.options {
   border-radius: 20px !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt {
+.SumoSelect .optWrapper>.options li.opt {
   font-size: 12px !important;
   font-family: "Montserrat", sans-serif !important;
   font-weight: 500 !important;
@@ -139,26 +154,26 @@
   border-radius: 0 !important;
 }
 
-.SumoSelect .optWrapper > .options > li.opt:first-child,
-.SumoSelect .optWrapper > .options > li.opt:last-child {
+.SumoSelect .optWrapper>.options>li.opt:first-child,
+.SumoSelect .optWrapper>.options>li.opt:last-child {
   border-radius: 0 !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt:hover {
+.SumoSelect .optWrapper>.options li.opt:hover {
   background: #f8f9fa !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt.sel,
-.SumoSelect .optWrapper > .options li.opt.selected {
+.SumoSelect .optWrapper>.options li.opt.sel,
+.SumoSelect .optWrapper>.options li.opt.selected {
   background: transparent !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt:hover.sel,
-.SumoSelect .optWrapper > .options li.opt:hover.selected {
+.SumoSelect .optWrapper>.options li.opt:hover.sel,
+.SumoSelect .optWrapper>.options li.opt:hover.selected {
   background: #f8f9fa !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt label {
+.SumoSelect .optWrapper>.options li.opt label {
   display: block !important;
   padding: 0 10px 17px 10px !important;
   cursor: pointer !important;
@@ -170,11 +185,11 @@
   overflow: hidden;
 }
 
-.SumoSelect .optWrapper > .options li.opt:first-child label {
+.SumoSelect .optWrapper>.options li.opt:first-child label {
   padding-top: 0 !important;
 }
 
-.SumoSelect .optWrapper > .options li.opt:last-child label {
+.SumoSelect .optWrapper>.options li.opt:last-child label {
   padding-bottom: 17px !important;
 }
 
@@ -182,15 +197,15 @@
   display: none !important;
 }
 
-.SumoSelect .optWrapper.multiple > .options li.opt {
+.SumoSelect .optWrapper.multiple>.options li.opt {
   padding-left: 0 !important;
 }
 
-.SumoSelect .optWrapper.multiple > .options li.opt span {
+.SumoSelect .optWrapper.multiple>.options li.opt span {
   display: none !important;
 }
 
-.SumoSelect .optWrapper > .MultiControls {
+.SumoSelect .optWrapper>.MultiControls {
   display: none !important;
 }
 
@@ -206,15 +221,15 @@
   cursor: not-allowed;
 }
 
-.SumoSelect.disabled > .CaptionCont {
+.SumoSelect.disabled>.CaptionCont {
   border-color: #bebebe !important;
   box-shadow: none !important;
 }
 
 .SumoSelect.open .CaptionCont {
-    z-index: 999 !important;
+  z-index: 999 !important;
 }
 
 .SumoSelect.open .optWrapper {
-    z-index: 997 !important;
+  z-index: 997 !important;
 }
