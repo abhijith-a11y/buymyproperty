@@ -17,7 +17,7 @@ get_header();
     <?php get_template_part('template-parts/banner', null, array('bg_position' => 'top')); ?>
 
 
-    <section class="get-offer-section container">
+    <section class="get-offer-section container mt_50 pb_100 pt_100">
         <div class="wrap">
             <div class="get-offer-content">
                 <!-- Left Side: Heading and Description -->

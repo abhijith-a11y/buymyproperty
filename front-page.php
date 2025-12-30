@@ -50,7 +50,7 @@ get_header(); ?>
                     echo get_field('hm_bnr_image')['url'];
                 } ?>);">
                     <?php if (get_field('vertical_video_')) { ?>
-                        <video autoplay muted loop playsinline>
+                        <video autoplay muted loop playsinline class="vertical_video">
                             <source src="<?php echo get_field('vertical_video_')['url']; ?>" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
