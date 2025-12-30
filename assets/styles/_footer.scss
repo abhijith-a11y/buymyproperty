@@ -166,8 +166,6 @@
 		width: 32px;
 		height: 32px;
 	}
-
-
 }
 
 // ========================================
@@ -197,6 +195,10 @@
 		a {
 			@include text-poppins-regular;
 			white-space: nowrap;
+
+			@media #{$media-1440} {
+				font-size: 14px;
+			}
 		}
 	}
 }
@@ -224,6 +226,10 @@
 	display: flex;
 	flex-direction: column;
 	gap: 25px;
+
+	@media #{$media-1440} {
+		gap: 20px;
+	}
 
 	@media (max-width: 768px) {
 		gap: 15px;
@@ -269,8 +275,19 @@
 }
 
 .footer-legal {
-	nav {
-		// Uses existing navigation styles
+	ul li:first-child {
+		padding-right: 24px;
+		position: relative;
+
+		&:before {
+			content: "";
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 2px;
+			height: 100%;
+			background-color: #6E6E6E;
+		}
 	}
 }
 
@@ -303,6 +320,10 @@
 			&:hover {
 				color: var(--color-primary);
 			}
+
+			@media #{$media-1440} {
+				font-size: 14px;
+			}
 		}
 	}
 }
@@ -327,7 +348,7 @@
 
 		@media #{$media-992} {
 			width: 360px;
-			height: 200px; 
+			height: 200px;
 			padding: 40px 0 0 25px;
 		}
 

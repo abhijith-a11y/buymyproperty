@@ -14,7 +14,7 @@ get_header();
 
 <main id="primary" class="site-main mt_default">
 
-  	<?php get_template_part('template-parts/banner'); ?>
+    <?php get_template_part('template-parts/banner', null, array('bg_position' => 'top')); ?>
 
 
     <section class="get-offer-section container">
@@ -30,7 +30,7 @@ get_header();
                 <div class="get-offer-right">
                     <div class="offer-form-container">
                         <div class="offer-form" id="propertyOfferForm">
-                          <?php echo do_shortcode('[contact-form-7 id="5f631f8" title="Get an offer"]'); ?>
+                            <?php echo do_shortcode('[contact-form-7 id="5f631f8" title="Get an offer"]'); ?>
                         </div>
                     </div>
                 </div>
@@ -41,54 +41,54 @@ get_header();
 </main>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Upload area functionality
-    const uploadArea = document.querySelector('.upload-area');
-    const fileInput = document.getElementById('property-images');
+    document.addEventListener('DOMContentLoaded', function () {
+        // Upload area functionality
+        const uploadArea = document.querySelector('.upload-area');
+        const fileInput = document.getElementById('property-images');
 
-    if (uploadArea && fileInput) {
-        uploadArea.addEventListener('click', function() {
-            fileInput.click();
-        });
+        if (uploadArea && fileInput) {
+            uploadArea.addEventListener('click', function () {
+                fileInput.click();
+            });
 
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            uploadArea.style.borderColor = 'var(--color-primary)';
-            uploadArea.style.background = '#f8f9fa';
-        });
+            uploadArea.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--color-primary)';
+                uploadArea.style.background = '#f8f9fa';
+            });
 
-        uploadArea.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#ddd';
-            uploadArea.style.background = 'white';
-        });
+            uploadArea.addEventListener('dragleave', function (e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ddd';
+                uploadArea.style.background = 'white';
+            });
 
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#ddd';
-            uploadArea.style.background = 'white';
+            uploadArea.addEventListener('drop', function (e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ddd';
+                uploadArea.style.background = 'white';
 
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                updateUploadText(files.length);
-            }
-        });
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    updateUploadText(files.length);
+                }
+            });
 
-        fileInput.addEventListener('change', function() {
-            if (this.files.length > 0) {
-                updateUploadText(this.files.length);
-            }
-        });
+            fileInput.addEventListener('change', function () {
+                if (this.files.length > 0) {
+                    updateUploadText(this.files.length);
+                }
+            });
 
-        function updateUploadText(fileCount) {
-            const uploadText = uploadArea.querySelector('.upload-text');
-            if (uploadText) {
-                uploadText.textContent = `${fileCount} file(s) selected`;
+            function updateUploadText(fileCount) {
+                const uploadText = uploadArea.querySelector('.upload-text');
+                if (uploadText) {
+                    uploadText.textContent = `${fileCount} file(s) selected`;
+                }
             }
         }
-    }
-});
+    });
 </script>
 
 <?php get_footer(); ?>
