@@ -67,8 +67,7 @@
 			}
 
 			@media #{$media-768} {
-				padding-top: 0;
-
+				padding-top: 30px;
 				flex: 1;
 				padding-right: auto;
 				text-align: center;
@@ -79,7 +78,7 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				height: 311px;
+				height: 355px;
 				width: 100%;
 				overflow: visible;
 				border-radius: 20px;
@@ -120,19 +119,41 @@
 					position: absolute;
 					top: 50%;
 					left: 55%;
-					left: calc(((100vw - 1400px) / 2) - 10px);
+					left: calc(((100vw - 1400px) / 2) - 15px);
 					transform: translateY(-50%);
 					height: fit-content;
 					width: 69.6%;
+
+					@media #{$media-1600} {
+						left: 50%;
+						top: 50%;
+						transform: translate(-50%, -50%);
+					}
+
+					@media #{$media-1400} {
+						bottom: 200px;
+						width: 90%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+					}
+
+					@media #{$media-768} {
+						width: 60%;
+						transform: translate(-50%, -58%);
+					}
+
+					@media #{$media-480} {
+						width: 90%;
+					}
 
 					.validation-error {
 						font-size: 12px;
 						color: red;
 						font-weight: 600;
-						margin-top: 5px;
+						margin-top: 1px;
 						display: block;
 						padding-left: 20px;
-						padding-top: 3px;
+						padding-top: 1px;
 					}
 
 					.CaptionCont,
@@ -140,16 +161,22 @@
 					input {
 						height: 59px !important;
 						max-height: unset !important;
+
+						@media #{$media-1440} {
+							height: 55px !important;
+						}
+
+						@media #{$media-820} {
+							height: 50px !important;
+						}
+
+						@media #{$media-480} {
+							height: 45px !important;
+						}
 					}
 
 					.dropdown-trigger {
 						height: 56px !important;
-					}
-
-					@media #{$media-1400} {
-						bottom: 200px;
-						width: 90%;
-						left: 20px;
 					}
 
 					// @media #{$media-480} {
@@ -163,6 +190,10 @@
 						display: flex;
 						gap: 10px;
 						margin-bottom: 15px;
+
+						@media #{$media-1440} {
+							margin-bottom: 10px;
+						}
 
 						@media #{$media-768} {
 							flex-direction: column;
@@ -180,9 +211,18 @@
 						gap: 10px;
 						align-items: center;
 						height: 59px;
+						margin-bottom: 15px;
+
+						@media #{$media-1440} {
+							margin-bottom: 10px;
+						}
 
 						.form-group {
 							flex: 1;
+
+							@media #{$media-768} {
+								width: 100%;
+							}
 						}
 
 						@media #{$media-768} {
@@ -194,6 +234,8 @@
 							flex: 1;
 							position: relative;
 							height: 100%;
+							font-size: 12;
+
 
 							input[type="file"] {
 								position: absolute;
@@ -219,13 +261,17 @@
 								border: none;
 								border-radius: 50px;
 								background: white;
-								color: #333;
-								font-size: 14px;
+								color: rgba(39, 48, 53, 0.4);
+								font-size: 12px;
 								font-family: var(--font-montserrat);
 								font-weight: 500;
 								transition: all 0.3s ease;
 								cursor: pointer;
 								box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+								@media #{$media-768} {
+									max-height: 50px;
+								}
 
 								&:hover {
 									box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -254,23 +300,21 @@
 							}
 
 							@media #{$media-768} {
-								width: 70%;
-								max-width: 250px;
+								width: 100%;
 							}
 						}
 
 						.submit-group {
 							flex: 1;
 							height: 59px;
+							width: 100%;
 
+							.prev-step-btn,
 							.submit-button {
-								width: 100% !important;
-								height: 100% !important;
-								max-height: unset !important;
+								width: 50%;
 							}
 							@media #{$media-768} {
-								width: 70%;
-								max-width: 250px;
+								width: 100%;
 							}
 						}
 					}
@@ -1585,7 +1629,7 @@ p {
 
 		@media (max-width: 1470px) {
 			margin-left: 1.5%;
-			width: calc(100vw - 1.5% );
+			width: calc(100vw - 1.5%);
 		}
 	}
 
@@ -1777,7 +1821,6 @@ p {
 
 			&:hover {
 				background: var(--color-primary);
-				transform: scale(1.1);
 				color: #fff;
 			}
 
@@ -1814,7 +1857,6 @@ p {
 
 			&:hover {
 				background: var(--color-primary);
-				transform: scale(1.1);
 				color: #fff;
 			}
 

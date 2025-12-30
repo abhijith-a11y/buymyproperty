@@ -483,6 +483,28 @@ function initRecentlyClosedDealsSwiper() {
 		return;
 	}
 
+	// Get the swiper wrapper and slides
+	const swiperWrapper = dealsSwiper.querySelector(".swiper-wrapper");
+	const slides = swiperWrapper.querySelectorAll(".swiper-slide");
+	const slideCount = slides.length;
+
+	// Duplicate slides if there are less than 4 slides
+	if (slideCount > 0 && slideCount <= 4) {
+		// Convert NodeList to Array for easier manipulation
+		const slidesArray = Array.from(slides);
+
+		// Calculate how many more slides we need to reach at least 4
+		const slidesNeeded = 5 - slideCount;
+
+		// Clone and append slides until we have at least 4
+		for (let i = 0; i < slidesNeeded; i++) {
+			// Clone the slide at index (i % slideCount) to cycle through original slides
+			const slideToClone = slidesArray[i % slideCount];
+			const clonedSlide = slideToClone.cloneNode(true);
+			swiperWrapper.appendChild(clonedSlide);
+		}
+	}
+
 	// Initialize Swiper for recently closed deals
 	const swiper = new Swiper(dealsSwiper, {
 		slidesPerView: 3.9,
@@ -492,7 +514,7 @@ function initRecentlyClosedDealsSwiper() {
 		observer: true,
 		observeParents: true,
 		autoplay: {
-			delay: 4000,
+			delay: 1500,
 			disableOnInteraction: false,
 			pauseOnMouseEnter: true,
 		},
@@ -516,12 +538,17 @@ function initRecentlyClosedDealsSwiper() {
 			},
 		},
 		effect: "slide",
-		speed: 800,
+		speed: 1000,
 		grabCursor: true,
 		watchSlidesProgress: true,
 		watchSlidesVisibility: true,
+		allowSlidePrev: true,
+		allowSlideNext: true,
 		on: {
 			init: function () {
+				this.update();
+			},
+			loopFix: function () {
 				this.update();
 			},
 		},
