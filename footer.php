@@ -457,8 +457,14 @@ class HeaderScrollEffects {
     toggleScrolldownClass(scrollTop) {
         if (scrollTop === 0) {
             this.header.classList.remove('scrolldown');
+            // Add 'at-top' class for non-home pages when at top
+            if (this.header.classList.contains('not-home-page')) {
+                this.header.classList.add('at-top');
+            }
         } else {
             this.header.classList.add('scrolldown');
+            // Remove 'at-top' class when scrolled
+            this.header.classList.remove('at-top');
         }
     }
 }

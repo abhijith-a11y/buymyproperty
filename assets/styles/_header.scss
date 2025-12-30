@@ -161,6 +161,15 @@
 		}
 	}
 
+	// White logo filter for non-home pages when at top
+	&.not-home-page.at-top {
+		.site-header__bottom {
+			.site-header__logo img.logo {
+				filter: brightness(0) invert(1);
+			}
+		}
+	}
+
 	&.scrolldown {
 		background-color: #fff;
 
