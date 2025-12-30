@@ -471,6 +471,8 @@ textarea::placeholder {
 	line-height: 20px;
 	color: rgba(39, 48, 53, 0.7);
 	cursor: pointer;
+	border: none !important;
+	height: 100% !important;
 }
 
 .date-time-picker input::placeholder {

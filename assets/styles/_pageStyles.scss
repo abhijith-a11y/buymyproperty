@@ -6901,6 +6901,7 @@ p {
 				color: #ffffff;
 				margin-left: auto;
 				margin-top: 15px;
+				width: fit-content !important;
 			}
 
 			span {
@@ -8212,4 +8213,39 @@ p {
 			}
 		}
 	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.intl-tel-input.separate-dial-code .selected-flag {
+	background-color: transparent !important;
+}
+
+.intl-tel-input .selected-flag .iti-flag {
+	display: none !important;
+}
+
+
+.intl-tel-input.separate-dial-code.allow-dropdown.iti-sdc-4 .selected-flag {
+	width: 70px !important;
+}
+
+.intl-tel-input.separate-dial-code .selected-dial-code {
+	padding-left: 15px !important;
+	font-size: 12px !important;
+	font-family: "Montserrat", sans-serif !important;
+	color: #273035 !important;
 }
