@@ -121,7 +121,7 @@
 					top: 50%;
 					left: 55%;
 					left: calc(((100vw - 1400px) / 2) - 10px);
-					transform: translateY(-55%);
+					transform: translateY(-50%);
 					height: fit-content;
 					width: 69.6%;
 
@@ -1578,12 +1578,15 @@ p {
 	}
 
 	.deals-slider-container {
-		// position: relative;
-		// max-width: 1200px;
-		// margin: 0 auto;
-		margin-left: 86px;
-		overflow: visible;
-		width: calc(100% - 86px);
+		position: relative;
+		margin-left: calc((100vw - 1400px) / 2 - 15px);
+		width: calc(100vw - (100vw - 1400px) / 2 + 3%);
+		overflow: hidden;
+
+		@media (max-width: 1470px) {
+			margin-left: 1.5%;
+			width: calc(100vw - 1.5% );
+		}
 	}
 
 	.recently-closed-deals-swiper {
@@ -7969,11 +7972,11 @@ p {
 				background-color: var(--color-primary);
 				border-radius: 50%;
 
-					@media #{$media-820} {
-						width: 6px;
-						height: 6px;
-						top: 9px;
-					}
+				@media #{$media-820} {
+					width: 6px;
+					height: 6px;
+					top: 9px;
+				}
 			}
 			&:last-child {
 				margin-bottom: 0;

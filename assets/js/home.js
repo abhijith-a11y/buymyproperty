@@ -485,10 +485,12 @@ function initRecentlyClosedDealsSwiper() {
 
 	// Initialize Swiper for recently closed deals
 	const swiper = new Swiper(dealsSwiper, {
-		slidesPerView: 3.8,
+		slidesPerView: 3.9,
 		spaceBetween: 10,
 		loop: true,
 		centeredSlides: false,
+		observer: true,
+		observeParents: true,
 		autoplay: {
 			delay: 4000,
 			disableOnInteraction: false,
@@ -509,7 +511,7 @@ function initRecentlyClosedDealsSwiper() {
 				slidesPerView: 3,
 			},
 			1200: {
-				slidesPerView: 3.8,
+				slidesPerView: 3.9,
 				spaceBetween: 10,
 			},
 		},
@@ -518,7 +520,19 @@ function initRecentlyClosedDealsSwiper() {
 		grabCursor: true,
 		watchSlidesProgress: true,
 		watchSlidesVisibility: true,
+		on: {
+			init: function () {
+				this.update();
+			},
+		},
 	});
+
+	// Force update after a short delay to ensure proper sizing
+	setTimeout(() => {
+		if (swiper) {
+			swiper.update();
+		}
+	}, 100);
 }
 
 // =============================================================================
