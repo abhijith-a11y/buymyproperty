@@ -120,7 +120,7 @@
                                         <?php if ($count < $total): ?>
                                             <span>|</span>
                                         <?php endif; ?>
-                                    <?php
+                                        <?php
                                     endif;
                                 endwhile; ?>
                             <?php endif; ?>
@@ -218,7 +218,7 @@
                                             <?php if ($count < $total): ?>
                                                 <span>|</span>
                                             <?php endif; ?>
-                                        <?php
+                                            <?php
                                         endif;
                                     endwhile; ?>
                                 <?php endif; ?>
@@ -316,7 +316,8 @@
                     <div class="right-section">
                         <div class="footer-cta-content">
                             <h3 class="heading-medium-accent text-accent font-medium">
-                                <?php echo get_field('h_box_title', 'option'); ?></h3>
+                                <?php echo get_field('h_box_title', 'option'); ?>
+                            </h3>
                             <?php if (get_field('h_box_link', 'option')): ?>
                                 <a href="<?php echo get_field('h_box_link', 'option')['url']; ?>"
                                     class="btn-primary footer-cta-btn">
