@@ -271,7 +271,7 @@
                                             <?php echo esc_html($menu_link['title']); ?>
                                         </span>
                                         <span class="nav-number">
-                                            <?php echo sprintf('%02d', $count); ?>
+                                            <?php echo sprintf('%02d', $count); ?> 
                                         </span>
                                     </a>
 

@@ -31,9 +31,7 @@
 	text-transform: none;
 
 	&:hover {
-		background-color: #014a3c; // Darker shade of primary
 		transform: translateY(-2px);
-		box-shadow: 0 8px 20px rgba(1, 108, 81, 0.3);
 	}
 
 	&:active {

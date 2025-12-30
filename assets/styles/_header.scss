@@ -20,6 +20,7 @@
 	.mobile-header__logo img.logo {
 		width: 180px;
 		height: auto;
+		filter: brightness(0) invert(1);
 	}
 
 	.menu-toggle {
@@ -393,6 +394,7 @@
 						transition: transform 0.3s ease;
 						position: relative;
 						padding-right: 25px;
+						text-transform: uppercase;
 					}
 
 					.nav-number {
@@ -413,7 +415,7 @@
 
 						&::before {
 							right: 0;
-							top: 60%;
+							top: 55%;
 							transform: translateY(-50%);
 							content: "";
 							position: absolute;
