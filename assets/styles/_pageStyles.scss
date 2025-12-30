@@ -4245,12 +4245,13 @@ p {
 			margin-top: 40px;
 			border-bottom: 1px solid #ede9e6;
 
-			&:last-child {
+			// Remove border from last form-section (even if other elements follow)
+			&:not(:has(+ .form-section)) {
 				border-bottom: none;
 			}
 
-			// Hide form section if it contains wpcf7cf-hidden class
-			&:has(.wpcf7cf-hidden) {
+			// Hide form section if it contains wpcf7cf-hidden class as direct child
+			&:has(> .wpcf7cf-hidden) {
 				display: none;
 			}
 
@@ -4337,7 +4338,7 @@ p {
 			margin-bottom: 25px;
 
 			#property-images {
-				display: none; /* hide native file input completely */
+				display: none !important; /* hide native file input completely */
 			}
 
 			.upload-area {
@@ -4350,7 +4351,7 @@ p {
 			}
 
 			.upload-area {
-				border: 1.5px dashed #016c51;
+				border: 2.5px dashed #016c51;
 				border-radius: 30px;
 				padding: 25px 20px;
 				display: flex;
@@ -4394,7 +4395,6 @@ p {
 			text-align: center;
 			color: #ffffff;
 			margin-left: auto;
-			margin-top: 40px;
 			width: max-content !important;
 
 			@media #{$media-1440} {
