@@ -12,6 +12,14 @@
 
 html {
 	font-size: 100%;
+	// Hide scrollbar to prevent width shift when header opens
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE and Edge
+
+	&::-webkit-scrollbar {
+		display: none; // Chrome, Safari, Opera
+	}
+
 	@media (max-width: 1500px) {
 		font-size: 89%;
 	}
@@ -511,6 +519,13 @@ body {
 	padding: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	// Hide scrollbar to prevent width shift when header opens
+	scrollbar-width: none; // Firefox
+	-ms-overflow-style: none; // IE and Edge
+
+	&::-webkit-scrollbar {
+		display: none; // Chrome, Safari, Opera
+	}
 }
 
 .container {
@@ -2731,7 +2746,7 @@ body {
 			font-size: 12px;
 			font-weight: 500;
 			line-height: 1;
-			
+
 			@media #{$media-820} {
 				font-size: 10px;
 			}
@@ -2828,7 +2843,7 @@ body {
 			@include heading-large-light;
 			font-weight: 500;
 
-			@media (max-width : 1500px) {
+			@media (max-width: 1500px) {
 				left: 25px;
 			}
 		}
