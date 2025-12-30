@@ -5960,7 +5960,6 @@ p {
 
 	// Switch to stacked layout on narrow widths (align with existing 968px usage)
 	@media (max-width: 968px) {
-		
 		.why_choose_card .card_content {
 			position: relative;
 			min-height: auto;
@@ -7849,6 +7848,204 @@ p {
 	background-color: #ffffff;
 }
 
+// ========================================
+// DEFAULT PAGE TEMPLATE STYLES
+// ========================================
+.sub-banner {
+	padding: 60px 0 100px 0;
+	background-color: #ffffff;
+
+	@media #{$media-1440} {
+		padding: 50px 0 80px 0;
+	}
+
+	@media #{$media-820} {
+		padding: 40px 0 60px 0;
+	}
+
+	@media #{$media-480} {
+		padding: 30px 0 40px 0;
+	}
+
+	div {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 3%;
+
+		@media #{$media-820} {
+			padding: 0 15px;
+		}
+	}
+
+	h1 {
+		@include heading-large-light;
+		color: var(--color-primary);
+		margin-bottom: 40px;
+		font-weight: 500;
+		text-align: center;
+
+		@media #{$media-1440} {
+			margin-bottom: 30px;
+		}
+
+		@media #{$media-820} {
+			margin-bottom: 25px;
+		}
+	}
+
+	// Page content styling
+	p {
+		@include text-para;
+		margin-bottom: 20px;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&:empty,
+		&:has-text("&nbsp;") {
+			margin-bottom: 15px;
+			min-height: 15px;
+		}
+	}
+
+	h2 {
+		@include heading-medium-primary;
+		color: var(--color-primary);
+		margin-top: 40px;
+		margin-bottom: 20px;
+
+		@media #{$media-1440} {
+			margin-top: 35px;
+			margin-bottom: 18px;
+		}
+
+		@media #{$media-820} {
+			margin-top: 30px;
+			margin-bottom: 15px;
+		}
+
+		&:first-of-type {
+			margin-top: 30px;
+		}
+	}
+
+	h3 {
+		@include heading-medium-accent;
+		margin-top: 15px;
+		margin-bottom: 15px;
+
+		@media #{$media-820} {
+			margin-top: 12px;
+			margin-bottom: 12px;
+		}
+	}
+
+	ul,
+	ol {
+		margin: 20px 0;
+
+		li {
+			@include text-para;
+			margin-bottom: 5px;
+			line-height: 1.8;
+			color: var(--color-text-secondary);
+			position: relative;
+			padding-left: 20px;
+
+			@media #{$media-820} {
+				padding-left: 15px;
+			}
+
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 11px;
+				width: 8px;
+				height: 8px;
+				background-color: var(--color-primary);
+				border-radius: 50%;
+
+					@media #{$media-820} {
+						width: 6px;
+						height: 6px;
+						top: 9px;
+					}
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	ul {
+		list-style-type: disc;
+
+		li {
+			&::marker {
+				color: var(--color-primary);
+			}
+		}
+	}
+
+	ol {
+		list-style-type: decimal;
+
+		li {
+			&::marker {
+				color: var(--color-primary);
+				font-weight: 600;
+			}
+		}
+	}
+
+	strong,
+	b {
+		font-weight: 600;
+		color: var(--color-text-accent);
+	}
+
+	a {
+		color: var(--color-primary);
+		text-decoration: underline;
+		transition: color 0.3s ease;
+
+		&:hover {
+			color: var(--color-text-accent);
+		}
+	}
+
+	blockquote {
+		border-left: 4px solid var(--color-primary);
+		padding-left: 20px;
+		margin: 30px 0;
+		font-style: italic;
+		color: var(--color-text-muted);
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 30px 0;
+
+		th,
+		td {
+			padding: 12px 15px;
+			text-align: left;
+			border-bottom: 1px solid #e0e0e0;
+		}
+
+		th {
+			background-color: var(--color-primary-light);
+			color: var(--color-primary);
+			font-weight: 600;
+		}
+	}
+}
+
 .error-404 {
 	/* Basic centering of the main content block */
 	display: flex;
@@ -7929,7 +8126,7 @@ p {
 	}
 
 	// Fallback/adaptation for smaller screens if columns are too narrow
-	@media #{$media-768} {
+	@media #{$media-820} {
 		.widget-grid {
 			// Force a single column layout on smaller devices
 			grid-template-columns: 1fr;
