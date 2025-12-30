@@ -4249,6 +4249,11 @@ p {
 				border-bottom: none;
 			}
 
+			// Hide form section if it contains wpcf7cf-hidden class
+			&:has(.wpcf7cf-hidden) {
+				display: none;
+			}
+
 			.section-title {
 				font-family: "Gotham", sans-serif;
 				font-size: 24px;
