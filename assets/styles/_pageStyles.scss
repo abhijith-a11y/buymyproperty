@@ -5053,6 +5053,10 @@ p {
 	.blog-detail-container {
 		width: 67%;
 		max-width: 948px;
+
+		@media #{$media-1440} {
+			width: 100%;
+		}
 	}
 
 	.blog-detail-article {
@@ -5191,24 +5195,10 @@ p {
 		}
 	}
 
-	// Responsive Design
-	@media (max-width: 1440px) {
-		.blog-detail-container {
-			width: 75%;
-			max-width: 700px;
-		}
-	}
 
-	@media (max-width: 992px) {
-		.blog-detail-container {
-			width: 85%;
-		}
-	}
+
 
 	@media (max-width: 768px) {
-		.blog-detail-container {
-			width: 95%;
-		}
 
 		.blog-detail-body .blog-content {
 			h2 {
@@ -5230,9 +5220,7 @@ p {
 	}
 
 	@media (max-width: 480px) {
-		.blog-detail-container {
-			width: 100%;
-		}
+	
 
 		.blog-detail-body .blog-content {
 			h2 {

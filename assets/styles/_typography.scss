@@ -338,9 +338,6 @@
 	@media #{$media-768} {
 		font-size: 20px;
 	}
-	@media #{$media-480} {
-		font-size: 18px;
-	}
 }
 
 @mixin heading-small-bold {
