@@ -8,6 +8,7 @@
 	z-index: 995;
 	background: var(--color-bg-dark);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	max-height: 75px;
 
 	.mobile-header__inner {
 		display: flex;

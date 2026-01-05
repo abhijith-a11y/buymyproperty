@@ -38,10 +38,9 @@
                     <div class="mobile-header__logo">
                         <a href="<?php echo home_url('/'); ?>" aria-label="Go to homepage">
                             <?php
-                            $theme_uri = get_template_directory_uri();
-                            $logo_src_mobile = is_front_page()
-                                ? $theme_uri . '/assets/images/common/logo_footer.png'
-                                : $theme_uri . '/assets/images/common/white_logo.png';
+                            //  $theme_uri = get_template_directory_uri();
+                            $logo_src_mobile = get_template_directory_uri() . '/assets/images/common/logo_footer.png';
+
                             ?>
                             <img class="logo" src="<?php echo esc_url($logo_src_mobile); ?>" alt="BuyMyProperty Logo">
                         </a>

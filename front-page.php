@@ -366,7 +366,7 @@ get_header(); ?>
 
 <?php if (get_field('hm_bg_referal_image') || get_field('hm_re_title') || get_field('hm_re_title__in_bold') || get_field('hm_re_tag_line') || get_field('hm_re_button')): ?>
     <section class="referral-banner container"
-        style="background: url('<?php echo get_field('hm_bg_referal_image')['url']; ?>') right center / cover no-repeat;">
+        style="background: url('<?php echo get_field('hm_bg_referal_image')['url']; ?>') center / cover no-repeat;">
         <div class="text-content">
             <div class="heading-medium-primary thin text-white"><?php echo get_field('hm_re_title'); ?></div>
             <h2 class="heading-medium-primary bold text-white"><?php echo get_field('hm_re_title__in_bold'); ?></h2>
