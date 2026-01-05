@@ -2718,6 +2718,9 @@ p {
 				z-index: 10;
 				.slide-right {
 					width: 780px;
+					position: relative;
+
+					
 					img {
 						opacity: 1;
 					}
@@ -8315,7 +8318,6 @@ p {
 	margin-top: 5px;
 	padding-left: 10px;
 }
-
 
 body.modal-open {
 	overflow: hidden;
