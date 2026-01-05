@@ -2630,13 +2630,23 @@ body {
 		flex-wrap: nowrap;
 		// min-height: 734px;
 		// overflow: auto;
-		height: 734px;
-		overflow: hidden;
+		// min-height: 734px;
+		height: calc(100vh -110px);
+		overflow-y: auto;
+		overflow-x: hidden;		
 		padding-left: 50px;
 		padding-right: 60px;
+		gap: 30px;
 
 		@media #{$media-1200} {
 			flex-wrap: wrap;
+			overflow: auto;
+		}
+
+		@media #{$media-768} {
+			width: 98%;
+			padding-right: auto;
+			padding-left: auto;
 		}
 	}
 
@@ -2719,6 +2729,10 @@ body {
 	.offer-form {
 		.city-group {
 			width: 50% !important;
+
+			@media #{$media-768} {
+				width: 100% !important;
+			}
 		}
 		.form-row {
 			display: grid;
@@ -2748,10 +2762,6 @@ body {
 			font-size: 12px;
 			font-weight: 500;
 			line-height: 1;
-
-			@media #{$media-820} {
-				font-size: 10px;
-			}
 		}
 
 		.custom-dropdown {
@@ -2779,7 +2789,7 @@ body {
 			font-family: "Montserrat", sans-serif;
 			font-weight: 600 !important;
 			font-size: 16px !important;
-			line-height: 36px !important;
+			// line-height: 36px !important;
 			text-align: center !important;
 			color: #ffffff !important;
 			gap: 10px !important;
@@ -2792,7 +2802,7 @@ body {
 	@media (max-width: 992px) {
 		.modal-dialog {
 			gap: 24px;
-			padding: 26px;
+			padding: 18px;
 		}
 
 		.modal-left,

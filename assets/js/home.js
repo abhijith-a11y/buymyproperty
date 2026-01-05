@@ -1629,14 +1629,18 @@ function initializeCareerApplyModal() {
 	const openModal = (e) => {
 		if (e) e.preventDefault();
 		modal.classList.add("open");
+		document.body.classList.add("modal-open"); // ⬅️ ADD HERE
 		if (backdrop) backdrop.classList.add("open");
 	};
+	
 
 	const closeModal = (e) => {
 		if (e) e.preventDefault();
 		modal.classList.remove("open");
+		document.body.classList.remove("modal-open"); // ⬅️ ADD HERE
 		if (backdrop) backdrop.classList.remove("open");
 	};
+	
 
 	// Delegate clicks for dynamic buttons
 	document.addEventListener("click", function (e) {
