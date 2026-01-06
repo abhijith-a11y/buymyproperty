@@ -959,6 +959,66 @@ function initThreeStepSwiper() {
 }
 
 // =============================================================================
+// HOW IT WORKS (MOBILE) SLIDER
+// =============================================================================
+let howItWorksMobileSwiper = null;
+
+function initializeHowItWorksMobileSwiper() {
+	const swiperContainer = document.querySelector(".how-it-works-swiper");
+
+	if (!swiperContainer) {
+		return;
+	}
+
+	const shouldEnable = window.matchMedia("(max-width: 767px)").matches;
+
+	if (shouldEnable) {
+		if (howItWorksMobileSwiper) {
+			return;
+		}
+
+		if (typeof Swiper === "undefined") {
+			console.log("❌ Swiper not available for How It Works mobile slider");
+			return;
+		}
+
+		howItWorksMobileSwiper = new Swiper(swiperContainer, {
+			slidesPerView: 1,
+			spaceBetween: 18,
+			autoHeight: true,
+			navigation: {
+				nextEl: ".how-it-works-next",
+				prevEl: ".how-it-works-prev",
+			},
+			pagination: {
+				el: ".how-it-works-pagination",
+				clickable: true,
+			},
+		});
+
+		return;
+	}
+
+	if (howItWorksMobileSwiper) {
+		howItWorksMobileSwiper.destroy(true, true);
+		howItWorksMobileSwiper = null;
+		resetHowItWorksMobileStyles(swiperContainer);
+	}
+}
+
+function resetHowItWorksMobileStyles(container) {
+	const wrapper = container.querySelector(".swiper-wrapper");
+
+	if (wrapper) {
+		wrapper.removeAttribute("style");
+	}
+
+	container.querySelectorAll(".swiper-slide").forEach((slide) => {
+		slide.removeAttribute("style");
+	});
+}
+
+// =============================================================================
 // MARQUEE SLIDER FUNCTIONALITY
 // =============================================================================
 
@@ -1437,6 +1497,95 @@ function initializeBuiltOnTrustAnimation() {
 }
 
 // =============================================================================
+// HOW IT WORKS SWIPER FUNCTIONALITY (Mobile only - below 768px)
+// =============================================================================
+
+function initializeHowItWorksSwiper() {
+	const howItWorksSwiper = document.querySelector(".how-it-works-swiper");
+
+	if (!howItWorksSwiper) {
+		console.log("How It Works swiper not found on this page");
+		return;
+	}
+
+	// Check if Swiper is available
+	if (typeof Swiper !== "undefined") {
+		initHowItWorksSwiper();
+	} else {
+		console.log("❌ Swiper not available for How It Works swiper");
+	}
+}
+
+function initHowItWorksSwiper() {
+	const howItWorksSwiper = document.querySelector(".how-it-works-swiper");
+
+	if (!howItWorksSwiper) {
+		return;
+	}
+
+	// Handle responsive show/hide function
+	function handleHowItWorksResponsive() {
+		const desktopLayout = document.querySelector(".how-it-works-desktop");
+		const mobileLayout = document.querySelector(".how-it-works-mobile");
+		const isMobile = window.innerWidth < 768;
+
+		if (desktopLayout && mobileLayout) {
+			if (isMobile) {
+				desktopLayout.style.display = "none";
+				mobileLayout.style.display = "block";
+			} else {
+				desktopLayout.style.display = "flex";
+				mobileLayout.style.display = "none";
+			}
+		}
+	}
+
+	// Initial responsive check
+	handleHowItWorksResponsive();
+
+	// Initialize Swiper (will only be visible on mobile via CSS)
+	let swiper = null;
+
+	if (window.innerWidth < 768) {
+		swiper = new Swiper(howItWorksSwiper, {
+			slidesPerView: 1,
+			spaceBetween: 20,
+			loop: true,
+			speed: 600,
+			grabCursor: true,
+			centeredSlides: true,
+			autoplay: {
+				delay: 5000,
+				disableOnInteraction: false,
+				pauseOnMouseEnter: true,
+			},
+			navigation: {
+				nextEl: ".how-it-works-next",
+				prevEl: ".how-it-works-prev",
+			},
+			pagination: {
+				el: ".how-it-works-pagination",
+				clickable: true,
+				dynamicBullets: true,
+			},
+		});
+		console.log("✅ How It Works swiper initialized for mobile");
+	}
+
+	// Handle window resize to show/hide desktop vs mobile layout
+	let resizeTimer;
+	window.addEventListener("resize", function () {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function () {
+			handleHowItWorksResponsive();
+			if (window.innerWidth < 768 && swiper) {
+				swiper.update();
+			}
+		}, 250);
+	});
+}
+
+// =============================================================================
 // MADE DIFFERENCE SLIDER FUNCTIONALITY
 // =============================================================================
 
@@ -1608,6 +1757,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	initializeThreeStepSlider();
 	initializeMarqueeSlider();
 	initializePropertyTypesSlider();
+	initializeHowItWorksSwiper();
 	initializeMadeDifferenceSlider();
 	initializeBuiltOnTrustAnimation();
 	initializeHeroSection();
@@ -1632,7 +1782,6 @@ function initializeCareerApplyModal() {
 		document.body.classList.add("modal-open"); // ⬅️ ADD HERE
 		if (backdrop) backdrop.classList.add("open");
 	};
-	
 
 	const closeModal = (e) => {
 		if (e) e.preventDefault();
@@ -1640,7 +1789,6 @@ function initializeCareerApplyModal() {
 		document.body.classList.remove("modal-open"); // ⬅️ ADD HERE
 		if (backdrop) backdrop.classList.remove("open");
 	};
-	
 
 	// Delegate clicks for dynamic buttons
 	document.addEventListener("click", function (e) {

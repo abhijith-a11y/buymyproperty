@@ -2720,7 +2720,6 @@ p {
 					width: 780px;
 					position: relative;
 
-					
 					img {
 						opacity: 1;
 					}
@@ -3378,12 +3377,150 @@ p {
 		}
 	}
 
+	// Responsive Layout Control
+	.how-it-works-desktop {
+		display: flex;
+
+		@media (max-width: 767px) {
+			display: none !important;
+		}
+	}
+
+	.how-it-works-mobile {
+		display: none;
+
+		@media (max-width: 767px) {
+			display: block;
+		}
+	}
+
+	.how-it-works-swiper-container {
+		width: 100%;
+		position: relative;
+
+		.how-it-works-swiper {
+			overflow: hidden;
+		}
+
+		.swiper-wrapper {
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.swiper-slide {
+			display: flex;
+			height: auto;
+			justify-content: center;
+			align-items: stretch;
+
+			.how-it-works-card {
+				width: 100%;
+				max-width: 100%;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+			}
+		}
+
+		.how-it-works-pagination {
+			display: none;
+		}
+
+		.swiper-button-prev,
+		.swiper-button-next {
+			display: none;
+		}
+
+		@media (max-width: 767px) {
+			padding: 0 12px;
+
+			.swiper-slide {
+				width: 100%;
+				padding: 0;
+				display: flex;
+				height: auto;
+				justify-content: center;
+				align-items: stretch;
+
+				.how-it-works-card {
+					width: 100%;
+					max-width: 100%;
+					margin: 0;
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
+			.how-it-works-pagination {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+				margin-top: 16px;
+				position: relative;
+				bottom: auto;
+			}
+
+			.swiper-button-prev,
+			.swiper-button-next {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				border: 1px solid var(--color-primary);
+				color: var(--color-primary);
+				background: #fff;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+				top: auto;
+				bottom: auto;
+				margin-top: 0;
+
+				&::after {
+					display: none;
+				}
+
+				svg {
+					width: 15px;
+					height: 15px;
+				}
+			}
+
+			.swiper-button-prev {
+				left: calc(50% - 60px);
+			}
+
+			.swiper-button-next {
+				right: calc(50% - 60px);
+			}
+
+			.swiper-pagination-bullet {
+				width: 8px;
+				height: 8px;
+				background: var(--color-primary);
+				opacity: 0.3;
+				margin: 0 4px;
+				transition: all 0.3s ease;
+			}
+
+			.swiper-pagination-bullet-active {
+				opacity: 1;
+				width: 24px;
+				border-radius: 4px;
+			}
+		}
+	}
+
 	.how-it-works-cards-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		position: relative; // Required for GSAP stacking animation
+	}
 
+	// Apply card styles to both desktop and mobile containers
+	.how-it-works-cards-container,
+	.how-it-works-swiper-container {
 		.how-it-works-card {
 			width: 100%;
 			background: white;
@@ -3611,6 +3748,92 @@ p {
 		}
 	}
 
+	// Swiper Container Styles (Mobile only)
+	.how-it-works-swiper-container {
+		position: relative;
+		padding: 0 0 50px 0;
+		width: 100%;
+
+		.how-it-works-swiper {
+			overflow: visible;
+			padding-bottom: 50px;
+
+			.swiper-wrapper {
+				align-items: stretch;
+			}
+
+			.swiper-slide {
+				height: auto;
+				display: flex;
+				justify-content: center;
+				padding: 0 10px;
+
+				.how-it-works-card {
+					width: 100%;
+					max-width: 100%;
+					margin: 0;
+				}
+			}
+		}
+
+		// Navigation Buttons
+		.swiper-button-prev,
+		.swiper-button-next {
+			width: 40px;
+			height: 40px;
+			background: var(--color-primary);
+			border-radius: 50%;
+			color: #fff;
+			top: auto;
+			bottom: 0;
+			margin-top: 0;
+			transition: all 0.3s ease;
+
+			&::after {
+				display: none;
+			}
+
+			svg {
+				width: 15px;
+				height: 15px;
+			}
+
+			&.swiper-button-disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+		}
+
+		.swiper-button-prev {
+			left: calc(50% - 60px);
+		}
+
+		.swiper-button-next {
+			right: calc(50% - 60px);
+		}
+
+		// Pagination
+		.swiper-pagination {
+			bottom: 10px;
+			position: absolute;
+
+			.swiper-pagination-bullet {
+				width: 8px;
+				height: 8px;
+				background: var(--color-primary);
+				opacity: 0.3;
+				margin: 0 4px;
+				transition: all 0.3s ease;
+
+				&.swiper-pagination-bullet-active {
+					opacity: 1;
+					width: 24px;
+					border-radius: 4px;
+				}
+			}
+		}
+	}
+
 	// Animation support styles for GSAP stacking
 	.three_step_process_for_sellers {
 		&.pinned {
@@ -3646,6 +3869,13 @@ p {
 
 		// Responsive Design
 		@media (max-width: 768px) {
+			.how-it-works-mobile {
+				.how-it-works-card {
+					margin: 0;
+					// Inherit all desktop styles, only override layout
+				}
+			}
+
 			.how-it-works-card {
 				max-width: 100%;
 				margin: 0 20px;
@@ -3659,22 +3889,26 @@ p {
 			}
 
 			.card-top-section {
-				padding: 20px 25px 15px 25px;
+				// Keep desktop padding and styles, only adjust for mobile layout
+				padding: 3px 10px 0 32px;
 				flex-direction: column;
 				align-items: flex-start;
 				gap: 15px;
 
 				.step-number {
-					font-size: 36px;
+					// Use desktop responsive size for 768px
+					font-size: 60px;
 
 					&::before {
-						top: -12px;
-						font-size: 10px;
+						top: 0;
+						font-size: 12px;
 					}
 				}
 
 				.card-main-title {
-					font-size: 24px;
+					// Use desktop responsive size for 768px
+					font-size: 16px;
+					line-height: 24px;
 					padding-bottom: 10px;
 				}
 			}
@@ -3682,26 +3916,46 @@ p {
 			.card-bottom-section {
 				flex-direction: column;
 				min-height: auto;
+				height: auto;
+				margin-top: 15px;
+				gap: 20px;
 			}
 
 			.card-content {
 				width: 100%;
-				padding: 25px;
+				padding: 25px 20px;
+				max-width: none;
 
 				.card-title {
-					font-size: 20px;
+					// Use desktop responsive size for 768px
+					font-size: 28px;
+					line-height: 36px;
+					margin: 0 0 15px 0;
 				}
 
 				.card-description {
-					font-size: 14px;
-					margin-bottom: 25px;
+					// Use desktop mixin and responsive size
+					@include text-body-large-medium;
+					line-height: 150%;
+					color: var(--color-text-light);
+					margin: 0 0 15px 0;
 				}
 			}
 
 			.card-image {
 				width: 100%;
-				height: 250px;
+				height: 200px; // Controlled height for mobile
 				order: -1; // Move image to top on mobile
+				border-radius: 20px;
+				overflow: hidden;
+				flex-shrink: 0;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: block;
+				}
 			}
 		}
 
