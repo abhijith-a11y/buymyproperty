@@ -986,14 +986,9 @@ function initializeHowItWorksMobileSwiper() {
 			slidesPerView: 1,
 			spaceBetween: 18,
 			autoHeight: true,
-			navigation: {
-				nextEl: ".how-it-works-next",
-				prevEl: ".how-it-works-prev",
-			},
-			pagination: {
-				el: ".how-it-works-pagination",
-				clickable: true,
-			},
+			// No navigation or pagination on mobile - swipe only
+			navigation: false,
+			pagination: false,
 		});
 
 		return;
@@ -1545,7 +1540,7 @@ function initHowItWorksSwiper() {
 
 	// Initialize Swiper (will only be visible on mobile via CSS)
 	let swiper = null;
-
+	
 	if (window.innerWidth < 768) {
 		swiper = new Swiper(howItWorksSwiper, {
 			slidesPerView: 1,
@@ -1554,22 +1549,11 @@ function initHowItWorksSwiper() {
 			speed: 600,
 			grabCursor: true,
 			centeredSlides: true,
-			autoplay: {
-				delay: 5000,
-				disableOnInteraction: false,
-				pauseOnMouseEnter: true,
-			},
-			navigation: {
-				nextEl: ".how-it-works-next",
-				prevEl: ".how-it-works-prev",
-			},
-			pagination: {
-				el: ".how-it-works-pagination",
-				clickable: true,
-				dynamicBullets: true,
-			},
+			// No navigation or pagination on mobile - swipe only
+			navigation: false,
+			pagination: false,
 		});
-		console.log("✅ How It Works swiper initialized for mobile");
+		console.log("✅ How It Works swiper initialized for mobile (swipe only)");
 	}
 
 	// Handle window resize to show/hide desktop vs mobile layout

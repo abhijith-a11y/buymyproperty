@@ -35,6 +35,12 @@
         return false;
       }
 
+      // Disable GSAP animation below 768px (mobile uses Swiper instead)
+      if (window.innerWidth < 768) {
+        log('📱 Mobile view detected - GSAP animation disabled (using Swiper)');
+        return false;
+      }
+
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
         log('❌ GSAP or ScrollTrigger not available for How It Works animation');
         return false;
@@ -134,14 +140,46 @@
   }
 
   function initializeHowItWorksAnimation() {
+    // Disable on mobile - check window width
+    if (window.innerWidth < 768) {
+      return false;
+    }
+
     // Safeguard DOM readiness
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => new HowItWorksAnimation());
+      document.addEventListener('DOMContentLoaded', () => {
+        // Check again after DOM loads in case window was resized
+        if (window.innerWidth >= 768) {
+          new HowItWorksAnimation();
+        }
+      });
     } else {
-      new HowItWorksAnimation();
+      if (window.innerWidth >= 768) {
+        new HowItWorksAnimation();
+      }
     }
     return true;
   }
+
+  // Handle window resize - disable/enable GSAP based on screen size
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (window.innerWidth < 768) {
+        // Destroy any existing ScrollTriggers on mobile
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.getAll().forEach(trigger => {
+            if (trigger.vars && trigger.vars.trigger && 
+                trigger.vars.trigger.classList && 
+                trigger.vars.trigger.classList.contains('three_step_process_for_sellers')) {
+              trigger.kill();
+            }
+          });
+        }
+      }
+    }, 250);
+  });
 
   // Auto-initialize
   initializeHowItWorksAnimation();
