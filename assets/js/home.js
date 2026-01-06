@@ -1045,7 +1045,9 @@ function initMarqueeSwiper() {
 		slidesPerView: "auto",
 		spaceBetween: 0,
 		loop: true,
-		speed: 1000,
+		loopAdditionalSlides: 2,
+		loopedSlides: 3,
+		speed: 15000, // Uniform speed for all devices (15 seconds)
 		autoplay: {
 			delay: 0,
 			disableOnInteraction: false,
@@ -1053,51 +1055,36 @@ function initMarqueeSwiper() {
 			reverseDirection: false,
 		},
 		freeMode: {
-			enabled: true,
+			enabled: false,
 			momentum: false,
 		},
 		grabCursor: false,
 		allowTouchMove: false,
 		simulateTouch: false,
 		resistance: false,
-		watchSlidesProgress: false,
-		watchSlidesVisibility: false,
-
-		// Responsive speed adjustments
-		breakpoints: {
-			0: {
-				speed: 9000,
-			},
-			768: {
-				speed: 10000,
-			},
-			1200: {
-				speed: 20000,
-			},
-		},
+		watchSlidesProgress: true,
+		watchSlidesVisibility: true,
 
 		// Ensure smooth continuous movement
 		on: {
 			init: function () {
-				// Set initial state for smooth marquee
-				this.setTranslate(0);
 				// Add CSS class for additional styling
 				marqueeSwiper.classList.add("marquee-initialized");
 				// Ensure autoplay starts
 				if (this.autoplay && this.autoplay.running === false) {
 					this.autoplay.start();
 				}
-			},
-
-			slideChange: function () {
-				// Maintain continuous movement
-				if (this.realIndex === 0) {
-					this.setTranslate(0);
-				}
+				// Set linear timing for smooth movement
+				this.wrapperEl.style.transitionTimingFunction = "linear";
 			},
 
 			transitionStart: function () {
-				// Ensure smooth transitions
+				// Ensure smooth transitions with linear timing
+				this.wrapperEl.style.transitionTimingFunction = "linear";
+			},
+			
+			transitionEnd: function () {
+				// Maintain linear timing after transition
 				this.wrapperEl.style.transitionTimingFunction = "linear";
 			},
 		},

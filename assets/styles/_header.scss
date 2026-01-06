@@ -365,6 +365,14 @@
 			list-style: none;
 			margin-bottom: 204px;
 
+			@media #{$media-820} {
+				padding-top: 50px;
+			}
+
+			@media #{$media-480} {
+				padding-top: 60px;
+			}
+
 			@media #{$media-1440} {
 				margin-bottom: 50px;
 			}
@@ -590,9 +598,7 @@
 			}
 		}
 
-		@media #{$media-820} {
-			padding-top: 50px;
-		}
+		
 	}
 
 	.right-section {

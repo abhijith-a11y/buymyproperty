@@ -494,7 +494,7 @@
 		height: 100%;
 
 		.swiper-wrapper {
-			transition-timing-function: linear;
+			transition-timing-function: linear !important;
 			align-items: center;
 			will-change: transform;
 		}
@@ -538,18 +538,18 @@
 
 	.marquee-text {
 		font-family: "Montserrat", sans-serif;
-		font-size: 16px;
+		font-size: 12px !important; // Default to 12px for mobile
 		font-weight: 500;
 		color: white;
 		white-space: nowrap;
-		line-height: 26px;
+		line-height: 1.5;
 
-		@media #{$media-1440} {
-			font-size: 14px;
+		@media (min-width: 821px) {
+			font-size: 14px !important;
 		}
 
-		@media #{$media-820} {
-			font-size: 12px;
+		@media (min-width: 1441px) {
+			font-size: 16px !important;
 		}
 	}
 
@@ -559,10 +559,14 @@
 
 	.marquee-separator {
 		font-family: "Poppins", sans-serif;
-		font-size: 16px;
+		font-size: 12px !important; // Match text size on mobile
 		font-weight: 300;
 		color: rgba(255, 255, 255, 0.7);
 		margin: 0 15px;
+
+		@media (min-width: 821px) {
+			font-size: 16px !important;
+		}
 	}
 
 	// Responsive Design
@@ -604,11 +608,12 @@
 
 	@media (max-width: 480px) {
 		.marquee-text {
-			font-size: 12px;
+			font-size: 12px !important;
+			line-height: 1.5 !important;
 		}
 
 		.marquee-separator {
-			font-size: 12px;
+			font-size: 12px !important;
 			margin: 0 6px;
 		}
 
@@ -3178,7 +3183,6 @@ p {
 
 					.swiper-button-prev {
 						left: calc(50% - 60px);
-
 
 						svg {
 							transform: rotate(180deg);
