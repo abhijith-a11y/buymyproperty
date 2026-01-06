@@ -1812,6 +1812,10 @@ function initInteractiveSliderSwiper() {
 			speed: 600,
 			grabCursor: true,
 			centeredSlides: true,
+			navigation: {
+				nextEl: ".interactive-slider-next",
+				prevEl: ".interactive-slider-prev",
+			},
 			// No pagination on mobile
 			pagination: false,
 		});
@@ -1841,6 +1845,10 @@ function initInteractiveSliderSwiper() {
 					speed: 600,
 					grabCursor: true,
 					centeredSlides: true,
+					navigation: {
+						nextEl: ".interactive-slider-next",
+						prevEl: ".interactive-slider-prev",
+					},
 					// No pagination on mobile
 					pagination: false,
 				});

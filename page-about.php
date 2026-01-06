@@ -219,6 +219,24 @@ get_header(); ?>
                             <?php endforeach; ?>
                         </div>
 
+                        <!-- Navigation -->
+                        <div class="swiper-button-prev interactive-slider-prev">
+                            <svg width="15" height="15" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.88452 0.880798L9.19988 5.00001L4.88452 9.11922" stroke="currentColor"
+                                    stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M9.2 4.99994L0.800049 4.99994" stroke="currentColor" stroke-width="1.28571"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="swiper-button-next interactive-slider-next">
+                            <svg width="15" height="15" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.88452 0.880798L9.19988 5.00001L4.88452 9.11922" stroke="currentColor"
+                                    stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M9.2 4.99994L0.800049 4.99994" stroke="currentColor" stroke-width="1.28571"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+
                         <!-- Pagination -->
                         <div class="swiper-pagination interactive-slider-pagination"></div>
                     </div>
