@@ -2555,7 +2555,7 @@ p {
 		// Responsive Layout Control
 		.interactive-slider-desktop {
 			display: flex;
-			
+
 			@media (max-width: 1199px) {
 				display: none !important;
 			}
@@ -2563,7 +2563,7 @@ p {
 
 		.interactive-slider-mobile {
 			display: none;
-			
+
 			@media (max-width: 1199px) {
 				display: block;
 			}
@@ -2659,7 +2659,7 @@ p {
 			top: 0;
 			left: 0;
 			height: 521px;
-			border-radius: 20px ;
+			border-radius: 20px;
 			transition: all 1s ease-in-out;
 			cursor: pointer;
 			display: flex;
@@ -3023,81 +3023,100 @@ p {
 					overflow: hidden;
 					padding-bottom: 0;
 
-				.swiper-wrapper {
-					align-items: stretch;
-				}
+					.swiper-wrapper {
+						align-items: stretch;
+					}
 
-				.swiper-slide {
-					height: auto;
-					display: flex;
-					justify-content: center;
-
-					.mobile-slide-card {
-						width: 100%;
-						max-width: 100%;
-						background: white;
-						border-radius: 20px;
-						overflow: hidden;
+					.swiper-slide {
+						height: auto;
 						display: flex;
-						flex-direction: column;
-					}
+						justify-content: center;
 
-					.mobile-slide-image {
-						position: relative;
-						width: 60%;
-						height: 400px;
-						overflow: hidden;
-
-						img {
+						.mobile-slide-card {
 							width: 100%;
-							height: 100%;
-							object-fit: cover;
-						}
-
-						.slide-number-badge {
-							position: absolute;
-							bottom: 20px;
-							right: 20px;
-							width: 120px;
-							height: 120px;
-							background-image: url("../images/about/white_shape.png");
-							background-size: contain;
-							background-repeat: no-repeat;
-							background-position: center;
-							color: var(--color-primary);
+							max-width: 100%;
+							background: white;
+							border-radius: 20px;
+							overflow: hidden;
 							display: flex;
-							align-items: center;
+							flex-direction: row;
+							align-items: stretch;
+						}
+
+						.mobile-slide-image {
+							position: relative;
+							width: 60%;
+							height: 400px;
+							overflow: hidden;
+							flex-shrink: 0;
+							border-radius: 20px;
+
+							img {
+								width: 100%;
+								height: 100%;
+								object-fit: cover;
+							}
+
+							.slide-number-badge {
+								display: none;
+							}
+						}
+
+						.mobile-slide-content {
+							flex: 1;
+							padding: 40px 30px;
+							display: flex;
+							flex-direction: column;
 							justify-content: center;
-							font-family: "Montserrat", sans-serif;
-							font-size: 50px;
-							font-weight: 300;
-							line-height: 1;
-							z-index: 10;
+							text-align: left;
+
+							.mobile-slide-title {
+								font-family: "Gotham", sans-serif;
+								font-size: 24px;
+								font-weight: 600;
+								color: var(--color-primary);
+								margin: 0 0 15px 0;
+								line-height: 1.3;
+							}
+
+							.mobile-slide-description {
+								font-family: "Montserrat", sans-serif;
+								font-size: 16px;
+								line-height: 150%;
+								color: var(--color-text-light);
+								margin: 0;
+							}
+						}
+
+						// Below 768px: Text on top, image on bottom, both full width
+						@media (max-width: 768px) {
+							.mobile-slide-card {
+								flex-direction: column-reverse;
+							}
+
+							.mobile-slide-image {
+								width: 100%;
+								height: 350px;
+								order: 2;
+							}
+
+							.mobile-slide-content {
+								width: 100%;
+								padding: 30px 20px;
+								text-align: center;
+								order: 1;
+
+								.mobile-slide-title {
+									font-size: 22px;
+									margin-bottom: 12px;
+								}
+
+								.mobile-slide-description {
+									font-size: 15px;
+								}
+							}
 						}
 					}
-
-					.mobile-slide-content {
-						padding: 25px 20px 30px 20px;
-						text-align: center;
-
-						.mobile-slide-title {
-							font-family: "Gotham", sans-serif;
-							font-size: 22px;
-							font-weight: 600;
-							color: var(--color-primary);
-							margin: 0 0 12px 0;
-							line-height: 1.3;
-						}
-
-						.mobile-slide-description {
-							font-family: "Montserrat", sans-serif;
-							font-size: 15px;
-							line-height: 150%;
-							color: var(--color-text-light);
-							margin: 0;
-						}
-					}
-				}
 
 					// Pagination - Hidden on mobile
 					.swiper-pagination {
