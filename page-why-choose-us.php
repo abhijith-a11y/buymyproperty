@@ -147,6 +147,7 @@ get_header();
             </div>
 
             <!-- Right Side Statistics -->
+            <div class="trust_content_overlay_container">
             <div class="trust_right_content">
                 <?php if( have_rows('statistics') ): $i = 1; ?>
                     <?php while( have_rows('statistics') ): the_row(); 
@@ -168,6 +169,7 @@ get_header();
                         </div>
                     <?php $i++; endwhile; ?>
                 <?php endif; ?>
+            </div>
             </div>
         </div>
     </div>

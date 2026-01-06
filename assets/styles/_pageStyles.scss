@@ -6656,6 +6656,7 @@ p {
 		}
 	}
 
+
 	// Content Overlay
 	.trust_content_overlay {
 		position: relative;
@@ -6687,6 +6688,7 @@ p {
 	.trust_left_content {
 		flex: 1;
 		max-width: 453px;
+		min-width: 250px;
 
 		@media #{$media-768} {
 			max-width: 100%;
@@ -6718,6 +6720,14 @@ p {
 			.trust_description {
 				@include text-para-white;
 			}
+		}
+	}
+
+	.trust_content_overlay_container {
+		overflow: visible;
+
+		@media #{$media-768} {
+			overflow: hidden;
 		}
 	}
 
@@ -6781,16 +6791,16 @@ p {
 					}
 
 					@media #{$media-1200} {
-						font-size: 65px;
+						font-size: 50px;
 						line-height: 100%;
 					}
 
-					@media #{$media-768} {
-						font-size: 56px;
+					@media #{$media-820} {
+						font-size: 45px;
 					}
 
 					@media #{$media-480} {
-						font-size: 48px;
+						font-size: 40px;
 					}
 				}
 			}
