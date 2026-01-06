@@ -172,6 +172,11 @@ get_header(); ?>
                                                     alt="<?php echo esc_attr($slide['alt']); ?>" loading="lazy">
                                             <?php endif; ?>
                                         <?php endif; ?>
+
+                                        <!-- Bottom-right number badge on image -->
+                                        <div class="slide-number-badge">
+                                            <?php echo sprintf('%02d', $slide['id']); ?>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
