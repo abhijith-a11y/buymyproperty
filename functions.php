@@ -171,8 +171,41 @@ function buy_my_property_scripts()
 
     // Pass theme URL to JavaScript for dynamic imports
     wp_add_inline_script('buy-my-property-main', 'window.yakultThemeUrl = "' . get_template_directory_uri() . '";', 'before');
+    wp_enqueue_script(
+        'bmp-navigation', 
+        get_template_directory_uri() . '/assets/js/navigation.js', 
+        array(), 
+        '1.0', 
+        true // This 'true' tells WordPress to load the script in the FOOTER
+    );
 }
 add_action('wp_enqueue_scripts', 'buy_my_property_scripts');
+
+/**
+ * Enqueue Choices.js scripts and styles (replacement for SumoSelect)
+ */
+function enqueue_choices_js()
+{
+    if (is_page() || is_single()) {
+        // Choices.js CSS
+        wp_enqueue_style(
+            'choices-css',
+            'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css',
+            array(),
+            '10.2.0'
+        );
+
+        // Choices.js JavaScript
+        wp_enqueue_script(
+            'choices-js',
+            'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js',
+            array(),
+            '10.2.0',
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_choices_js');
 
 /**
  * Display inner banner component
@@ -435,67 +468,6 @@ function force_cf7_reset_script() {
 }
 add_action('wp_footer', 'force_cf7_reset_script');
 
-function enqueue_sumoselect_for_cf7()
-{
-    if (is_page() || is_single()) {
-        // Default SumoSelect CSS
-        wp_enqueue_style(
-            'sumoselect-css',
-            'https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.4.6/sumoselect.min.css',
-            array(),
-            '3.4.6'
-        );
-
-        // YOUR CUSTOM CSS - ENQUEUE AFTER DEFAULT
-        wp_enqueue_style(
-            'sumoselect-custom-css',
-            get_template_directory_uri() . '/assets/styles/sumoselect-custom.css',
-            array('sumoselect-css'), // Depends on default CSS
-            '1.0.0'
-        );
-
-        wp_enqueue_script('jquery');
-
-        wp_enqueue_script(
-            'sumoselect-js',
-            'https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.4.6/jquery.sumoselect.min.js',
-            array('jquery'),
-            '3.4.6',
-            true
-        );
-
-        wp_add_inline_script('sumoselect-js', "
-            jQuery(document).ready(function($) {
-                function initSumoSelect() {        
-                    $('form select').each(function() {
-                        if (!$(this).hasClass('SumoUnder')) {
-                            $(this).SumoSelect({
-                                placeholder: $(this).find('option:first').text() || 'Select an option',
-                                search: false,
-                                searchText: 'Search...',
-                                noMatch: 'No matches found',
-                                csvDispCount: 1
-                            });
-                        }
-                    });
-                }
-
-                initSumoSelect();
-
-                document.addEventListener('wpcf7mailsent', function() {
-                    initSumoSelect();
-                });
-                document.addEventListener('wpcf7invalid', function() {
-                    initSumoSelect();
-                });
-                document.addEventListener('wpcf7submit', function() {
-                    initSumoSelect();
-                });
-            });
-        ");
-    }
-}
-add_action('wp_enqueue_scripts', 'enqueue_sumoselect_for_cf7');
 
 
 // function for removing unwanted br and p tag
@@ -1085,3 +1057,4 @@ function property_form_inline_script()
     </style>
     <?php
 }
+

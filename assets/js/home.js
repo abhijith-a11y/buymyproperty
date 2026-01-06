@@ -594,7 +594,14 @@ function initTestimonialsSwiper() {
 		slidesPerView: 3.5,
 		centeredSlides: false,
 		spaceBetween: 16,
-		loop: false, // Disable Swiper's loop, we'll handle duplication manually
+		loop: true,
+		loopedSlides: 4,
+		// Disable Swiper's loop, we'll handle duplication manually
+		autoplay: {
+			delay: 1500,
+			disableOnInteraction: false,
+			pauseOnMouseEnter: true,
+		},
 		navigation: {
 			nextEl: ".testimonials-next",
 			prevEl: ".testimonials-prev",
@@ -617,65 +624,62 @@ function initTestimonialsSwiper() {
 				spaceBetween: 16,
 			},
 		},
-		effect: "slide",
-		grabCursor: true,
-		watchSlidesProgress: true,
-		watchSlidesVisibility: true,
-		allowTouchMove: false,
-		on: {
-			init: function () {
-				// Override Swiper's setTranslate to allow CSS animation
-				const wrapper = this.wrapperEl;
-				const swiper = this;
+		// effect: "slide",
+		// grabCursor: true,
+		// watchSlidesProgress: true,
+		// watchSlidesVisibility: true,
+		// allowTouchMove: false,
+		// on: {
+		// 	init: function () {
+		// 		// Override Swiper's setTranslate to allow CSS animation
+		// 		const wrapper = this.wrapperEl;
+		// 		const swiper = this;
 
-				// Get all original slides
-				const originalSlides = Array.from(this.slides);
+		// 		// Get all original slides
+		// 		const originalSlides = Array.from(this.slides);
 
-				// Wait for layout to calculate proper widths
-				setTimeout(() => {
-					// Calculate the width of one complete set of original slides
-					let originalSetWidth = 0;
-					originalSlides.forEach((slide) => {
-						const slideWidth = slide.offsetWidth;
-						const spaceBetween = swiper.params.spaceBetween || 0;
-						originalSetWidth += slideWidth + spaceBetween;
-					});
+		// 		// Wait for layout to calculate proper widths
+		// 		setTimeout(() => {
+		// 			// Calculate the width of one complete set of original slides
+		// 			let originalSetWidth = 0;
+		// 			originalSlides.forEach((slide) => {
+		// 				const slideWidth = slide.offsetWidth;
+		// 				const spaceBetween = swiper.params.spaceBetween || 0;
+		// 				originalSetWidth += slideWidth + spaceBetween;
+		// 			});
 
-					// Duplicate slides multiple times for seamless infinite loop
-					// Create 3-4 complete sets total for smooth continuous scrolling
-					const totalSets = 4; // original + 3 duplicates = 4 sets
+		// 			// Duplicate slides multiple times for seamless infinite loop
+		// 			// Create 3-4 complete sets total for smooth continuous scrolling
+		// 			const totalSets = 4; // original + 3 duplicates = 4 sets
 
-					// Clone and append original slides multiple times
-					for (let i = 0; i < totalSets - 1; i++) {
-						originalSlides.forEach((slide) => {
-							const clone = slide.cloneNode(true);
-							clone.classList.add("swiper-slide-duplicate-custom");
-							wrapper.appendChild(clone);
-						});
-					}
+		// 			// Clone and append original slides multiple times
+		// 			for (let i = 0; i < totalSets - 1; i++) {
+		// 				originalSlides.forEach((slide) => {
+		// 					const clone = slide.cloneNode(true);
+		// 					clone.classList.add("swiper-slide-duplicate-custom");
+		// 					wrapper.appendChild(clone);
+		// 				});
+		// 			}
 
-					// Override setTranslate to prevent Swiper from managing transforms
-					swiper.setTranslate = function (translate) {
-						// Don't apply Swiper's transform, let CSS animation handle it
-						return;
-					};
+		// 			// Override setTranslate to prevent Swiper from managing transforms
+		// 			// swiper.setTranslate = function (translate) {
+		// 			// 	return;
+		// 			// };
 
-					// Set CSS custom property with exact width of one set
-					// This ensures seamless loop - animation now starts at negative position
-					// and moves to 0, creating reverse direction
-					wrapper.style.setProperty(
-						"--slide-set-width",
-						`-${originalSetWidth}px`
-					);
+		// 			// Set CSS custom property with exact width of one set
+		// 			// This ensures seamless loop - animation now starts at negative position
+		// 			// and moves to 0, creating reverse direction
+		// 			// wrapper.style.setProperty(
+		// 			// 	"--slide-set-width",
+		// 			// 	`-${originalSetWidth}px`
+		// 			// );
 
-					// Mark wrapper as initialized and enable CSS animation
-					wrapper.classList.add("swiper-wrapper-initialized");
+		// 			// wrapper.classList.add("swiper-wrapper-initialized");
 
-					// Set initial position to match reversed animation start (negative position)
-					wrapper.style.transform = `translateX(${-originalSetWidth}px)`;
-				}, 100);
-			},
-		},
+		// 			// wrapper.style.transform = `translateX(${-originalSetWidth}px)`;
+		// 		}, 100);
+		// 	},
+		// },
 	});
 
 	console.log("✅ Testimonials slider initialized with Swiper");
@@ -1047,7 +1051,7 @@ function initMarqueeSwiper() {
 		loop: true,
 		loopAdditionalSlides: 2,
 		loopedSlides: 3,
-		speed: 15000, // Uniform speed for all devices (15 seconds)
+		speed: 30000, // Uniform speed for all devices (15 seconds)
 		autoplay: {
 			delay: 0,
 			disableOnInteraction: false,

@@ -21,7 +21,7 @@
                 <div class="validation-error" style="color:red;display:none;font-size:12px;"></div>
             </div>
             <div class="form-group">
-                <select name="emirate" required>
+                <select name="emirate" class="select_box" required>
                     <option value="" selected disabled>Emirate</option>
                     <option value="dubai">Dubai</option>
                     <option value="abu-dhabi">Abu Dhabi</option>

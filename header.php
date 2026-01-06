@@ -265,14 +265,23 @@
                                 $is_dropdown = get_sub_field('is_drop_down');
                                 ?>
                                 <li class="nav-item <?php echo $is_dropdown ? 'has-dropdown' : ''; ?>">
-                                    <a href="<?php echo esc_url($menu_link['url']); ?>" class="nav-link">
+                                    <!-- <a href="<?php echo esc_url($menu_link['url']); ?>" class="nav-link">
+                                        <span class="nav-text <?php echo $is_dropdown ? 'arrow' : ''; ?>">
+                                            <?php //echo esc_html($menu_link['title']); ?>
+                                        </span>
+                                        <span class="nav-number">
+                                            <?php //echo sprintf('%02d', $count); ?>.
+                                        </span>
+                                    </a> -->
+
+                                    <div class="nav-link" data-url="<?php echo esc_url($menu_link['url']); ?>">
                                         <span class="nav-text <?php echo $is_dropdown ? 'arrow' : ''; ?>">
                                             <?php echo esc_html($menu_link['title']); ?>
                                         </span>
                                         <span class="nav-number">
                                             <?php echo sprintf('%02d', $count); ?>.
                                         </span>
-                                    </a>
+                                    </div>
 
                                     <?php if ($is_dropdown && have_rows('h_sub_menus')): ?>
                                         <div class="submenu">

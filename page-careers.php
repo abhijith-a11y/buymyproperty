@@ -217,18 +217,21 @@ get_header();
 		}, false);
 	});
 
-	// Initialize SumoSelect for careers sort dropdown
-	jQuery(document).ready(function ($) {
-		if ($('#careers-sort').length && typeof $.fn.SumoSelect !== 'undefined') {
-			$('#careers-sort').SumoSelect({
-				placeholder: 'Newest First',
-				search: false,
-				csvDispCount: 1
+	// Initialize Choices.js for careers sort dropdown
+	document.addEventListener('DOMContentLoaded', function() {
+		var careersSort = document.getElementById('careers-sort');
+		if (careersSort && typeof Choices !== 'undefined') {
+			var choices = new Choices(careersSort, {
+				placeholder: true,
+				placeholderValue: 'Newest First',
+				searchEnabled: false,
+				itemSelectText: '',
+				shouldSort: false
 			});
 
 			// Handle change event to redirect with sort parameter
-			$('#careers-sort').on('sumo:changed', function (evt, data) {
-				var sortValue = $(this).val();
+			careersSort.addEventListener('change', function() {
+				var sortValue = this.value;
 				var url = new URL(window.location.href);
 
 				if (sortValue) {
