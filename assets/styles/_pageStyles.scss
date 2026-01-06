@@ -8726,6 +8726,21 @@ body.modal-open {
 	background: white !important;
 	position: relative !important;
 	z-index: 900 !important;
+	min-height: 59px !important;
+	display: flex !important;
+	align-items: center !important;
+
+	@media #{$media-1440} {
+		min-height: 55px !important;
+	}
+
+	@media #{$media-820} {
+		min-height: 50px !important;
+	}
+
+	@media #{$media-480} {
+		min-height: 45px !important;
+	}
 }
 
 .choices__list--dropdown {
