@@ -1742,12 +1742,112 @@ document.addEventListener("DOMContentLoaded", function () {
 	initializeMarqueeSlider();
 	initializePropertyTypesSlider();
 	initializeHowItWorksSwiper();
+	initializeInteractiveSliderSwiper();
 	initializeMadeDifferenceSlider();
 	initializeBuiltOnTrustAnimation();
 	initializeHeroSection();
 	initializeCareerApplyModal();
 	customeDropdown();
 });
+
+// =============================================================================
+// INTERACTIVE SLIDER SWIPER FUNCTIONALITY (Mobile only - below 1200px)
+// =============================================================================
+
+function initializeInteractiveSliderSwiper() {
+	const interactiveSwiper = document.querySelector(
+		".interactive-slider-swiper"
+	);
+
+	if (!interactiveSwiper) {
+		console.log("Interactive slider swiper not found on this page");
+		return;
+	}
+
+	// Check if Swiper is available
+	if (typeof Swiper !== "undefined") {
+		initInteractiveSliderSwiper();
+	} else {
+		console.log("❌ Swiper not available for Interactive slider swiper");
+	}
+}
+
+function initInteractiveSliderSwiper() {
+	const interactiveSwiper = document.querySelector(
+		".interactive-slider-swiper"
+	);
+
+	if (!interactiveSwiper) {
+		return;
+	}
+
+	// Handle responsive show/hide function
+	function handleInteractiveSliderResponsive() {
+		const desktopLayout = document.querySelector(".interactive-slider-desktop");
+		const mobileLayout = document.querySelector(".interactive-slider-mobile");
+		const isMobile = window.innerWidth < 1200;
+
+		if (desktopLayout && mobileLayout) {
+			if (isMobile) {
+				desktopLayout.style.display = "none";
+				mobileLayout.style.display = "block";
+			} else {
+				desktopLayout.style.display = "flex";
+				mobileLayout.style.display = "none";
+			}
+		}
+	}
+
+	// Initial responsive check
+	handleInteractiveSliderResponsive();
+
+	// Initialize Swiper (will only be visible on mobile via CSS)
+	let swiper = null;
+
+	if (window.innerWidth < 1200) {
+		swiper = new Swiper(interactiveSwiper, {
+			slidesPerView: 1,
+			spaceBetween: 20,
+			loop: true,
+			speed: 600,
+			grabCursor: true,
+			centeredSlides: true,
+			// No pagination on mobile
+			pagination: false,
+		});
+		console.log("✅ Interactive slider swiper initialized for mobile");
+	}
+
+	// Handle window resize to show/hide desktop vs mobile layout
+	let resizeTimer;
+	window.addEventListener("resize", function () {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function () {
+			handleInteractiveSliderResponsive();
+			if (window.innerWidth < 1200 && swiper) {
+				swiper.update();
+			} else if (window.innerWidth >= 1200 && swiper) {
+				swiper.destroy(true, true);
+				swiper = null;
+			} else if (
+				window.innerWidth < 1200 &&
+				!swiper &&
+				typeof Swiper !== "undefined"
+			) {
+				swiper = new Swiper(interactiveSwiper, {
+					slidesPerView: 1,
+					spaceBetween: 20,
+					loop: true,
+					speed: 600,
+					grabCursor: true,
+					centeredSlides: true,
+					// No pagination on mobile
+					pagination: false,
+				});
+			}
+		}, 250);
+	});
+}
 
 function initializeCareerApplyModal() {
 	const modal =

@@ -118,8 +118,8 @@ get_header(); ?>
                     </p>
                 </div>
 
-                <!-- Interactive Slider Container -->
-                <div class="interactive-slider-container">
+                <!-- Desktop Layout (above 1200px) -->
+                <div class="interactive-slider-container interactive-slider-desktop">
                     <!-- Left Side: Active Slide Content -->
                     <div class="slider-content-left">
                         <div class="active-slide-content">
@@ -181,6 +181,46 @@ get_header(); ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Swiper Layout (below 1200px) -->
+                <div class="interactive-slider-swiper-container interactive-slider-mobile">
+                    <div class="interactive-slider-swiper swiper">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($slides as $index => $slide): ?>
+                                <div class="swiper-slide">
+                                    <div class="mobile-slide-card">
+                                        <div class="mobile-slide-content">
+                                            <h3 class="mobile-slide-title"><?php echo esc_html($slide['title']); ?></h3>
+                                            <p class="mobile-slide-description"><?php echo esc_html($slide['description']); ?>
+                                            </p>
+                                        </div>
+                                        <div class="mobile-slide-image">
+                                            <?php if (!empty($slide['image'])): ?>
+                                                <?php if (is_array($slide['image'])): ?>
+                                                    <img src="<?php echo esc_url($slide['image']['url']); ?>"
+                                                        alt="<?php echo esc_attr($slide['image']['alt'] ?: $slide['alt']); ?>"
+                                                        loading="lazy">
+                                                <?php else: ?>
+                                                    <img src="<?php echo esc_url($slide['image']); ?>"
+                                                        alt="<?php echo esc_attr($slide['alt']); ?>" loading="lazy">
+                                                <?php endif; ?>
+
+                                                <!-- Bottom-right number badge on image -->
+                                                <div class="slide-number-badge">
+                                                    <?php echo sprintf('%02d', $slide['id']); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="swiper-pagination interactive-slider-pagination"></div>
                     </div>
                 </div>
             </div>
