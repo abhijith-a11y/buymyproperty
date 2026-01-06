@@ -1540,11 +1540,11 @@ function initHowItWorksSwiper() {
 
 	// Initialize Swiper (will only be visible on mobile via CSS)
 	let swiper = null;
-	
+
 	if (window.innerWidth < 768) {
 		swiper = new Swiper(howItWorksSwiper, {
 			slidesPerView: 1,
-			spaceBetween: 20,
+			spaceBetween: 60,
 			loop: true,
 			speed: 600,
 			grabCursor: true,
