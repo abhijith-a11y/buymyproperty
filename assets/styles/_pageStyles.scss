@@ -147,13 +147,17 @@
 					}
 
 					.validation-error {
-						font-size: 12px;
+						font-size: 12px !important;
 						color: red;
 						font-weight: 600;
 						margin-top: 1px;
 						display: block;
 						padding-left: 20px;
 						padding-top: 1px;
+
+						@media #{$media-1024} {
+							font-size: 10px !important;
+						}
 					}
 
 					.CaptionCont,
@@ -542,24 +546,20 @@
 
 	.marquee-text {
 		font-family: "Montserrat", sans-serif;
-		font-size: 12px !important; // Default to 12px for mobile
+		font-size: 16px !important; // Default to 12px for mobile
 		font-weight: 500;
 		color: white;
 		white-space: nowrap;
 		line-height: 1.5;
 
-		@media (min-width: 821px) {
+		@media #{$media-1440} {
 			font-size: 14px !important;
 		}
-
-		@media (min-width: 1441px) {
-			font-size: 16px !important;
-		}
 	}
 
-	.marquee-text.is-bold {
-		font-weight: 700;
-	}
+	// .marquee-text.is-bold {
+	// 	font-weight: 700;
+	// }
 
 	.marquee-separator {
 		font-family: "Poppins", sans-serif;
@@ -6016,8 +6016,8 @@ p {
 
 			label {
 				display: block;
-				font-family: "Poppins", sans-serif;
-				font-size: 14px;
+				font-family: "montserrat", sans-serif;
+				font-size: 12px;
 				font-weight: 500;
 				color: #333;
 				margin-bottom: 8px;
@@ -6033,9 +6033,10 @@ p {
 			text-align: center;
 			color: #ffffff;
 			margin-left: auto;
-			margin-top: 15px;
+			margin-top: 0px;
 			max-height: 48px;
 			min-height: unset;
+			max-width: 214px;
 
 			@media #{$media-1440} {
 				font-size: 14px !important;
