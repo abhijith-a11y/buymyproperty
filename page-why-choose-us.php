@@ -66,7 +66,7 @@ get_header();
 <?php endif; ?>
 
 <?php if( have_rows('impact_stories') ): ?>
-   <section class="made_difference wrap pt_80 pb_100">
+   <section class="made_difference wrap pt_100 pb_100">
     <!-- Header Section -->
     <div class="made_difference_header">
         <h2 class="made_difference_title">

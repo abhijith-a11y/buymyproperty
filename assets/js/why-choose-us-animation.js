@@ -29,6 +29,14 @@ class WhyChooseUsAnimation {
             return;
         }
 
+        // Check window width - disable GSAP below 969px
+        const breakpoint = 969;
+        if (window.innerWidth < breakpoint) {
+            console.log('📱 Why Choose Us: Below breakpoint, disabling GSAP stacking animation');
+            this.setupNormalCards();
+            return;
+        }
+
         // Check if GSAP and ScrollTrigger are available
         if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
             console.log('❌ GSAP or ScrollTrigger not available for Why Choose Us animation');
@@ -43,6 +51,49 @@ class WhyChooseUsAnimation {
 
         this.setupInitialState();
         this.createStackingAnimation();
+
+        // Handle resize - disable/enable GSAP based on breakpoint
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth < breakpoint) {
+                    // Destroy GSAP animations if they exist
+                    if (this.scrollTrigger) {
+                        this.scrollTrigger.kill();
+                        this.scrollTrigger = null;
+                    }
+                    // Reset cards to normal state
+                    this.setupNormalCards();
+                } else {
+                    // Reinitialize GSAP if window is large enough
+                    if (!this.scrollTrigger) {
+                        this.setupInitialState();
+                        this.createStackingAnimation();
+                    }
+                }
+            }, 250);
+        });
+    }
+
+    setupNormalCards() {
+        // Reset all GSAP transforms and set cards to normal flow
+        this.cards.forEach((card, index) => {
+            // Kill any existing GSAP animations
+            if (typeof gsap !== 'undefined') {
+                gsap.set(card, { clearProps: 'all' });
+            }
+            // Remove any inline styles that GSAP might have added
+            card.style.transform = '';
+            card.style.position = '';
+            card.style.top = '';
+            card.style.left = '';
+            card.style.zIndex = '';
+            card.style.opacity = '';
+            card.style.willChange = '';
+            card.style.backfaceVisibility = '';
+        });
+        console.log('📱 Cards set to normal flow (no GSAP stacking)');
     }
 
     setupInitialState() {
@@ -113,6 +164,9 @@ class WhyChooseUsAnimation {
             }
         });
 
+        // Store reference to ScrollTrigger for cleanup
+        this.scrollTrigger = mainTimeline.scrollTrigger;
+
         // Animate each card (except the first one) to stack on top
         this.cards.forEach((card, index) => {
             if (index === 0) return; // Skip first card as it's already in position
@@ -153,11 +207,16 @@ class WhyChooseUsAnimation {
 
     // Method to kill animation (useful for cleanup)
     destroy() {
-        ScrollTrigger.getAll().forEach(trigger => {
-            if (trigger.trigger === this.section) {
-                trigger.kill();
-            }
-        });
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.trigger === this.section) {
+                    trigger.kill();
+                }
+            });
+        }
+        // Reset cards to normal state
+        this.setupNormalCards();
+        this.scrollTrigger = null;
     }
 }
 

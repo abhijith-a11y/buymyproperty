@@ -140,8 +140,12 @@
 		transform: translateY(0);
 
 		.site-header__logo img.logo {
-			width: 220px;
+			width: 250px;
 			height: auto;
+
+			@media #{$media-820} {
+				width: 220px;
+			}
 		}
 
 		.site-header__actions {

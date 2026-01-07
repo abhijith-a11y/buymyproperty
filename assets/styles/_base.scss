@@ -2633,16 +2633,19 @@ body {
 		// min-height: 734px;
 		// overflow: auto;
 		// min-height: 734px;
-		height: calc(100vh - 110px);
+		height: calc(100vh - 150px);
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-left: 50px;
 		padding-right: 60px;
+		max-height: 743px;
 		gap: 30px;
 
 		@media #{$media-1200} {
 			flex-wrap: wrap;
 			overflow: auto;
+			max-height: unset;
+			padding-bottom: 30px;
 		}
 
 		@media #{$media-768} {
@@ -2671,6 +2674,11 @@ body {
 	.modal-left {
 		width: 33%;
 		min-width: 260px;
+		padding-top: 70px;
+
+		@media #{$media-1200} {
+			padding-top: 0px;
+		}
 	}
 
 	.modal-right {
@@ -2684,7 +2692,7 @@ body {
 	.apply-heading {
 		font-family: "Gotham", sans-serif;
 		font-size: 44px;
-		font-weight: 600;
+		font-weight: 300;
 		color: var(--color-primary);
 		margin: 0 0 12px 0;
 
@@ -2706,7 +2714,7 @@ body {
 
 		span {
 			color: var(--color-primary);
-			font-weight: 300;
+			font-weight: 600;
 		}
 	}
 
@@ -2715,7 +2723,7 @@ body {
 		font-size: 18px;
 		color: #273035;
 		opacity: 0.9;
-		max-width: 275px;
+		max-width: 248px;
 
 		@media #{$media-1400} {
 			font-size: 16px;
@@ -2753,7 +2761,7 @@ body {
 
 		.form-group {
 			width: 100%;
-			margin-bottom: 25px;
+			margin-bottom: 20px;
 
 			@media #{$media-820} {
 				margin-bottom: 12px;

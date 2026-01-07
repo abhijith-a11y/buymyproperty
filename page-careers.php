@@ -122,7 +122,7 @@ get_header();
 
 	<div class="career-apply-modal" id="careerApplyModal" aria-hidden="true">
 		<div class="modal-backdrop"></div>
-		<div class="modal-dialog pt_80 pb_80">
+		<div class="modal-dialog pt_80">
 			<button type="button" class="modal-close" aria-label="Close">
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="#6E6E6E" xmlns="http://www.w3.org/2000/svg">
 					<path d="M18 6L6 18" stroke="#6E6E6E" stroke-width="2" stroke-linecap="round" />
