@@ -6901,7 +6901,6 @@ p {
 		@media #{$media-820} {
 			grid-template-columns: 1fr 300px 1fr;
 		}
-		
 	}
 
 	.comparison_column {
@@ -7382,9 +7381,9 @@ p {
 				width: fit-content !important;
 			}
 
-			span {
-				color: #273035;
-			}
+			// span {
+			// 	color: #273035;
+			// }
 		}
 
 		@media (max-width: 768px) {
@@ -8753,6 +8752,17 @@ body.modal-open {
 	margin-bottom: 0 !important;
 	border-radius: 50px !important;
 	width: 100% !important;
+	position: relative !important;
+	z-index: 1 !important; /* Base z-index for closed dropdowns */
+}
+
+.choices.is-open {
+	z-index: 1000 !important; /* Higher z-index when opened */
+}
+
+/* When dropdown is both focused and open, give it highest priority */
+.choices.is-focused.is-open {
+	z-index: 1002 !important; /* Highest z-index for focused and opened dropdown */
 }
 
 .choices__inner {
@@ -8764,7 +8774,7 @@ body.modal-open {
 	color: rgba(39, 48, 53, 0.6) !important;
 	background: white !important;
 	position: relative !important;
-	z-index: 900 !important;
+	z-index: 1 !important; /* Base z-index for closed dropdowns */
 	min-height: 59px !important;
 	display: flex !important;
 	align-items: center !important;
@@ -8782,11 +8792,24 @@ body.modal-open {
 	}
 }
 
+/* When dropdown is open, make the inner element appear above closed dropdowns and its own dropdown list */
+.choices.is-open .choices__inner {
+	z-index: 1002 !important; /* Higher than dropdown list to prevent overlap */
+	position: relative !important;
+}
+
+/* When dropdown is both focused and open, inner element should also be higher */
+.choices.is-focused.is-open .choices__inner {
+	z-index: 1004 !important; /* Higher than focused dropdown list */
+	position: relative !important;
+}
+
 .choices__list--dropdown {
 	border-radius: 17px !important;
 	padding-top: 40px;
 	margin-top: -20px !important;
-	z-index: 890;
+	position: absolute !important;
+	z-index: 1001 !important; /* Lower than inner element but higher than closed dropdowns */
 }
 
 .choices__list--single {
@@ -8810,31 +8833,36 @@ body.modal-open {
 	}
 }
 
-.choices.is-focused.is-open {
-	z-index: 900 !important;
+.choices__list--dropdown.is-active {
+	z-index: 1001 !important; /* Lower than inner element but higher than closed dropdowns */
 }
 
-.choices__list--dropdown.is-active {
-	z-index: 890 !important;
+/* When parent is focused and open, dropdown list should be higher but still below inner */
+.choices.is-focused.is-open .choices__list--dropdown {
+	z-index: 1003 !important; /* Higher than normal but lower than focused inner element */
 }
 
 /* Adjust dropdown when it opens UPWARDS (flipped) */
 .choices.is-flipped .choices__list--dropdown {
 	margin-top: 0 !important;
 	margin-bottom: -20px !important;
-	z-index: 880 !important;
+	z-index: 1001 !important; /* Same high z-index regardless of direction */
+}
+
+/* When focused and open, flipped dropdown should be higher but below inner */
+.choices.is-focused.is-open.is-flipped .choices__list--dropdown {
+	z-index: 1003 !important; /* Higher than normal but lower than focused inner element */
 }
 
 /* Ensure dropdown is behind when opening DOWNWARDS */
 .choices:not(.is-flipped) .choices__list--dropdown {
 	margin-top: -40px !important; /* Tucks it behind the bottom of the input */
-	z-index: 880 !important;
+	z-index: 1001 !important; /* Lower than inner element */
 }
 
-/* General dropdown positioning */
-.choices__list--dropdown {
-	position: absolute !important;
-	z-index: 880 !important;
+/* When focused and open, non-flipped dropdown should be higher but below inner */
+.choices.is-focused.is-open:not(.is-flipped) .choices__list--dropdown {
+	z-index: 1003 !important; /* Higher than normal but lower than focused inner element */
 }
 
 .choices__list--dropdown .choices__item {
@@ -8855,10 +8883,29 @@ body.modal-open {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	position: relative;
 }
 .property-form .form-group .validation-error {
 	position: absolute;
 	right: 10px;
 	font-family: "Montserrat", sans-serif;
 	font-size: 11px;
+}
+
+
+.date-time-picker input {
+	padding-left: 0 !important;
+}
+
+.custom-dropdown.date-time-picker {
+	.wpcf7-not-valid-tip {
+		position: absolute;
+		bottom: -35px;
+		left: -12px;
+	}
+}
+
+
+.form.invalid {
+	color: #dc3232 !important;
 }
