@@ -553,7 +553,7 @@
 		}
 	}
 
-	.marquee-text.bold {
+	.marquee-text.is-bold {
 		font-weight: 700;
 	}
 
@@ -805,7 +805,7 @@
 		z-index: 3;
 
 		@media #{$media-1440} {
-			font-size: 48px;
+			font-size: 50px;
 			margin-bottom: 20px;
 		}
 		@media #{$media-1200} {
@@ -1470,7 +1470,7 @@ p {
 		margin: 0;
 		line-height: 28px;
 
-		@media #{$media-1440} {
+		@media #{$media-1600} {
 			font-size: 14px;
 		}
 	}
@@ -1737,10 +1737,16 @@ p {
 		border: 0.7px solid rgba(255, 255, 255, 0.2);
 		max-height: 31px;
 
-		@media #{$media-1400} {
+		@media #{$media-1440} {
 			max-height: 23px;
 			font-size: 14px;
 			padding: 3px 15px;
+		}
+
+		@media #{$media-820} {
+			max-height: 20px;
+			font-size: 12px;
+			padding: 2px 10px;
 		}
 	}
 
@@ -3057,7 +3063,25 @@ p {
 							}
 
 							.slide-number-badge {
+								position: absolute;
+								bottom: -1px;
+								right: -1px;
+								width: 201px;
+								height: 120px;
+								padding-top: 25px;
+								background-image: url("../images/about/white_shape.png");
+								background-size: contain;
+								background-repeat: no-repeat;
+								background-position: center;
+								color: var(--color-primary);
 								display: none;
+								align-items: center;
+								justify-content: center;
+								font-family: "Montserrat", sans-serif;
+								font-size: 50px;
+								font-weight: 300;
+								line-height: 1;
+								z-index: 10;
 							}
 						}
 
@@ -3219,7 +3243,6 @@ p {
 // ========================================
 
 .trust_matter_section {
-	padding: 100px 0;
 	background-color: var(--color-bg-light);
 
 	.trust-content-container {
@@ -3372,8 +3395,6 @@ p {
 
 	// Responsive Design
 	@media (max-width: 1400px) {
-		padding: 80px 0;
-
 		.trust-content-container {
 			gap: 60px;
 			padding: 0 40px;
@@ -3385,8 +3406,6 @@ p {
 	}
 
 	@media (max-width: 992px) {
-		padding: 70px 0;
-
 		.trust-content-container {
 			gap: 50px;
 			padding: 0 30px;
@@ -3403,8 +3422,6 @@ p {
 	}
 
 	@media (max-width: 768px) {
-		padding: 60px 0;
-
 		.trust-content-container {
 			flex-direction: column;
 			gap: 40px;
@@ -3438,8 +3455,6 @@ p {
 	}
 
 	@media (max-width: 480px) {
-		padding: 50px 0;
-
 		.trust-content-container {
 			gap: 30px;
 			padding: 0 15px;
@@ -6250,6 +6265,10 @@ p {
 			will-change: transform, z-index;
 			backface-visibility: hidden;
 
+			@media (max-width: 1440px) {
+				height: 447px;
+			}
+
 			&::before {
 				content: "";
 				position: absolute;
@@ -6306,18 +6325,22 @@ p {
 				ul {
 					margin-block: 20px;
 
+					@media #{$media-820} {
+						margin-block: 10px;
+					}
+
 					li {
 						@include text-para;
 						position: relative;
-						padding-left: 20px;
+						padding-left: 15px;
 
 						&:before {
 							content: "";
 							position: absolute;
 							left: 0;
-							top: 8px;
-							width: 6px;
-							height: 6px;
+							top: 10px;
+							width: 4px;
+							height: 4px;
 							background-color: var(--color-primary);
 							border-radius: 50%;
 							overflow: hidden;
@@ -6334,9 +6357,10 @@ p {
 				line-height: 120%;
 				margin-bottom: 16px;
 
-				@media #{$media-1400} {
+				@media #{$media-1440} {
 					font-size: 40px;
 					margin-bottom: 12px;
+					line-height: 110%;
 				}
 
 				@media #{$media-1024} {
@@ -6488,7 +6512,9 @@ p {
 
 		.made_difference_description {
 			@include text-body-center;
-			max-width: 700px;
+			max-width: 862px;
+			padding-left: 10px;
+			padding-right: 10px;
 			margin: 0 auto;
 		}
 	}
@@ -6577,14 +6603,12 @@ p {
 				color: var(--color-text-light);
 				flex-grow: 1;
 
-				@media #{$media-768} {
-					font-size: 15px;
-					line-height: 24px;
+				@media #{$media-1440} {
+					font-size: 16px;
 				}
 
-				@media #{$media-480} {
+				@media #{$media-820} {
 					font-size: 14px;
-					line-height: 22px;
 				}
 			}
 		}
@@ -6873,12 +6897,21 @@ p {
 		@media #{$media-1400} {
 			overflow: scroll;
 		}
+
+		@media #{$media-820} {
+			grid-template-columns: 1fr 300px 1fr;
+		}
+		
 	}
 
 	.comparison_column {
 		display: flex;
 		flex-direction: column;
-		min-width: 300px;
+		min-width: 330px;
+
+		@media #{$media-820} {
+			min-width: 300px;
+		}
 
 		&.buy_my_property_column {
 			background: var(--color-primary);
@@ -6971,20 +7004,22 @@ p {
 	}
 
 	.table_data {
-		padding-bottom: 50px;
+		padding-bottom: 40px;
 		display: flex;
 		align-items: center;
 		font-family: "Montserrat", sans-serif;
-		font-weight: 500;
+		font-weight: 400;
 		font-size: 18px;
 		line-height: 150%;
 
 		@media #{$media-1440} {
 			padding-bottom: 30px;
+			font-size: 16px;
 		}
 
 		@media #{$media-820} {
 			padding-bottom: 20px;
+			font-size: 14px;
 		}
 
 		.feature_text {
@@ -8745,7 +8780,7 @@ body.modal-open {
 
 .choices__list--dropdown {
 	border-radius: 17px !important;
-	padding-top: 20px;
+	padding-top: 40px;
 	margin-top: -20px !important;
 	z-index: 890;
 }
@@ -8782,13 +8817,13 @@ body.modal-open {
 /* Adjust dropdown when it opens UPWARDS (flipped) */
 .choices.is-flipped .choices__list--dropdown {
 	margin-top: 0 !important;
-	margin-bottom: -20px !important; /* Tucks it behind the top of the input */
+	margin-bottom: -20px !important;
 	z-index: 880 !important;
 }
 
 /* Ensure dropdown is behind when opening DOWNWARDS */
 .choices:not(.is-flipped) .choices__list--dropdown {
-	margin-top: -20px !important; /* Tucks it behind the bottom of the input */
+	margin-top: -40px !important; /* Tucks it behind the bottom of the input */
 	z-index: 880 !important;
 }
 

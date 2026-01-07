@@ -62,8 +62,8 @@ get_header(); ?>
     </div>
 </section>
 
-<!-- Marquee Section -->
-<?php if (have_rows('marquee_items')): ?>
+<!-- Marquee Section old code-->
+<!-- <?php if (have_rows('marquee_items')): ?>
     <section class="home_marquee_section container">
         <div class="marquee-container">
             <div class="swiper marquee-swiper">
@@ -88,6 +88,44 @@ get_header(); ?>
                         <?php endfor; ?>
                     <?php endif; ?>
 
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?> -->
+
+<!-- Marquee Section -->
+<?php if (have_rows('marquee_items')): ?>
+    <section class="home_marquee_section container">
+        <div class="marquee-container">
+            <div class="swiper marquee-swiper">
+                <div class="swiper-wrapper">
+                    <?php
+                    // Repeat slides for seamless loop
+                    for ($i = 0; $i < 3; $i++): ?>
+                        <div class="swiper-slide">
+                            <div class="marquee-content">
+                                <?php
+                                $item_count = 0; // Initialize a counter
+                                while (have_rows('marquee_items')):
+                                    the_row();
+                                    $item_count++; // Increment every loop
+                                    $text = get_sub_field('marquee_text');
+
+                                    // Determine if the item is odd or even
+                                    $weight_class = ($item_count % 2 !== 0) ? 'is-bold' : 'is-normal';
+                                    ?>
+
+                                    <span class="marquee-text <?php echo $weight_class; ?>">
+                                        <?php echo esc_html($text); ?>
+                                    </span>
+
+                                    <span class="marquee-separator">|</span>
+
+                                <?php endwhile; ?>
+                            </div>
+                        </div>
+                    <?php endfor; ?>
                 </div>
             </div>
         </div>

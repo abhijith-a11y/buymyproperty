@@ -265,36 +265,41 @@
                                 $is_dropdown = get_sub_field('is_drop_down');
                                 ?>
                                 <li class="nav-item <?php echo $is_dropdown ? 'has-dropdown' : ''; ?>">
-                                    <!-- <a href="<?php echo esc_url($menu_link['url']); ?>" class="nav-link">
-                                        <span class="nav-text <?php echo $is_dropdown ? 'arrow' : ''; ?>">
-                                            <?php //echo esc_html($menu_link['title']); ?>
-                                        </span>
-                                        <span class="nav-number">
-                                            <?php //echo sprintf('%02d', $count); ?>.
-                                        </span>
-                                    </a> -->
 
-                                    <div class="nav-link" data-url="<?php echo esc_url($menu_link['url']); ?>">
-                                        <span class="nav-text <?php echo $is_dropdown ? 'arrow' : ''; ?>">
-                                            <?php echo esc_html($menu_link['title']); ?>
-                                        </span>
-                                        <span class="nav-number">
-                                            <?php echo sprintf('%02d', $count); ?>.
-                                        </span>
-                                    </div>
+                                    <?php if (!$is_dropdown): ?>
+                                        <a href="<?php echo esc_url($menu_link['url']); ?>" class="nav-link">
+                                            <span class="nav-text">
+                                                <?php echo esc_html($menu_link['title']); ?>
+                                            </span>
+                                            <span class="nav-number">
+                                                <?php echo sprintf('%02d', $count); ?>.
+                                            </span>
+                                        </a>
 
-                                    <?php if ($is_dropdown && have_rows('h_sub_menus')): ?>
-                                        <div class="submenu">
-                                            <?php while (have_rows('h_sub_menus')):
-                                                the_row();
-                                                $sub_link = get_sub_field('h_sub_menu'); ?>
-                                                <div class="submenu-item">
-                                                    <a href="<?php echo esc_url($sub_link['url']); ?>">
-                                                        <?php echo esc_html($sub_link['title']); ?>
-                                                    </a>
-                                                </div>
-                                            <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <div class="nav-link" data-url="<?php echo esc_url($menu_link['url']); ?>">
+                                            <span class="nav-text arrow">
+                                                <?php echo esc_html($menu_link['title']); ?>
+                                            </span>
+                                            <span class="nav-number">
+                                                <?php echo sprintf('%02d', $count); ?>.
+                                            </span>
                                         </div>
+
+                                        <?php if (have_rows('h_sub_menus')): ?>
+                                            <div class="submenu">
+                                                <?php while (have_rows('h_sub_menus')):
+                                                    the_row();
+                                                    $sub_link = get_sub_field('h_sub_menu'); ?>
+                                                    <div class="submenu-item">
+                                                        <a href="<?php echo esc_url($sub_link['url']); ?>">
+                                                            <?php echo esc_html($sub_link['title']); ?>
+                                                        </a>
+                                                    </div>
+                                                <?php endwhile; ?>
+                                            </div>
+                                        <?php endif; ?>
+
                                     <?php endif; ?>
                                 </li>
                                 <?php

@@ -108,7 +108,7 @@ get_header(); ?>
     if (!empty($slides)):
         ?>
 
-        <section class="interactive-slider-section pt_120 pb_120">
+        <section class="interactive-slider-section pt_100 pb_100">
             <div class="wrap">
                 <!-- Section Header -->
                 <div class="section-header">
@@ -246,7 +246,7 @@ get_header(); ?>
 
     <?php endif; ?>
     <?php if (get_field('ab_bt_title') || get_field('ab_bt_content') || get_field('ab_bt_image')): ?>
-        <section class="trust_matter_section">
+        <section class="trust_matter_section pb_100 pt_100">
             <div class="wrap trust-content-container ">
                 <!-- <div class="trust-content-container"> -->
                 <!-- Left Side: Image -->

@@ -40,13 +40,9 @@ const themeUrl = window.yakultThemeUrl || "/wp-content/themes/yakult";
 const jsFiles = [
 	`${themeUrl}/assets/js/Header.js`,
 	`${themeUrl}/assets/js/common.js`,
-	// `${themeUrl}/assets/js/history-swiper.js`,
-	// `${themeUrl}/assets/js/product-swiper.js`,
 	`${themeUrl}/assets/js/video.js`,
 	`${themeUrl}/assets/js/why-choose-us-animation.js`,
 	`${themeUrl}/assets/js/how-it-works-animation.js`,
-	// `${themeUrl}/assets/js/snazzy-map.js`,
-	// `${themeUrl}/assets/js/news-marquee.js`
 ];
 
 // Load all JavaScript files
@@ -355,26 +351,8 @@ var swiper = new Swiper(".our-products-swiper", {
 	},
 });
 
-// function initializeProductsSlider() {
-//     const productsSwiper = document.querySelector('.our-products-swiper');
-
-//     if (!productsSwiper) {
-//         console.log('Products slider not found on this page');
-//         return;
-//     }
-
-//     // Check if Swiper is available
-//     if (typeof Swiper !== 'undefined') {
-//         initProductsSwiper();
-//     } else {
-//         // Load Swiper if not already loaded
-//         loadSwiperForProducts();
-//     }
-// }
 
 function loadSwiperForProducts() {
-	// Swiper CSS is already loaded via functions.php
-	// Just check if Swiper JS is available
 	if (typeof Swiper === "undefined") {
 		console.log("❌ Swiper JS not found for products slider");
 		return;
@@ -608,18 +586,22 @@ function initTestimonialsSwiper() {
 		},
 		breakpoints: {
 			0: {
-				slidesPerView: 1,
+				slidesPerView: 1.2,
 				spaceBetween: 10,
 			},
-			768: {
+			700: {
+				slidesPerView: 2,
+				spaceBetween: 10,
+			},
+			930: {
 				slidesPerView: 2.5,
 				spaceBetween: 10,
 			},
-			992: {
+			1150: {
 				slidesPerView: 3,
 				spaceBetween: 10,
 			},
-			1200: {
+			1440: {
 				slidesPerView: 3.5,
 				spaceBetween: 16,
 			},
