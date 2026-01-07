@@ -59,6 +59,7 @@ textarea {
 	background: white !important;
 	display: flex !important;
 	align-items: center !important;
+	font-family: "Poppins", sans-serif !important;
 }
 input {
 	height: 46px;
@@ -2633,7 +2634,7 @@ body {
 		// min-height: 734px;
 		height: calc(100vh - 110px);
 		overflow-y: auto;
-		overflow-x: hidden;		
+		overflow-x: hidden;
 		padding-left: 50px;
 		padding-right: 60px;
 		gap: 30px;
@@ -2870,7 +2871,7 @@ body {
 		height: 100%;
 		background: linear-gradient(
 			180deg,
-			rgba(0, 0, 0, 0.6) 11.75%,
+			rgba(0, 0, 0, 0.6) -70.75%,
 			rgba(0, 0, 0, 0) 100%
 		);
 		z-index: 1;
@@ -2885,7 +2886,7 @@ body {
 		height: 100%;
 		background: linear-gradient(
 			180deg,
-			rgba(0, 0, 0, 0) 57.02%,
+			rgba(0, 0, 0, 0) 70.02%,
 			rgba(0, 0, 0, 0.6) 100%
 		);
 		z-index: 1;

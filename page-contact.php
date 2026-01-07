@@ -27,7 +27,7 @@ get_header();
             </div>
 
             <!-- Contact Content -->
-            <div class="wrap contact-content pt_70 pb_80">
+            <div class="wrap contact-content pt_70 pb_100">
                 <!-- Left Side - Contact Info -->
                 <div class="contact-info-section">
                     <h3 class="contact-info-title"><?php echo get_field('form_title'); ?></h3>

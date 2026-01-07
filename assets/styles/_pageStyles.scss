@@ -4678,6 +4678,10 @@ p {
 			margin-top: 40px;
 			border-bottom: 1px solid #ede9e6;
 
+			@media #{$media-1440} {
+				margin-top: 30px;
+			}
+
 			// Remove border from last form-section (even if other elements follow)
 			&:not(:has(+ .form-section)) {
 				border-bottom: none;
@@ -4821,7 +4825,7 @@ p {
 
 		.submit-btn {
 			border: none;
-			font-family: "Montserrat", sans-serif;
+			font-family: "Montserrat", sans-serif !important;
 			font-weight: 600;
 			font-size: 16px !important;
 			line-height: 1;
@@ -5710,13 +5714,7 @@ p {
 	//     line-height: 1.6;
 	//   }
 	// }
-	.contact-container {
-		padding: 20px;
 
-		@media #{$media-768} {
-			padding: 15px;
-		}
-	}
 
 	.section-header {
 		text-align: center;
@@ -6002,7 +6000,7 @@ p {
 			border: none;
 			font-family: "Montserrat", sans-serif;
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 16px !important;
 			line-height: 1;
 			text-align: center;
 			color: #ffffff;
@@ -6010,11 +6008,19 @@ p {
 			margin-top: 15px;
 			max-height: 48px;
 			min-height: unset;
+
+			@media #{$media-1440} {
+				font-size: 14px !important;
+			}
+
+			@media #{$media-768} {
+				font-size: 14px !important;
+			}
 		}
 
-		span {
-			margin-left: 10px;
-		}
+		// span {
+		// 	margin-left: 10px;
+		// }
 	}
 }
 
@@ -7407,12 +7413,16 @@ p {
 		text-align: center;
 		margin-bottom: 50px;
 
-		@media (max-width: 768px) {
+		@media #{$media-1440} {
 			margin-bottom: 40px;
 		}
 
-		@media (max-width: 480px) {
+		@media #{$media-768} {
 			margin-bottom: 30px;
+		}
+
+		@media #{$media-480} {
+			margin-bottom: 25px;
 		}
 
 		.section_title {
@@ -7450,22 +7460,18 @@ p {
 		grid-template-columns: repeat(4, 1fr);
 		gap: 16px;
 
-		@media (max-width: 1200px) {
-			gap: 13;
-		}
-
 		@media (max-width: 992px) {
 			grid-template-columns: repeat(2, 1fr);
 			gap: 30px;
 		}
 
 		@media (max-width: 768px) {
-			gap: 25px;
+			gap: 15px;
 		}
 
 		@media (max-width: 480px) {
 			grid-template-columns: 1fr;
-			gap: 20px;
+			gap: 10px;
 		}
 
 		// Process Step Card
@@ -7511,13 +7517,13 @@ p {
 			}
 
 			@media (max-width: 768px) {
-				padding: 35px 25px;
+				padding: 15px;
 				border-radius: 16px;
 			}
 
-			@media (max-width: 480px) {
-				padding: 30px 20px;
-			}
+			// @media (max-width: 480px) {
+			// 	padding: 
+			// }
 
 			&:hover {
 				transform: translateY(-8px);
@@ -7952,12 +7958,12 @@ p {
 			background: linear-gradient(0deg, #ffffff, #ffffff),
 				linear-gradient(
 					177.37deg,
-					rgba(255, 255, 255, 0) 59.4%,
+					rgba(255, 255, 255, 0) 70.4%,
 					#c3ede2 116.25%
 				);
 			background-blend-mode: multiply;
 			border-radius: 26px;
-			z-index: -1;
+			// z-index: -1;
 		}
 
 		// &:hover {
@@ -7971,6 +7977,7 @@ p {
 			position: absolute;
 			top: 20px;
 			right: 20px;
+			z-index: 1;
 
 			.time_posted {
 				font-family: "Montserrat", sans-serif;
@@ -7994,6 +8001,7 @@ p {
 		}
 
 		.card_content {
+			z-index: 1;
 			.job_title {
 				font-family: "Gotham", sans-serif;
 				font-size: 22px;
@@ -8003,8 +8011,12 @@ p {
 				// line-height: 63.23px;
 				line-height: 100%;
 
-				@media #{$media-1400} {
+				@media #{$media-1440} {
 					font-size: 20px;
+				}
+
+				@media #{$media-820} {
+					font-size: 18px;
 				}
 			}
 
