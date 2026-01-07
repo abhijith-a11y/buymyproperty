@@ -7917,10 +7917,15 @@ p {
 			gap: 30px;
 		}
 
-		@media #{$media-992} {
+		@media (max-width: 1150px) {
 			grid-template-columns: repeat(2, 1fr);
 			gap: 30px;
 		}
+
+		// @media #{$media-992} {
+		// 	grid-template-columns: repeat(2, 1fr);
+		// 	gap: 30px;
+		// }
 
 		@media #{$media-600} {
 			grid-template-columns: repeat(1, 1fr);
@@ -7979,6 +7984,11 @@ p {
 			right: 20px;
 			z-index: 1;
 
+			@media #{$media-820} {
+				top: 8px;
+				right: 10px;
+			}
+
 			.time_posted {
 				font-family: "Montserrat", sans-serif;
 				font-weight: 400;
@@ -8024,6 +8034,7 @@ p {
 				display: flex;
 				align-items: center;
 				gap: 12px;
+				padding-bottom: 10px;
 
 				.location_icon {
 					color: rgba(63, 103, 69, 1);
@@ -8072,11 +8083,11 @@ p {
 	// Responsive Design
 	@media (max-width: 1200px) {
 		.careers_grid {
-			gap: 25px;
+			gap: 15px;
 		}
 
 		.career_card {
-			padding: 20px;
+			padding: 15px;
 		}
 	}
 

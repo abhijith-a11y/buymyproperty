@@ -67,7 +67,15 @@ get_header();
 				while ($jobs->have_posts()):
 					$jobs->the_post();
 					$location = get_field('ca_location');
-					$time_ago = human_time_diff(get_the_time('U'), current_time('timestamp')) . ' ago';
+					$time_ago_raw = human_time_diff(get_the_time('U'), current_time('timestamp'));
+					// Capitalize first letter of time unit (e.g., "8 months" -> "8 Months")
+					$time_ago = preg_replace_callback(
+						'/(\d+\s+)([a-z]+)/',
+						function ($matches) {
+							return $matches[1] . ucfirst($matches[2]);
+						},
+						$time_ago_raw
+					) . ' ago';
 					?>
 					<div class="career_card">
 						<div class="card_header">
@@ -218,7 +226,7 @@ get_header();
 	});
 
 	// Initialize Choices.js for careers sort dropdown
-	document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function () {
 		var careersSort = document.getElementById('careers-sort');
 		if (careersSort && typeof Choices !== 'undefined') {
 			var choices = new Choices(careersSort, {
@@ -230,7 +238,7 @@ get_header();
 			});
 
 			// Handle change event to redirect with sort parameter
-			careersSort.addEventListener('change', function() {
+			careersSort.addEventListener('change', function () {
 				var sortValue = this.value;
 				var url = new URL(window.location.href);
 
