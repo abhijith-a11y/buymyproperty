@@ -234,7 +234,10 @@
 							flex: 1;
 							position: relative;
 							height: 100%;
-							font-size: 12;
+							font-size: 12px;
+							border : 2.5px dashed #016C51;
+							border-radius: 50px;
+							background: #fff;
 
 							input[type="file"] {
 								position: absolute;
@@ -243,6 +246,7 @@
 								height: 100%;
 								cursor: pointer;
 								z-index: 5;
+
 							}
 
 							input.active {
@@ -3651,6 +3655,8 @@ p {
 				color: var(--color-primary);
 				// line-height: 140%;
 				position: relative;
+				// min-width: 97px;
+				// text-align: right;
 
 				// Add "STEP" pseudo-element
 				&::before {
@@ -3665,6 +3671,10 @@ p {
 					letter-spacing: 1px;
 					text-transform: uppercase;
 					font-weight: 120%;
+
+					@media #{$media-1440} {
+						left: -25px;
+					}
 
 					@media #{$media-1200} {
 						font-size: 12px;
@@ -3825,6 +3835,14 @@ p {
 
 			.card-cta-btn {
 				align-self: flex-start;
+
+
+				svg {
+					height: 10px;
+					width: 10px;
+					margin-left: 10px;
+					color: #fff;
+				}
 			}
 		}
 

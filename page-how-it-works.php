@@ -58,6 +58,12 @@ get_header();
                            class="card-cta-btn default_btn"
                            <?php if($p_button['target']): ?>target="<?php echo esc_attr($p_button['target']); ?>"<?php endif; ?>>
                             <?php echo esc_html($p_button['title']); ?>
+
+                            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.72754 0.643066L9.0429 4.76228L4.72754 8.88148" stroke="currentColor" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.04301 4.76221L0.643066 4.76221" stroke="currentColor" stroke-width="1.28571" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                         </a>
                     <?php endif; ?>
                 </div>
