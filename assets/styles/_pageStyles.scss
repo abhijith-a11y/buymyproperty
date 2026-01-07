@@ -1986,7 +1986,11 @@ p {
 		color: white;
 		max-width: 527px;
 		z-index: 10;
-		margin-left: 90px;
+		margin-left: calc(((100vw - 1400px) / 2) - 10px);
+
+		@media #{$media-1440} {
+			margin-left: 3%;
+		}
 
 		@media #{$media-820} {
 			margin-left: 40px;
@@ -3500,9 +3504,9 @@ p {
 
 	.section-header {
 		text-align: center;
-		margin-bottom: 70px;
+		margin-bottom: 50px;
 
-		@media #{$media-1400} {
+		@media #{$media-1440} {
 			margin-bottom: 20px;
 		}
 
@@ -8923,7 +8927,7 @@ body.modal-open {
 		right: 10px;
 		top: 50%;
 		transform: translateY(-50%);
-		width: 10px;
+		width: 12px;
 		height: 8px;
 		background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 0.999512L6.66 6.65951L12.32 0.999512' stroke='%23273035' stroke-width='1.99922' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 		background-repeat: no-repeat;
