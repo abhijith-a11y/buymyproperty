@@ -443,25 +443,123 @@ function cf7_auto_hide_success_message() {
     <?php
 }
 add_action('wp_footer', 'cf7_auto_hide_success_message');
-//Function to reset select fields after form submission
+//Function to reset all form fields after successful form submission (but preserve success message)
 function force_cf7_reset_script() {
     ?>
     <script>
     document.addEventListener('wpcf7mailsent', function(event) {
+        // Get the form
+        var form = event.target;
+        
+        // Delay reset to ensure success message is displayed first
         setTimeout(function() {
-            // Get the form
-            var form = event.target;
+            // Reset all form inputs, textareas, and selects
+            var inputs = form.querySelectorAll('input:not([type="submit"]):not([type="hidden"]), textarea, select');
+            inputs.forEach(function(input) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                } else if (input.tagName === 'SELECT') {
+                    input.selectedIndex = 0;
+                    input.value = '';
+                } else {
+                    input.value = '';
+                }
+            });
             
-            // Reset everything
-            form.reset();
+            // Reset file inputs
+            var fileInputs = form.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(function(input) {
+                input.value = '';
+                // Reset file input display text if exists
+                var uploadText = form.querySelector('.upload-text');
+                if (uploadText) {
+                    uploadText.textContent = 'Upload Images' || 'Select files';
+                }
+            });
             
-            // Force select reset
-            var selects = form.querySelectorAll('select');
-            for (var i = 0; i < selects.length; i++) {
-                selects[i].selectedIndex = 0;
-                selects[i].value = '';
+            // Reset Choices.js select elements - must reset underlying select first
+            if (typeof Choices !== 'undefined') {
+                var selects = form.querySelectorAll('select');
+                selects.forEach(function(select) {
+                    // Check if Choices.js is already initialized
+                    if (select.closest('.choices')) {
+                        try {
+                            // First, reset the underlying select element
+                            var placeholderOption = select.querySelector('option[selected][disabled]') || 
+                                                   select.querySelector('option[disabled]') ||
+                                                   select.querySelector('option[value=""]');
+                            
+                            if (placeholderOption) {
+                                select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
+                                select.value = '';
+                            } else {
+                                select.selectedIndex = 0;
+                                select.value = '';
+                            }
+                            
+                            // Then update Choices.js instance
+                            var choicesInstance = Choices.getInstance(select);
+                            if (choicesInstance) {
+                                // Remove all active items
+                                choicesInstance.removeActiveItems();
+                                
+                                // Set to empty value to show placeholder
+                                choicesInstance.setChoiceByValue('');
+                                
+                                // Force update the display
+                                if (choicesInstance._render) {
+                                    choicesInstance._render();
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Error resetting Choices.js:', e);
+                            // Fallback: just reset the select element
+                            select.selectedIndex = 0;
+                            select.value = '';
+                        }
+                    } else {
+                        // For non-Choices selects, just reset normally
+                        select.selectedIndex = 0;
+                        select.value = '';
+                    }
+                });
             }
-        }, 150);
+            
+            // Reset any custom dropdowns
+            var customDropdowns = form.querySelectorAll('.custom-dropdown');
+            customDropdowns.forEach(function(dropdown) {
+                var placeholder = dropdown.querySelector('.placeholder');
+                if (placeholder) {
+                    placeholder.textContent = placeholder.getAttribute('data-placeholder') || 'Select';
+                    placeholder.classList.add('placeholder');
+                    placeholder.classList.remove('selected');
+                }
+                dropdown.removeAttribute('data-selected');
+            });
+            
+            // Remove any validation error messages
+            var errorMessages = form.querySelectorAll('.validation-error, .wpcf7-not-valid-tip, .field-error');
+            errorMessages.forEach(function(error) {
+                error.remove();
+            });
+            
+            // Remove error styling from fields
+            var errorFields = form.querySelectorAll('.wpcf7-not-valid, .error-border');
+            errorFields.forEach(function(field) {
+                field.classList.remove('wpcf7-not-valid', 'error-border');
+                field.style.borderColor = '';
+            });
+            
+            // Reset submit button
+            var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                if (submitBtn.hasAttribute('data-original-text')) {
+                    submitBtn.textContent = submitBtn.getAttribute('data-original-text');
+                }
+            }
+            
+        }, 500); // Small delay to ensure success message is visible, then reset everything
     }, false);
     </script>
     <?php

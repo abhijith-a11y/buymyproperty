@@ -88,6 +88,116 @@ get_header();
                 }
             }
         }
+
+        // Reset form completely after successful submission
+        document.addEventListener('wpcf7mailsent', function (event) {
+            const form = event.target;
+
+            // Wait a moment to show success message, then reset everything
+            setTimeout(function () {
+                // Reset all form fields
+                const allInputs = form.querySelectorAll('input, textarea, select');
+                allInputs.forEach(function (input) {
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        input.checked = false;
+                    } else if (input.type === 'file') {
+                        input.value = '';
+                        // Reset upload area text
+                        if (uploadArea) {
+                            const uploadText = uploadArea.querySelector('.upload-text');
+                            if (uploadText) {
+                                uploadText.textContent = uploadText.getAttribute('data-original-text') || 'Upload Images' || 'Select files';
+                            }
+                        }
+                    } else if (input.tagName === 'SELECT') {
+                        input.selectedIndex = 0;
+                        input.value = '';
+                    } else if (input.type !== 'submit' && input.type !== 'hidden') {
+                        input.value = '';
+                    }
+                });
+
+                // Reset Choices.js selects - must reset underlying select first, then update Choices
+                if (typeof Choices !== 'undefined') {
+                    const selects = form.querySelectorAll('select');
+                    selects.forEach(function (select) {
+                        if (select.closest('.choices')) {
+                            try {
+                                // First, reset the underlying select element
+                                const placeholderOption = select.querySelector('option[selected][disabled]') ||
+                                    select.querySelector('option[disabled]') ||
+                                    select.querySelector('option[value=""]');
+
+                                if (placeholderOption) {
+                                    select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
+                                    select.value = '';
+                                } else {
+                                    select.selectedIndex = 0;
+                                    select.value = '';
+                                }
+
+                                // Then update Choices.js instance
+                                const choicesInstance = Choices.getInstance(select);
+                                if (choicesInstance) {
+                                    // Remove all active items
+                                    choicesInstance.removeActiveItems();
+
+                                    // Set to empty value to show placeholder
+                                    choicesInstance.setChoiceByValue('');
+
+                                    // Force update the display
+                                    choicesInstance._render();
+                                }
+                            } catch (e) {
+                                console.log('Error resetting Choices.js:', e);
+                                // Fallback: just reset the select element
+                                select.selectedIndex = 0;
+                                select.value = '';
+                            }
+                        } else {
+                            // For non-Choices selects, just reset normally
+                            select.selectedIndex = 0;
+                            select.value = '';
+                        }
+                    });
+                }
+
+                // Reset custom dropdowns
+                const customDropdowns = form.querySelectorAll('.custom-dropdown');
+                customDropdowns.forEach(function (dropdown) {
+                    const placeholder = dropdown.querySelector('.placeholder, .selected');
+                    if (placeholder) {
+                        const originalText = placeholder.getAttribute('data-placeholder') || 'Select';
+                        placeholder.textContent = originalText;
+                        placeholder.classList.add('placeholder');
+                        placeholder.classList.remove('selected');
+                    }
+                    dropdown.removeAttribute('data-selected');
+                });
+
+                // Clear all validation errors
+                const errorMessages = form.querySelectorAll('.validation-error, .wpcf7-not-valid-tip, .field-error');
+                errorMessages.forEach(function (error) {
+                    error.remove();
+                });
+
+                // Remove error styling
+                const errorFields = form.querySelectorAll('.wpcf7-not-valid, .error-border');
+                errorFields.forEach(function (field) {
+                    field.classList.remove('wpcf7-not-valid', 'error-border');
+                    field.style.borderColor = '';
+                });
+
+                // Reset submit button
+                const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    if (submitBtn.hasAttribute('data-original-text')) {
+                        submitBtn.textContent = submitBtn.getAttribute('data-original-text');
+                    }
+                }
+            }, 500); // Small delay to show success message first
+        }, false);
     });
 </script>
 
