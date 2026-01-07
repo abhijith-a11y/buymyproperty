@@ -671,7 +671,7 @@
     });
 </script>
 
-<!-- Choices.js Initialization for .select_box -->
+<!-- Choices.js Initialization for ALL select elements -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof Choices === 'undefined') {
@@ -681,12 +681,18 @@
 
         var choicesInstances = {};
 
-        function initSelectBox() {
-            var selectElements = document.querySelectorAll('.select_box');
+        function initAllSelects() {
+            // Get ALL select elements, excluding those that should not be initialized
+            var selectElements = document.querySelectorAll('select:not([data-no-choices])');
 
             selectElements.forEach(function (select) {
                 // Skip if already initialized
                 if (select.closest('.choices')) {
+                    return;
+                }
+
+                // Skip if disabled (Choices.js can handle disabled, but skip for now)
+                if (select.hasAttribute('disabled') && select.getAttribute('disabled') !== 'false') {
                     return;
                 }
 
@@ -702,8 +708,12 @@
                 }
 
                 try {
-                    var placeholder = select.querySelector('option[selected][disabled]')
-                        ? select.querySelector('option[selected][disabled]').text
+                    // Get placeholder from disabled selected option, or use default
+                    var placeholderOption = select.querySelector('option[selected][disabled]') || 
+                                           select.querySelector('option[disabled]') ||
+                                           select.querySelector('option[value=""]');
+                    var placeholder = placeholderOption 
+                        ? placeholderOption.text 
                         : 'Select an option';
 
                     var choices = new Choices(select, {
@@ -725,13 +735,13 @@
 
         // Initialize on DOM ready
         setTimeout(function () {
-            initSelectBox();
+            initAllSelects();
         }, 200);
 
         // Initialize on window load
         window.addEventListener('load', function () {
             setTimeout(function () {
-                initSelectBox();
+                initAllSelects();
             }, 100);
         });
 
@@ -742,13 +752,13 @@
             resizeTimer = setTimeout(function () {
                 // Check if any selects are broken
                 var broken = false;
-                document.querySelectorAll('.select_box').forEach(function (select) {
+                document.querySelectorAll('select:not([data-no-choices])').forEach(function (select) {
                     if (!select.closest('.choices')) {
                         broken = true;
                     }
                 });
                 if (broken) {
-                    initSelectBox();
+                    initAllSelects();
                 }
             }, 300);
         });
@@ -762,9 +772,10 @@
                         for (var i = 0; i < mutation.addedNodes.length; i++) {
                             var node = mutation.addedNodes[i];
                             if (node.nodeType === 1) {
-                                if (node.classList && node.classList.contains('select_box')) {
+                                // Check if node is a select or contains selects
+                                if (node.tagName === 'SELECT' && !node.hasAttribute('data-no-choices')) {
                                     needsInit = true;
-                                } else if (node.querySelectorAll && node.querySelectorAll('.select_box').length > 0) {
+                                } else if (node.querySelectorAll && node.querySelectorAll('select:not([data-no-choices])').length > 0) {
                                     needsInit = true;
                                 }
                             }
@@ -773,7 +784,7 @@
                 });
                 if (needsInit) {
                     setTimeout(function () {
-                        initSelectBox();
+                        initAllSelects();
                     }, 200);
                 }
             });
