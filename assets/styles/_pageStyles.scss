@@ -4671,6 +4671,8 @@ p {
 
 	.offer-form {
 		// Form Sections
+		// Note: .choices__inner height override is defined after global .choices__inner styles (see line ~8800)
+
 		.form-section {
 			padding-bottom: 15px;
 			margin-top: 40px;
@@ -4756,8 +4758,8 @@ p {
 
 			label {
 				display: block;
-				font-family: "Poppins", sans-serif;
-				font-size: 14px;
+				font-family: "Montserrat", sans-serif;
+				font-size: 12px;
 				font-weight: 500;
 				color: #333;
 				margin-bottom: 8px;
@@ -8778,6 +8780,7 @@ body.modal-open {
 	min-height: 59px !important;
 	display: flex !important;
 	align-items: center !important;
+	border: 1px solid #bebebe !important;
 
 	@media #{$media-1440} {
 		min-height: 55px !important;
@@ -8789,6 +8792,32 @@ body.modal-open {
 
 	@media #{$media-480} {
 		min-height: 45px !important;
+	}
+}
+
+/* Override for offer-form - must come after global styles */
+.offer-form .choices__inner,
+.offer-form-container .choices__inner {
+	height: 46px !important;
+	min-height: 46px !important;
+	max-height: 46px !important;
+
+	@media #{$media-1440} {
+		height: 46px !important;
+		min-height: 46px !important;
+		max-height: 46px !important;
+	}
+
+	@media #{$media-820} {
+		height: 46px !important;
+		min-height: 46px !important;
+		max-height: 46px !important;
+	}
+
+	@media #{$media-480} {
+		height: 46px !important;
+		min-height: 46px !important;
+		max-height: 46px !important;
 	}
 }
 
@@ -8892,7 +8921,6 @@ body.modal-open {
 	font-size: 11px;
 }
 
-
 .date-time-picker input {
 	padding-left: 0 !important;
 }
@@ -8904,7 +8932,6 @@ body.modal-open {
 		left: -12px;
 	}
 }
-
 
 .form.invalid {
 	color: #dc3232 !important;
