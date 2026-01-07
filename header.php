@@ -45,7 +45,16 @@
                             <img class="logo" src="<?php echo esc_url($logo_src_mobile); ?>" alt="BuyMyProperty Logo">
                         </a>
                     </div>
-                    <div class="d_flex g_1"> <a href="<?php echo home_url(); ?>" class="btn btn-white">Get an Offer</a>
+                    <div class="d_flex g_1">
+                        <?php
+                        // Get the "Get an Offer" page URL
+                        $get_offer_page = get_pages(array(
+                            'meta_key' => '_wp_page_template',
+                            'meta_value' => 'page-get-an-offer.php'
+                        ));
+                        $get_offer_url = !empty($get_offer_page) ? get_permalink($get_offer_page[0]->ID) : home_url('/get-an-offer/');
+                        ?>
+                        <a href="<?php echo esc_url($get_offer_url); ?>" class="btn btn-white">Get an Offer</a>
                         <button class="menu-toggle" role="button" aria-label="Open menu"
                             aria-controls="mobile-navigation" aria-expanded="false" type="button">
                             <svg width="18" height="19" viewBox="0 0 18 19" fill="none"
