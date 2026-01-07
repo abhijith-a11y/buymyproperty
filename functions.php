@@ -208,33 +208,6 @@ function enqueue_choices_js()
 add_action('wp_enqueue_scripts', 'enqueue_choices_js');
 
 /**
- * Enqueue Flatpickr scripts and styles for datetime picker
- */
-function enqueue_flatpickr()
-{
-    // Only load on pages that might have datetime pickers
-    if (is_page() || is_single()) {
-        // Flatpickr CSS
-        wp_enqueue_style(
-            'flatpickr-css',
-            'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
-            array(),
-            '4.6.13'
-        );
-
-        // Flatpickr JavaScript
-        wp_enqueue_script(
-            'flatpickr-js',
-            'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js',
-            array(),
-            '4.6.13',
-            true
-        );
-    }
-}
-add_action('wp_enqueue_scripts', 'enqueue_flatpickr');
-
-/**
  * Display inner banner component
  *
  * @param string $title Banner title
