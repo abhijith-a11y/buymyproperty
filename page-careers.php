@@ -175,13 +175,124 @@ get_header();
 				const jobTitle = btn.dataset.job;
 				if (hiddenInput) hiddenInput.value = jobTitle; // set the hidden field
 				modal.classList.add('active'); // open modal
+				document.body.classList.add('career-modal-open'); // Add class to body
 			});
 		});
 
-		const closeModal = () => modal.classList.remove('active');
+		const closeModal = () => {
+			modal.classList.remove('active');
+			document.body.classList.remove('career-modal-open'); // Remove class from body
+		};
 
 		closeBtn.addEventListener('click', closeModal);
 		backdrop.addEventListener('click', closeModal);
+
+		// Fix intl-tel-input dropdown z-index when modal is open
+		// The intl-tel-input library appends its dropdown to body
+		function fixIntlTelDropdown() {
+			if (!modal.classList.contains('active')) return;
+
+			// Try multiple possible class names for the dropdown
+			const selectors = [
+				'.iti-flag-dropdown',
+				'.iti-country-list',
+				'ul.iti__country-list',
+				'div.iti__flag-dropdown',
+				'[id*="iti"][id*="dropdown"]',
+				'[id*="iti"][id*="country"]'
+			];
+
+			selectors.forEach(selector => {
+				try {
+					const elements = document.querySelectorAll(selector);
+					elements.forEach(el => {
+						// Force z-index with inline style (highest priority)
+						el.style.setProperty('z-index', '100000', 'important');
+						// Ensure it's positioned
+						const computedStyle = window.getComputedStyle(el);
+						if (computedStyle.position === 'static' || !computedStyle.position) {
+							el.style.setProperty('position', 'absolute', 'important');
+						}
+					});
+				}
+			});
+
+			// Also check all direct children of body that might be the dropdown
+			Array.from(document.body.children).forEach(child => {
+				if (child.classList && (
+					child.classList.contains('iti-flag-dropdown') ||
+					child.classList.contains('iti-country-list') ||
+					(child.id && child.id.includes('iti'))
+				)) {
+					child.style.setProperty('z-index', '100000', 'important');
+					const computedStyle = window.getComputedStyle(child);
+					if (computedStyle.position === 'static' || !computedStyle.position) {
+						child.style.setProperty('position', 'absolute', 'important');
+					}
+				}
+			});
+		} catch (e) {
+			// Silently fail for invalid selectors
+		}
+	});
+		}
+
+	// Continuous check when modal is open
+	let checkInterval = null;
+	const startChecking = () => {
+		if (checkInterval) clearInterval(checkInterval);
+		checkInterval = setInterval(fixIntlTelDropdown, 50); // Check every 50ms
+	};
+	const stopChecking = () => {
+		if (checkInterval) {
+			clearInterval(checkInterval);
+			checkInterval = null;
+		}
+	};
+
+	// Watch for modal open/close
+	const modalObserver = new MutationObserver(function (mutations) {
+		mutations.forEach(function (mutation) {
+			if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+				if (modal.classList.contains('active')) {
+					startChecking();
+				} else {
+					stopChecking();
+				}
+			}
+		});
+	});
+	modalObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
+
+	// Watch for intl-tel-input dropdown being added to DOM
+	const bodyObserver = new MutationObserver(function (mutations) {
+		if (modal.classList.contains('active')) {
+			fixIntlTelDropdown();
+		}
+	});
+	bodyObserver.observe(document.body, {
+		childList: true,
+		subtree: true
+	});
+
+	// Watch for clicks on intl-tel-input flag
+	document.addEventListener('click', function (e) {
+		if (e.target.closest('.intl-tel-input .selected-flag') && modal.classList.contains('active')) {
+			// Use multiple timeouts to catch the dropdown
+			setTimeout(fixIntlTelDropdown, 10);
+			setTimeout(fixIntlTelDropdown, 50);
+			setTimeout(fixIntlTelDropdown, 100);
+			setTimeout(fixIntlTelDropdown, 200);
+		}
+	}, true);
+
+	// Also listen for focus events
+	document.addEventListener('focusin', function (e) {
+		if (e.target.closest('.intl-tel-input') && modal.classList.contains('active')) {
+			setTimeout(fixIntlTelDropdown, 10);
+			setTimeout(fixIntlTelDropdown, 50);
+		}
+	}, true);
 	});
 
 	//File upload

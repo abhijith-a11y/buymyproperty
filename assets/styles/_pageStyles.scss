@@ -5515,6 +5515,7 @@ p {
 
 		@media #{$media-1440} {
 			width: 100%;
+			max-width: 1200px;
 		}
 	}
 
@@ -5714,7 +5715,6 @@ p {
 	//     line-height: 1.6;
 	//   }
 	// }
-
 
 	.section-header {
 		text-align: center;
@@ -6684,7 +6684,7 @@ p {
 		z-index: 3;
 		height: 100%;
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: space-between;
 		width: 100%;
 
@@ -6710,10 +6710,12 @@ p {
 		flex: 1;
 		max-width: 453px;
 		min-width: 250px;
+		padding-bottom: 150px;
 
 		@media #{$media-768} {
 			max-width: 100%;
 			text-align: center;
+			padding-bottom: 0;
 		}
 
 		.trust_text_block {
@@ -7522,7 +7524,7 @@ p {
 			}
 
 			// @media (max-width: 480px) {
-			// 	padding: 
+			// 	padding:
 			// }
 
 			&:hover {
@@ -7950,6 +7952,7 @@ p {
 
 		@media #{$media-768} {
 			height: 180px;
+			border-radius: 16px;
 			padding: 10px 10px 20px 10px;
 		}
 
@@ -7968,6 +7971,10 @@ p {
 				);
 			background-blend-mode: multiply;
 			border-radius: 26px;
+
+			@media #{$media-768} {
+				border-radius: 16px;
+			}
 			// z-index: -1;
 		}
 
@@ -8754,6 +8761,24 @@ p {
 	font-size: 12px !important;
 	font-family: "Montserrat", sans-serif !important;
 	color: #273035 !important;
+}
+
+/* Fix intl-tel-input dropdown z-index in modal */
+/* The intl-tel-input library appends its dropdown to body, so we need to target it globally */
+/* Apply high z-index to ALL intl-tel-input dropdowns when modal is open */
+body.career-modal-open .iti-flag-dropdown,
+body.career-modal-open .iti-country-list,
+body.career-modal-open [class*="iti"][class*="dropdown"],
+body.career-modal-open [class*="country-list"],
+body.career-modal-open [id*="iti"] {
+	z-index: 100000 !important; /* Higher than modal z-index (9999) */
+	position: absolute !important;
+}
+
+/* Global fallback - target ALL intl-tel-input dropdowns (will be overridden by JS) */
+.iti-flag-dropdown,
+.iti-country-list {
+	z-index: 100000 !important;
 }
 
 .wpcf7-not-valid-tip {
