@@ -368,7 +368,11 @@
 
 		.main-nav {
 			list-style: none;
-			margin-bottom: 204px;
+			margin-bottom: 130px;
+
+			@media #{$media-1440} {
+				margin-bottom: 50px;
+			}
 
 			@media #{$media-820} {
 				padding-top: 50px;
@@ -378,12 +382,8 @@
 				padding-top: 60px;
 			}
 
-			@media #{$media-1440} {
-				margin-bottom: 50px;
-			}
-
 			.nav-item {
-				margin-bottom: 30px;
+				margin-bottom: 20px;
 				position: relative;
 
 				@media #{$media-1440} {
