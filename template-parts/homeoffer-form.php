@@ -215,9 +215,7 @@
                 </select>
                 <div class="validation-error" style="color:red;display:none;font-size:12px;"></div>
             </div>
-        </div>
 
-        <div class="form-row-3">
             <div class="upload-group">
                 <input type="file" name="property_images[]" id="property_images" multiple accept="image/*">
                 <div class="upload-button">
@@ -291,6 +289,10 @@
             </div>
         </div>
 
+        <!-- <div class="form-row-3">
+           
+        </div> -->
+
         <div class="form-row-3">
             <div class="submit-group" style="display: flex; gap: 10px;">
                 <button type="button" class="btn-primary footer-cta-btn prev-step-btn">
@@ -319,7 +321,7 @@
     <!-- Step 4: Success Message -->
     <div class="form-step success-step" data-step="4" style="display: none;">
         <div style="text-align: center; padding: 40px 20px;">
-            <div style="margin-bottom: 30px;">
+            <div style="margin-bottom: 10px;">
                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"
                     style="display: inline-block;">
                     <circle cx="40" cy="40" r="40" fill="#4CAF50" />
@@ -327,15 +329,15 @@
                         stroke-linejoin="round" />
                 </svg>
             </div>
-            <h2 style="font-size: 28px; color: #333; margin-bottom: 20px;">Thank You!</h2>
-            <p style="font-size: 16px; color: #666; line-height: 1.6; margin-bottom: 15px;">
+            <h2 style="font-size: 28px; color: #fff; margin-bottom: 10px;">Thank You!</h2>
+            <p style="font-size: 16px; color: #fff; line-height: 1.6; margin-bottom: 15px;">
                 Your property submission has been received successfully.
             </p>
-            <p style="font-size: 16px; color: #666; line-height: 1.6; margin-bottom: 30px;">
+            <p style="font-size: 16px; color: #fff; line-height: 1.6; margin-bottom: 10px;">
                 Our team will review your information and contact you shortly.
             </p>
             <button type="button" class="btn-primary footer-cta-btn" onclick="location.reload();"
-                style="margin-top: 20px;">
+                style="margin-top: 10px;">
                 Submit Another Property
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.88452 0.880798L9.19988 5.00001L4.88452 9.11922" stroke="white" stroke-width="1.28571"

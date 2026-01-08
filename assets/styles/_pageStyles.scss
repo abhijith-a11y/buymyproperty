@@ -193,7 +193,7 @@
 					.form-row-1 {
 						display: flex;
 						gap: 10px;
-						margin-bottom: 15px;
+						margin-bottom: 10px;
 
 						@media #{$media-1440} {
 							margin-bottom: 10px;
@@ -206,32 +206,6 @@
 
 						.form-group {
 							flex: 1;
-						}
-					}
-
-					// Third row: Upload Images and Next Button side by side
-					.form-row-3 {
-						display: flex;
-						gap: 10px;
-						align-items: center;
-						height: 59px;
-						margin-bottom: 15px;
-
-						@media #{$media-1440} {
-							margin-bottom: 10px;
-						}
-
-						.form-group {
-							flex: 1;
-
-							@media #{$media-768} {
-								width: 100%;
-							}
-						}
-
-						@media #{$media-768} {
-							flex-direction: column;
-							gap: 12px;
 						}
 
 						.upload-group {
@@ -263,7 +237,7 @@
 								gap: 12px;
 								width: 100%;
 								height: 100%;
-								padding: 14px 20px;
+								padding: 10px 20px;
 								border: none;
 								border-radius: 50px;
 								background: white;
@@ -309,6 +283,44 @@
 								width: 100%;
 							}
 						}
+					}
+
+					.row-display {
+						#offplan-details-group {
+							display: flex;
+                            gap: 6px;
+                            margin-bottom: 8px;
+                            justify-content: space-between;
+							// flex-wrap: wrap;
+						}
+					}
+
+					// Third row: Upload Images and Next Button side by side
+					.form-row-3 {
+						display: flex;
+						gap: 10px;
+						align-items: center;
+						height: 59px;
+						margin-bottom: 10px;
+
+						@media #{$media-1440} {
+							margin-bottom: 10px;
+						}
+
+						.form-group {
+							flex: 1;
+
+							@media #{$media-768} {
+								width: 100%;
+							}
+						}
+
+						@media #{$media-768} {
+							flex-direction: column;
+							gap: 12px;
+						}
+
+						
 
 						.submit-group {
 							flex: 1;
@@ -8841,6 +8853,7 @@ p {
 	font-size: 12px !important;
 	font-family: "Montserrat", sans-serif !important;
 	color: #273035 !important;
+	font-weight: 500 !important;
 }
 
 /* Fix intl-tel-input dropdown z-index in modal */
@@ -8862,13 +8875,17 @@ body.career-modal-open [id*="iti"] {
 }
 
 .wpcf7-not-valid-tip {
-	font-family: "Gotham", sans-serif;
+	font-family: "Poppins", sans-serif;
 	color: #dc3232;
-	font-size: 1em;
+	font-size: 12px !important;
 	font-weight: normal;
 	display: block;
 	margin-top: 5px;
 	padding-left: 10px;
+
+	@media #{$media-820} {
+		font-size: 10px !important;
+	}
 }
 
 body.modal-open {
