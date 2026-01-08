@@ -1356,12 +1356,12 @@ function initPropertyTypesSwiper() {
 				768: {
 					slidesPerView: 2,
 					spaceBetween: 25,
-					centeredSlides: true,
+					centeredSlides: false,
 				},
 				1024: {
 					slidesPerView: 3,
 					spaceBetween: 30,
-					centeredSlides: true,
+					centeredSlides: false,
 				},
 			},
 			on: {
@@ -1403,6 +1403,23 @@ function initializeBuiltOnTrustAnimation() {
 			"❌ GSAP or ScrollTrigger not available for Built on Trust animation"
 		);
 		return;
+	}
+
+	// Check screen width - disable animation below 768px
+	const isMobile = window.innerWidth < 768;
+	
+	if (isMobile) {
+		console.log("📱 Mobile device detected - Built on Trust animation disabled, showing full content");
+		// Ensure content is visible and not translated on mobile
+		const rightContent = trustSection.querySelector(".trust_right_content");
+		if (rightContent) {
+			gsap.set(rightContent, {
+				opacity: 1,
+				y: 0, // No translation on mobile
+				clearProps: "transform" // Clear any existing transforms
+			});
+		}
+		return; // Exit early on mobile
 	}
 
 	console.log("✅ Initializing Built on Trust ScrollTrigger animation...");
@@ -1464,7 +1481,26 @@ function initializeBuiltOnTrustAnimation() {
 
 	// Handle responsive behavior
 	const handleResize = () => {
-		ScrollTrigger.refresh();
+		// Check if we need to enable/disable animation based on screen size
+		const currentIsMobile = window.innerWidth < 768;
+		
+		if (currentIsMobile && !isMobile) {
+			// Just switched to mobile - disable animation
+			ScrollTrigger.getAll().forEach(trigger => {
+				if (trigger.vars && trigger.vars.trigger === trustSection) {
+					trigger.kill();
+				}
+			});
+			gsap.set(rightContent, {
+				y: 0,
+				clearProps: "transform"
+			});
+		} else if (!currentIsMobile && isMobile) {
+			// Just switched to desktop - reinitialize animation
+			location.reload(); // Simplest way to reinitialize
+		} else {
+			ScrollTrigger.refresh();
+		}
 	};
 
 	window.addEventListener("resize", handleResize);

@@ -6736,6 +6736,10 @@ p {
 	overflow: hidden;
 	background-color: var(--color-bg-primary);
 
+	@media #{$media-768} {
+		height: auto;
+	}
+
 	.built_on_trust_container {
 		position: relative;
 		height: 100vh;
@@ -6744,6 +6748,7 @@ p {
 
 		@media #{$media-768} {
 			padding: 0 15px;
+			height: auto;
 		}
 
 		@media #{$media-480} {
@@ -6865,13 +6870,10 @@ p {
 		gap: 67px;
 
 		@media #{$media-992} {
-			gap: 35;
+			gap: 35px;
 			max-width: 100%;
 		}
 
-		@media #{$media-480} {
-			gap: 25;
-		}
 
 		.trust_stat_item {
 			display: flex;
@@ -6880,17 +6882,16 @@ p {
 			gap: 20px;
 			opacity: 1;
 
-			@media #{$media-1400} {
+			@media #{$media-1440} {
 				gap: 5px;
 			}
 
 			@media #{$media-768} {
-				gap: 25px;
+				gap: 10px;
 				text-align: left;
 			}
 
 			@media #{$media-480} {
-				gap: 20px;
 				flex-direction: column;
 				text-align: left;
 			}
