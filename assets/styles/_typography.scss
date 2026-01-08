@@ -124,7 +124,6 @@
 	@media #{$media-820} {
 		font-size: 14px !important;
 	}
-
 }
 
 @mixin text-body-large-medium {
@@ -136,7 +135,7 @@
 	color: var(--color-white);
 	// Responsive steps
 	@media #{$media-1440} {
-		font-size: 16px ;
+		font-size: 16px;
 	}
 
 	@media #{$media-820} {
@@ -153,7 +152,7 @@
 	color: var(--color-text-light);
 	// Responsive steps
 	@media #{$media-1440} {
-		font-size: 16px ;
+		font-size: 16px;
 	}
 
 	@media #{$media-820} {
@@ -207,7 +206,7 @@
 	@media #{$media-1440} {
 		font-size: 16px;
 	}
-	
+
 	@media #{$media-820} {
 		font-size: 14px;
 	}
