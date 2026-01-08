@@ -94,13 +94,15 @@ get_header();
 
                 <!-- Google Maps API Script -->
                 <?php
+                $map_title = get_field('map_title');
                 $map_address = get_field('map_address');
                 $latitude = get_field('latitude');
                 $longitude = get_field('longitude');
 
-                $map_lat = floatval($latitude);
-                $map_lng = floatval($longitude);
-                $map_title = esc_js($map_address);
+                $map_lat = $latitude ? floatval($latitude) : 25.2048;
+                $map_lng = $longitude ? floatval($longitude) : 55.2708;
+                $map_title = esc_js($map_title);
+                $map_address = esc_js($map_address);
                 ?>
                 <script>
                     function initSnazzyMap() {
@@ -162,7 +164,7 @@ get_header();
 
                         // Map options
                         var mapOptions = {
-                            zoom: 17,
+                            zoom: 9,
                             center: officeLocation,
                             styles: snazzyMapStyles,
                             disableDefaultUI: true,
@@ -175,7 +177,7 @@ get_header();
                         // Create info window content
                         var infoWindowContent = '<div style="padding: 10px; max-width: 250px;">' +
                             '<h4 style="margin: 0 0 8px 0; color: #016C51; font-size: 16px;"><?php echo $map_title; ?></h4>' +
-                            '<p style="margin: 0; color: #333; font-size: 14px; line-height: 1.4;"></p>' +
+                            '<p style="margin: 0; color: #333; font-size: 14px; line-height: 1.4;"><?php echo $map_address; ?></p>' +
                             '</div>';
 
                         // Create info window
@@ -207,8 +209,7 @@ get_header();
                 <!-- Load Google Maps API -->
                 <script async defer
                     src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCaWcgwHmig2q4SmrOXzGuPmf1PP5g-iao&callback=initSnazzyMap">
-                    </script>
-
+                </script>
                 <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCaWcgwHmig2q4SmrOXzGuPmf1PP5g-iao&callback=initialize"></script> -->
 
             </div>

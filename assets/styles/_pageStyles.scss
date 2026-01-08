@@ -2035,7 +2035,7 @@ p {
 		}
 
 		.bold {
-			font-weight: 700 !important;
+			font-weight: 500 !important;
 		}
 
 		.description {
@@ -2047,11 +2047,13 @@ p {
 
 			.tagline {
 				font-weight: 600;
+
+				span {
+					font-weight: 500;
+				}
 			}
 
-			.details {
-				font-weight: 500;
-			}
+			
 		}
 	}
 
