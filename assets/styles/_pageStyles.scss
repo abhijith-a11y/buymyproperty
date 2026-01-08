@@ -1313,6 +1313,7 @@ p {
 				font-size: 16px;
 				font-weight: 400;
 				color: #717171 !important;
+				margin-left: -10px;
 			}
 
 			&.active {
@@ -3309,11 +3310,18 @@ p {
 		overflow: hidden;
 		border-radius: 30px;
 
+		&:hover {
+			img {
+				transform: scale(1.05);
+			}
+		}
+
 		img {
 			width: 100%;
 			height: auto;
 			border-radius: 20px;
 			object-fit: cover;
+			transition: all 0.3s ease;
 		}
 		@media #{$media-1440} {
 			flex: 0 0 38.8%;
@@ -3371,13 +3379,29 @@ p {
 			margin: 0;
 		}
 		ul {
-			margin-top: 20px;
+			margin-top: 25px;
+
+			@media #{$media-1440} {
+				margin-top: 20px;
+			}
+
+			@media #{$media-820} {
+				margin-top: 15px;
+			}
 
 			li {
 				@include text-para;
 				position: relative;
 				padding-left: 20px;
-				margin-bottom: 10px;
+				margin-bottom: 25px;
+
+				@media #{$media-1440} {
+					margin-bottom: 20px;
+				}
+
+				@media #{$media-820} {
+					margin-bottom: 15px;
+				}
 
 				&:last-child {
 					margin-bottom: 0;
@@ -3563,6 +3587,10 @@ p {
 			margin-left: auto;
 			margin-right: auto;
 			margin-top: 30px;
+
+			@media #{$media-820} {
+				font-size: 20px;
+			}
 		}
 	}
 

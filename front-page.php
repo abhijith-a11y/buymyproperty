@@ -203,7 +203,10 @@ get_header(); ?>
     <section class="why_sell_to_us pb_105 pt_105 p_relative">
         <div class="container">
             <div class="section-header">
-                <h2 class="heading-medium-primary"><?php the_field('hm_ws_title'); ?></h2>
+                <h2 class="heading-medium-primary"><?php
+                $ws_title = get_field('hm_ws_title');
+                echo esc_html(ucwords(strtolower($ws_title), " \t\r\n\f\v-_"));
+                ?></h2>
             </div>
 
             <?php if (have_rows('hm_ws_why_sell_to_us')):
