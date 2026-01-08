@@ -89,7 +89,6 @@
 	}
 
 	@media (max-width: 768px) {
-		flex-direction: column;
 		gap: 40px;
 		padding-top: 0;
 		width: 100%;
@@ -358,6 +357,8 @@
 
 		@media #{$media-768} {
 			margin-right: auto;
+			margin-left: auto;
+			width: 70%;
 		}
 
 		@media #{$media-480} {
