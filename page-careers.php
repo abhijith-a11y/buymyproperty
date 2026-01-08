@@ -214,114 +214,137 @@ get_header();
 							el.style.setProperty('position', 'absolute', 'important');
 						}
 					});
+				} catch (e) {
+					// Silently fail for invalid selectors
 				}
 			});
 
 			// Also check all direct children of body that might be the dropdown
-			Array.from(document.body.children).forEach(child => {
-				if (child.classList && (
-					child.classList.contains('iti-flag-dropdown') ||
-					child.classList.contains('iti-country-list') ||
-					(child.id && child.id.includes('iti'))
-				)) {
-					child.style.setProperty('z-index', '100000', 'important');
-					const computedStyle = window.getComputedStyle(child);
-					if (computedStyle.position === 'static' || !computedStyle.position) {
-						child.style.setProperty('position', 'absolute', 'important');
+			try {
+				Array.from(document.body.children).forEach(child => {
+					if (child.classList && (
+						child.classList.contains('iti-flag-dropdown') ||
+						child.classList.contains('iti-country-list') ||
+						(child.id && child.id.includes('iti'))
+					)) {
+						child.style.setProperty('z-index', '100000', 'important');
+						const computedStyle = window.getComputedStyle(child);
+						if (computedStyle.position === 'static' || !computedStyle.position) {
+							child.style.setProperty('position', 'absolute', 'important');
+						}
+					}
+				});
+			} catch (e) {
+				// Silently fail
+			}
+		}
+
+		// Continuous check when modal is open
+		let checkInterval = null;
+		const startChecking = () => {
+			if (checkInterval) clearInterval(checkInterval);
+			checkInterval = setInterval(fixIntlTelDropdown, 50); // Check every 50ms
+		};
+		const stopChecking = () => {
+			if (checkInterval) {
+				clearInterval(checkInterval);
+				checkInterval = null;
+			}
+		};
+
+		// Watch for modal open/close
+		const modalObserver = new MutationObserver(function (mutations) {
+			mutations.forEach(function (mutation) {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+					if (modal.classList.contains('active')) {
+						startChecking();
+					} else {
+						stopChecking();
 					}
 				}
 			});
-		} catch (e) {
-			// Silently fail for invalid selectors
-		}
-	});
-		}
+		});
+		modalObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
 
-	// Continuous check when modal is open
-	let checkInterval = null;
-	const startChecking = () => {
-		if (checkInterval) clearInterval(checkInterval);
-		checkInterval = setInterval(fixIntlTelDropdown, 50); // Check every 50ms
-	};
-	const stopChecking = () => {
-		if (checkInterval) {
-			clearInterval(checkInterval);
-			checkInterval = null;
-		}
-	};
-
-	// Watch for modal open/close
-	const modalObserver = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
-			if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-				if (modal.classList.contains('active')) {
-					startChecking();
-				} else {
-					stopChecking();
-				}
+		// Watch for intl-tel-input dropdown being added to DOM
+		const bodyObserver = new MutationObserver(function (mutations) {
+			if (modal.classList.contains('active')) {
+				fixIntlTelDropdown();
 			}
 		});
-	});
-	modalObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
+		bodyObserver.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
 
-	// Watch for intl-tel-input dropdown being added to DOM
-	const bodyObserver = new MutationObserver(function (mutations) {
-		if (modal.classList.contains('active')) {
-			fixIntlTelDropdown();
-		}
-	});
-	bodyObserver.observe(document.body, {
-		childList: true,
-		subtree: true
-	});
+		// Watch for clicks on intl-tel-input flag
+		document.addEventListener('click', function (e) {
+			if (e.target.closest('.intl-tel-input .selected-flag') && modal.classList.contains('active')) {
+				// Use multiple timeouts to catch the dropdown
+				setTimeout(fixIntlTelDropdown, 10);
+				setTimeout(fixIntlTelDropdown, 50);
+				setTimeout(fixIntlTelDropdown, 100);
+				setTimeout(fixIntlTelDropdown, 200);
+			}
+		}, true);
 
-	// Watch for clicks on intl-tel-input flag
-	document.addEventListener('click', function (e) {
-		if (e.target.closest('.intl-tel-input .selected-flag') && modal.classList.contains('active')) {
-			// Use multiple timeouts to catch the dropdown
-			setTimeout(fixIntlTelDropdown, 10);
-			setTimeout(fixIntlTelDropdown, 50);
-			setTimeout(fixIntlTelDropdown, 100);
-			setTimeout(fixIntlTelDropdown, 200);
-		}
-	}, true);
-
-	// Also listen for focus events
-	document.addEventListener('focusin', function (e) {
-		if (e.target.closest('.intl-tel-input') && modal.classList.contains('active')) {
-			setTimeout(fixIntlTelDropdown, 10);
-			setTimeout(fixIntlTelDropdown, 50);
-		}
-	}, true);
+		// Also listen for focus events
+		document.addEventListener('focusin', function (e) {
+			if (e.target.closest('.intl-tel-input') && modal.classList.contains('active')) {
+				setTimeout(fixIntlTelDropdown, 10);
+				setTimeout(fixIntlTelDropdown, 50);
+			}
+		}, true);
 	});
 
 	//File upload
-	document.addEventListener('DOMContentLoaded', function () {
-		// Select the CF7 resume file input and label
-		const resumeInput = document.querySelector('#resume-file');
+	function setupFileUpload() {
+		// Select the CF7 resume file input - try multiple selectors
+		let resumeInput = document.querySelector('#resume-file');
+		if (!resumeInput) {
+			// Try finding file input within the career form
+			const careerForm = document.querySelector('#careerApplyForm');
+			if (careerForm) {
+				resumeInput = careerForm.querySelector('input[type="file"]');
+			}
+		}
+		if (!resumeInput) {
+			// Try finding any file input in default_upload_file
+			resumeInput = document.querySelector('.default_upload_file input[type="file"]');
+		}
+
 		const resumeLabel = document.querySelector('.default_upload_file .file-label');
 		const browseBtn = document.querySelector('.default_upload_file .browse-btn');
 
-		if (!resumeInput || !resumeLabel) return;
+		if (!resumeInput) {
+			console.log('Resume file input not found');
+			return;
+		}
 
 		// Update label on file selection
 		resumeInput.addEventListener('change', function (e) {
 			const files = e.target.files;
-			if (files.length > 0) {
-				if (files.length === 1) {
-					resumeLabel.textContent = files[0].name;
+			if (resumeLabel) {
+				if (files.length > 0) {
+					if (files.length === 1) {
+						resumeLabel.textContent = files[0].name;
+					} else {
+						resumeLabel.textContent = `${files.length} files selected`;
+					}
 				} else {
-					resumeLabel.textContent = `${files.length} files selected`;
+					resumeLabel.textContent = 'Attach Resume';
 				}
-			} else {
-				resumeLabel.textContent = 'Attach Resume';
 			}
 		});
 
-		// Optional: click on "Browse" opens file dialog
+		// Click on "Browse" opens file dialog
 		if (browseBtn) {
-			browseBtn.addEventListener('click', function () {
-				resumeInput.click();
+			browseBtn.addEventListener('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				if (resumeInput) {
+					resumeInput.click();
+				}
 			});
 		}
 
@@ -334,7 +357,22 @@ get_header();
 				resumeLabel.textContent = 'Attach Resume'; // Reset label text
 			}
 		}, false);
-	});
+	}
+
+	// Run on DOMContentLoaded
+	document.addEventListener('DOMContentLoaded', setupFileUpload);
+
+	// Also run when modal opens (in case form is loaded dynamically)
+	const modal = document.getElementById('careerApplyModal');
+	if (modal) {
+		const modalObserver = new MutationObserver(function (mutations) {
+			if (modal.classList.contains('active')) {
+				// Wait a bit for CF7 form to render
+				setTimeout(setupFileUpload, 100);
+			}
+		});
+		modalObserver.observe(modal, { attributes: true, attributeFilter: ['class'] });
+	}
 
 	// Initialize Choices.js for careers sort dropdown
 	document.addEventListener('DOMContentLoaded', function () {
