@@ -535,19 +535,46 @@
                             ? placeholderOption.text
                             : 'Select an Emirate first';
 
+                        // Ensure native select is enabled before initializing Choices
+                        nativeSelect.removeAttribute('disabled');
+                        nativeSelect.disabled = false;
+                        nativeSelect.removeAttribute('readonly');
+
                         communityChoicesInstance = new Choices(nativeSelect, {
                             placeholder: true,
                             placeholderValue: placeholder,
                             searchEnabled: false,
                             itemSelectText: '',
                             shouldSort: false,
-                            removeItemButton: false
+                            removeItemButton: false,
+                            allowHTML: false
                         });
 
-                        // Keep disabled initially if no emirate is selected
+                        // Check if emirate is selected to determine if we should enable
                         var emirateValue = emirateSelect.value;
+                        // If emirate select uses Choices.js, get value from native select
+                        var emirateChoicesContainer = emirateSelect.closest('.choices');
+                        if (emirateChoicesContainer) {
+                            var emirateNativeSelect = emirateChoicesContainer.querySelector('select');
+                            if (emirateNativeSelect) {
+                                emirateValue = emirateNativeSelect.value;
+                            }
+                        }
+
+                        // Always enable if we're calling this from updateCommunities (emirate is selected)
+                        // Only disable if this is the initial load and no emirate is selected
                         if (!emirateValue || emirateValue === '') {
-                            communityChoicesInstance.disable();
+                            // Only disable on initial load, not when updating
+                            var isInitialLoad = !nativeSelect.querySelector('option:not([disabled]):not([value=""])');
+                            if (isInitialLoad) {
+                                communityChoicesInstance.disable();
+                            } else {
+                                // If there are options, enable it
+                                communityChoicesInstance.enable();
+                            }
+                        } else {
+                            // Enable if emirate is selected
+                            communityChoicesInstance.enable();
                         }
                     } catch (e) {
                         console.error('Choices.js init error:', e);
@@ -599,6 +626,13 @@
                         }
                     }
 
+                    // Ensure native select is enabled BEFORE updating options
+                    nativeSelect.removeAttribute('disabled');
+                    nativeSelect.disabled = false;
+
+                    // Also remove any readonly attribute
+                    nativeSelect.removeAttribute('readonly');
+
                     // Clear existing options
                     nativeSelect.innerHTML = '';
 
@@ -623,16 +657,115 @@
                     // Reinitialize Choices.js with new options
                     setTimeout(function () {
                         initCommunityChoices();
-                        // Enable after initialization
+                        // Enable after initialization and ensure it's selectable
                         setTimeout(function () {
                             if (communityChoicesInstance) {
-                                communityChoicesInstance.enable();
-                                communityChoicesInstance.setChoiceByValue('');
-                                console.log('Choices.js reinitialized and enabled');
+                                // Get the native select and ensure it's enabled
+                                var nativeSelect = communitySelect;
+                                var choicesContainer = communitySelect.closest('.choices');
+                                if (choicesContainer) {
+                                    var wrappedSelect = choicesContainer.querySelector('select');
+                                    if (wrappedSelect) {
+                                        nativeSelect = wrappedSelect;
+                                        // Ensure native select is enabled
+                                        nativeSelect.removeAttribute('disabled');
+                                        nativeSelect.disabled = false;
+                                    }
+                                }
+
+                                // Force enable the Choices.js instance
+                                try {
+                                    if (typeof communityChoicesInstance.enable === 'function') {
+                                        communityChoicesInstance.enable();
+                                        console.log('Called enable() on Choices instance');
+                                    } else {
+                                        console.warn('enable() method not found on Choices instance');
+                                    }
+                                } catch (e) {
+                                    console.error('Error enabling Choices:', e);
+                                }
+
+                                // Also try to enable via the input property if it exists
+                                try {
+                                    if (communityChoicesInstance.input && typeof communityChoicesInstance.input.enable === 'function') {
+                                        communityChoicesInstance.input.enable();
+                                    }
+                                } catch (e) {
+                                    // Ignore
+                                }
+
+                                // Remove any disabled classes manually
+                                if (choicesContainer) {
+                                    choicesContainer.classList.remove('is-disabled');
+                                    var inner = choicesContainer.querySelector('.choices__inner');
+                                    if (inner) {
+                                        inner.classList.remove('is-disabled');
+                                        inner.setAttribute('tabindex', '0');
+                                    }
+                                    var input = choicesContainer.querySelector('.choices__input');
+                                    if (input) {
+                                        input.setAttribute('tabindex', '0');
+                                        input.removeAttribute('disabled');
+                                    }
+                                    var button = choicesContainer.querySelector('.choices__button');
+                                    if (button) {
+                                        button.setAttribute('tabindex', '0');
+                                    }
+                                }
+
+                                // Don't set to empty value - let it show placeholder naturally
+                                // The placeholder will show automatically when no value is selected
+
+                                // Verify it's actually enabled by checking the container
+                                var isDisabled = choicesContainer ? choicesContainer.classList.contains('is-disabled') : false;
+                                console.log('Choices.js reinitialized. Container is disabled:', isDisabled);
+
+                                // Double-check the instance is enabled
+                                if (communityChoicesInstance && communityChoicesInstance.input) {
+                                    console.log('Choices instance input exists:', !!communityChoicesInstance.input);
+                                }
+
+                                // Ensure the dropdown is clickable - remove all blocking styles
+                                if (choicesContainer) {
+                                    // Remove disabled class from container
+                                    choicesContainer.classList.remove('is-disabled');
+                                    choicesContainer.style.pointerEvents = 'auto';
+
+                                    var trigger = choicesContainer.querySelector('.choices__inner');
+                                    if (trigger) {
+                                        // Remove any styles that might block interaction
+                                        trigger.style.pointerEvents = 'auto';
+                                        trigger.style.cursor = 'pointer';
+                                        trigger.style.opacity = '1';
+                                        trigger.classList.remove('is-disabled');
+                                    }
+
+                                    // Also ensure the button is clickable
+                                    var button = choicesContainer.querySelector('.choices__button');
+                                    if (button) {
+                                        button.style.pointerEvents = 'auto';
+                                        button.style.cursor = 'pointer';
+                                    }
+
+                                    // Ensure the list dropdown is accessible
+                                    var list = choicesContainer.querySelector('.choices__list--dropdown');
+                                    if (list) {
+                                        list.style.pointerEvents = 'auto';
+                                    }
+                                }
+
+                                // Verify native select is enabled
+                                if (nativeSelect) {
+                                    nativeSelect.disabled = false;
+                                    nativeSelect.removeAttribute('disabled');
+                                    console.log('Native select disabled attribute:', nativeSelect.disabled);
+                                }
+
+                                console.log('Community select should now be fully selectable');
                             } else {
                                 console.error('Failed to reinitialize Choices.js');
                             }
-                        }, 100);
+                        }, 150);
                     }, 50);
                 }
 
