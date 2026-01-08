@@ -351,7 +351,6 @@ var swiper = new Swiper(".our-products-swiper", {
 	},
 });
 
-
 function loadSwiperForProducts() {
 	if (typeof Swiper === "undefined") {
 		console.log("❌ Swiper JS not found for products slider");
@@ -1073,7 +1072,7 @@ function initMarqueeSwiper() {
 				// Ensure smooth transitions with linear timing
 				this.wrapperEl.style.transitionTimingFunction = "linear";
 			},
-			
+
 			transitionEnd: function () {
 				// Maintain linear timing after transition
 				this.wrapperEl.style.transitionTimingFunction = "linear";
@@ -1082,7 +1081,7 @@ function initMarqueeSwiper() {
 	});
 
 	// Ensure autoplay is running after Swiper is fully initialized
-	setTimeout(function() {
+	setTimeout(function () {
 		if (swiper && swiper.autoplay) {
 			swiper.autoplay.start();
 		}
