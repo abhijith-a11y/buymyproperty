@@ -1407,16 +1407,18 @@ function initializeBuiltOnTrustAnimation() {
 
 	// Check screen width - disable animation below 768px
 	const isMobile = window.innerWidth < 768;
-	
+
 	if (isMobile) {
-		console.log("📱 Mobile device detected - Built on Trust animation disabled, showing full content");
+		console.log(
+			"📱 Mobile device detected - Built on Trust animation disabled, showing full content"
+		);
 		// Ensure content is visible and not translated on mobile
 		const rightContent = trustSection.querySelector(".trust_right_content");
 		if (rightContent) {
 			gsap.set(rightContent, {
 				opacity: 1,
 				y: 0, // No translation on mobile
-				clearProps: "transform" // Clear any existing transforms
+				clearProps: "transform", // Clear any existing transforms
 			});
 		}
 		return; // Exit early on mobile
@@ -1483,17 +1485,17 @@ function initializeBuiltOnTrustAnimation() {
 	const handleResize = () => {
 		// Check if we need to enable/disable animation based on screen size
 		const currentIsMobile = window.innerWidth < 768;
-		
+
 		if (currentIsMobile && !isMobile) {
 			// Just switched to mobile - disable animation
-			ScrollTrigger.getAll().forEach(trigger => {
+			ScrollTrigger.getAll().forEach((trigger) => {
 				if (trigger.vars && trigger.vars.trigger === trustSection) {
 					trigger.kill();
 				}
 			});
 			gsap.set(rightContent, {
 				y: 0,
-				clearProps: "transform"
+				clearProps: "transform",
 			});
 		} else if (!currentIsMobile && isMobile) {
 			// Just switched to desktop - reinitialize animation
@@ -1566,13 +1568,16 @@ function initHowItWorksSwiper() {
 			spaceBetween: 60,
 			loop: true,
 			speed: 600,
-			grabCursor: true,
-			centeredSlides: true,
-			// No navigation or pagination on mobile - swipe only
-			navigation: false,
-			pagination: false,
+			navigation: {
+				nextEl: ".how-it-works-next",
+				prevEl: ".how-it-works-prev",
+			},
+			pagination: {
+				el: ".how-it-works-pagination",
+				clickable: true,
+			},
 		});
-		console.log("✅ How It Works swiper initialized for mobile (swipe only)");
+		console.log("✅ How It Works swiper initialized");
 	}
 
 	// Handle window resize to show/hide desktop vs mobile layout
