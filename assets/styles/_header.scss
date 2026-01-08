@@ -62,7 +62,8 @@
 	left: 0;
 	width: 100%;
 	z-index: 990;
-	transition: all 0.8s ease;
+	transition: transform 0.3s ease, background-color 0.3s ease;
+	transform: translateY(0); // Initial position
 
 	.container_header_top,
 	.container_header_bottom {
@@ -72,7 +73,11 @@
 	.container_header_top {
 		background: #fff;
 		width: 100vw;
-		transition: transform 0.8s ease, height 0.8s ease, opacity 0.8s ease;
+		transition: transform 0.3s ease, opacity 0.3s ease;
+		transform: translateY(0);
+		opacity: 1;
+		height: 58px;
+		overflow: hidden; // Prevent content from showing when translated
 	}
 
 	&__top {
@@ -182,13 +187,16 @@
 
 	&.scrolldown {
 		background-color: #fff;
+		transform: translateY(
+			-58px
+		); // Translate entire header up to fill the space
 
 		.container_header_top {
-			// opacity: 0;
-			transform: translateY(-100%);
+			transform: translateY(
+				-58px
+			); // Use exact height value for smooth translate
+			opacity: 0;
 			pointer-events: none;
-			height: 0;
-			overflow: hidden;
 		}
 
 		.btn-white {

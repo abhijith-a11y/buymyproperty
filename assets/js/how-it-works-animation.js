@@ -92,7 +92,7 @@
         defaults: { ease: 'none' }, // smooth, no bounce during scrub
         scrollTrigger: {
           trigger: this.section,
-          start: 'top top+=50',
+          start: 'top top+=20',
                     // start: 'top top',
 
           end: `+=${scrollDistance}`,
