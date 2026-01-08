@@ -1031,9 +1031,9 @@ function initMarqueeSwiper() {
 		slidesPerView: "auto",
 		spaceBetween: 0,
 		loop: true,
-		loopAdditionalSlides: 2,
-		loopedSlides: 3,
-		speed: 30000, // Uniform speed for all devices (15 seconds)
+		loopAdditionalSlides: 3, // Increased for better loop
+		loopedSlides: 6, // Match the number of slides we're creating
+		speed: 30000, // Uniform speed for all devices (30 seconds)
 		autoplay: {
 			delay: 0,
 			disableOnInteraction: false,
@@ -1048,8 +1048,11 @@ function initMarqueeSwiper() {
 		allowTouchMove: false,
 		simulateTouch: false,
 		resistance: false,
+		resistanceRatio: 0,
 		watchSlidesProgress: true,
 		watchSlidesVisibility: true,
+		// Prevent loop from breaking
+		loopPreventsSliding: false,
 
 		// Ensure smooth continuous movement
 		on: {
@@ -1062,6 +1065,8 @@ function initMarqueeSwiper() {
 				}
 				// Set linear timing for smooth movement
 				this.wrapperEl.style.transitionTimingFunction = "linear";
+				// Force loop to work
+				this.loopCreate();
 			},
 
 			transitionStart: function () {
@@ -1076,10 +1081,16 @@ function initMarqueeSwiper() {
 		},
 	});
 
-	// Ensure autoplay is running
-	if (swiper.autoplay) {
-		swiper.autoplay.start();
-	}
+	// Ensure autoplay is running after Swiper is fully initialized
+	setTimeout(function() {
+		if (swiper && swiper.autoplay) {
+			swiper.autoplay.start();
+		}
+		// Update Swiper to ensure loop is properly calculated
+		if (swiper && swiper.update) {
+			swiper.update();
+		}
+	}, 100);
 
 	// Pause marquee on hover (optional)
 	marqueeSwiper.addEventListener("mouseenter", function () {

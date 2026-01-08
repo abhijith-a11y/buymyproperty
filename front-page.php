@@ -101,8 +101,9 @@ get_header(); ?>
             <div class="swiper marquee-swiper">
                 <div class="swiper-wrapper">
                     <?php
-                    // Repeat slides for seamless loop
-                    for ($i = 0; $i < 3; $i++): ?>
+                    // Repeat slides multiple times for seamless infinite loop
+                    // More slides = better loop performance with Swiper
+                    for ($i = 0; $i < 6; $i++): ?>
                         <div class="swiper-slide">
                             <div class="marquee-content">
                                 <?php

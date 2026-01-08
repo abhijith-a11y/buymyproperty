@@ -911,10 +911,34 @@
                     return; // Skip validation for hidden fields
                 }
 
+                // For select fields, check if Choices.js is wrapping it
+                let errorContainer = group;
+                if (input.tagName === 'SELECT') {
+                    // Check if this select is wrapped by Choices.js
+                    var choicesContainer = input.closest('.choices');
+                    if (choicesContainer) {
+                        // If Choices.js is wrapping it, place error after the Choices container
+                        // Find the form-group that contains the Choices container
+                        var formGroup = choicesContainer.closest('.form-group');
+                        if (formGroup) {
+                            errorContainer = formGroup;
+                        } else {
+                            // Fallback: use the parent of Choices container
+                            errorContainer = choicesContainer.parentElement || group;
+                        }
+                    }
+                }
+
                 // Remove any existing error divs first to prevent duplicates
+                // Remove from both the group and the errorContainer
                 group.querySelectorAll('.validation-error, .field-error').forEach(div => {
                     div.remove();
                 });
+                if (errorContainer !== group) {
+                    errorContainer.querySelectorAll('.validation-error, .field-error').forEach(div => {
+                        div.remove();
+                    });
+                }
 
                 // Create a single error div
                 let errorDiv = document.createElement('div');
@@ -922,7 +946,11 @@
                 errorDiv.style.color = 'red';
                 errorDiv.style.display = 'none';
                 errorDiv.style.fontSize = '12px';
-                group.appendChild(errorDiv);
+                errorDiv.style.marginTop = '5px'; // Add spacing below field
+                errorDiv.style.width = '100%'; // Full width like input errors
+
+                // Append to errorContainer (which will be the form-group for selects with Choices.js)
+                errorContainer.appendChild(errorDiv);
 
                 let fieldValue = input.value ? input.value.trim() : '';
                 let fieldError = '';
@@ -993,15 +1021,46 @@
 
                 if (fieldError) {
                     // Show error - add red border and display error message
-                    input.style.borderColor = 'red';
-                    input.style.borderWidth = '2px';
+                    // For select fields with Choices.js, also style the Choices container
+                    if (input.tagName === 'SELECT') {
+                        var choicesContainer = input.closest('.choices');
+                        if (choicesContainer) {
+                            var choicesInner = choicesContainer.querySelector('.choices__inner');
+                            if (choicesInner) {
+                                choicesInner.style.borderColor = 'red';
+                                choicesInner.style.borderWidth = '2px';
+                            }
+                        } else {
+                            // Regular select without Choices.js
+                            input.style.borderColor = 'red';
+                            input.style.borderWidth = '2px';
+                        }
+                    } else {
+                        // Regular input field
+                        input.style.borderColor = 'red';
+                        input.style.borderWidth = '2px';
+                    }
                     errorDiv.innerText = fieldError;
                     errorDiv.style.display = 'block';
                     errorDiv.style.visibility = 'visible';
                 } else {
                     // Clear error styling
-                    input.style.borderColor = '';
-                    input.style.borderWidth = '';
+                    if (input.tagName === 'SELECT') {
+                        var choicesContainer = input.closest('.choices');
+                        if (choicesContainer) {
+                            var choicesInner = choicesContainer.querySelector('.choices__inner');
+                            if (choicesInner) {
+                                choicesInner.style.borderColor = '';
+                                choicesInner.style.borderWidth = '';
+                            }
+                        } else {
+                            input.style.borderColor = '';
+                            input.style.borderWidth = '';
+                        }
+                    } else {
+                        input.style.borderColor = '';
+                        input.style.borderWidth = '';
+                    }
                     errorDiv.innerText = '';
                     errorDiv.style.display = 'none';
                 }
@@ -1068,9 +1127,17 @@
                 if (!stepIsValid) {
                     // Errors are already displayed for all invalid fields by validateStep()
                     // Scroll to first error in current step for better UX
-                    const firstError = currentStepElement.querySelector('input[style*="border-color: red"], select[style*="border-color: red"]');
+                    const firstError = currentStepElement.querySelector('input[style*="border-color: red"], select[style*="border-color: red"], .choices__inner[style*="border-color: red"]');
                     if (firstError) {
-                        window.scrollTo({ top: firstError.offsetTop - 100, behavior: 'smooth' });
+                        var scrollTarget = firstError;
+                        // If it's a Choices.js inner element, get the form-group container
+                        if (firstError.classList.contains('choices__inner')) {
+                            var formGroup = firstError.closest('.form-group');
+                            if (formGroup) {
+                                scrollTarget = formGroup;
+                            }
+                        }
+                        window.scrollTo({ top: scrollTarget.offsetTop - 100, behavior: 'smooth' });
                     }
                     return false; // Prevent any further action
                 }
@@ -1156,10 +1223,18 @@
                     currentStep = firstInvalidStep;
                     showStep(currentStep);
                 }
-                // Scroll to first error
-                const firstError = form.querySelector('input[style*="border-color: red"], select[style*="border-color: red"]');
+                // Scroll to first error - check for both regular fields and Choices.js inner elements
+                const firstError = form.querySelector('input[style*="border-color: red"], select[style*="border-color: red"], .choices__inner[style*="border-color: red"]');
                 if (firstError) {
-                    window.scrollTo({ top: firstError.offsetTop - 100, behavior: 'smooth' });
+                    var scrollTarget = firstError;
+                    // If it's a Choices.js inner element, get the form-group container
+                    if (firstError.classList.contains('choices__inner')) {
+                        var formGroup = firstError.closest('.form-group');
+                        if (formGroup) {
+                            scrollTarget = formGroup;
+                        }
+                    }
+                    window.scrollTo({ top: scrollTarget.offsetTop - 100, behavior: 'smooth' });
                 }
                 return false;
             }
@@ -1216,27 +1291,66 @@
                         Object.keys(data.errors).forEach(fieldName => {
                             const field = form.querySelector(`[name="${fieldName}"]`);
                             if (field) {
-                                field.style.borderColor = 'red';
-                                const group = field.parentElement;
+                                // Determine error container - for selects with Choices.js, use form-group
+                                let errorContainer = field.parentElement;
+                                if (field.tagName === 'SELECT') {
+                                    var choicesContainer = field.closest('.choices');
+                                    if (choicesContainer) {
+                                        var formGroup = choicesContainer.closest('.form-group');
+                                        if (formGroup) {
+                                            errorContainer = formGroup;
+                                        }
+                                    }
+                                }
+
+                                // Style the field border
+                                if (field.tagName === 'SELECT') {
+                                    var choicesContainer = field.closest('.choices');
+                                    if (choicesContainer) {
+                                        var choicesInner = choicesContainer.querySelector('.choices__inner');
+                                        if (choicesInner) {
+                                            choicesInner.style.borderColor = 'red';
+                                            choicesInner.style.borderWidth = '2px';
+                                        }
+                                    } else {
+                                        field.style.borderColor = 'red';
+                                        field.style.borderWidth = '2px';
+                                    }
+                                } else {
+                                    field.style.borderColor = 'red';
+                                    field.style.borderWidth = '2px';
+                                }
+
                                 // Remove any existing error divs first
-                                group.querySelectorAll('.validation-error, .field-error').forEach(div => {
+                                errorContainer.querySelectorAll('.validation-error, .field-error').forEach(div => {
                                     div.remove();
                                 });
+
                                 // Create a single error div
                                 const errorDiv = document.createElement('div');
                                 errorDiv.className = 'validation-error';
                                 errorDiv.style.color = 'red';
                                 errorDiv.style.display = 'block';
                                 errorDiv.style.fontSize = '12px';
+                                errorDiv.style.marginTop = '5px';
+                                errorDiv.style.width = '100%';
                                 errorDiv.innerText = data.errors[fieldName];
-                                group.appendChild(errorDiv);
+                                errorContainer.appendChild(errorDiv);
                             }
                         });
 
-                        // Scroll to first error
-                        const firstError = form.querySelector('input[style*="border-color: red"], select[style*="border-color: red"]');
+                        // Scroll to first error - check for both regular fields and Choices.js inner elements
+                        const firstError = form.querySelector('input[style*="border-color: red"], select[style*="border-color: red"], .choices__inner[style*="border-color: red"]');
                         if (firstError) {
-                            window.scrollTo({ top: firstError.offsetTop - 100, behavior: 'smooth' });
+                            var scrollTarget = firstError;
+                            // If it's a Choices.js inner element, get the form-group container
+                            if (firstError.classList.contains('choices__inner')) {
+                                var formGroup = firstError.closest('.form-group');
+                                if (formGroup) {
+                                    scrollTarget = formGroup;
+                                }
+                            }
+                            window.scrollTo({ top: scrollTarget.offsetTop - 100, behavior: 'smooth' });
                         }
                     } else {
                         // Server error or other error
@@ -1294,20 +1408,76 @@
         const allInputs = form.querySelectorAll('input, select, textarea');
         allInputs.forEach(input => {
             input.addEventListener('change', function () {
-                this.style.borderColor = '';
+                // Clear border styling
+                if (this.tagName === 'SELECT') {
+                    var choicesContainer = this.closest('.choices');
+                    if (choicesContainer) {
+                        var choicesInner = choicesContainer.querySelector('.choices__inner');
+                        if (choicesInner) {
+                            choicesInner.style.borderColor = '';
+                            choicesInner.style.borderWidth = '';
+                        }
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.borderWidth = '';
+                    }
+                } else {
+                    this.style.borderColor = '';
+                    this.style.borderWidth = '';
+                }
                 this.classList.remove('error-border');
-                let group = this.parentElement;
+
+                // Find error container (form-group for selects with Choices.js)
+                let errorContainer = this.parentElement;
+                if (this.tagName === 'SELECT') {
+                    var choicesContainer = this.closest('.choices');
+                    if (choicesContainer) {
+                        var formGroup = choicesContainer.closest('.form-group');
+                        if (formGroup) {
+                            errorContainer = formGroup;
+                        }
+                    }
+                }
+
                 // Remove all error divs
-                group.querySelectorAll('.validation-error, .field-error').forEach(div => {
+                errorContainer.querySelectorAll('.validation-error, .field-error').forEach(div => {
                     div.remove();
                 });
             });
             input.addEventListener('input', function () {
-                this.style.borderColor = '';
+                // Clear border styling
+                if (this.tagName === 'SELECT') {
+                    var choicesContainer = this.closest('.choices');
+                    if (choicesContainer) {
+                        var choicesInner = choicesContainer.querySelector('.choices__inner');
+                        if (choicesInner) {
+                            choicesInner.style.borderColor = '';
+                            choicesInner.style.borderWidth = '';
+                        }
+                    } else {
+                        this.style.borderColor = '';
+                        this.style.borderWidth = '';
+                    }
+                } else {
+                    this.style.borderColor = '';
+                    this.style.borderWidth = '';
+                }
                 this.classList.remove('error-border');
-                let group = this.parentElement;
+
+                // Find error container (form-group for selects with Choices.js)
+                let errorContainer = this.parentElement;
+                if (this.tagName === 'SELECT') {
+                    var choicesContainer = this.closest('.choices');
+                    if (choicesContainer) {
+                        var formGroup = choicesContainer.closest('.form-group');
+                        if (formGroup) {
+                            errorContainer = formGroup;
+                        }
+                    }
+                }
+
                 // Remove all error divs
-                group.querySelectorAll('.validation-error, .field-error').forEach(div => {
+                errorContainer.querySelectorAll('.validation-error, .field-error').forEach(div => {
                     div.remove();
                 });
             });

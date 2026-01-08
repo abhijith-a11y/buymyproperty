@@ -48,7 +48,8 @@
 			flex: 0 0 60%;
 			padding-right: 40px;
 			position: relative;
-			padding-top: 255px;
+			// padding-top: 255px;
+			padding-top: 200px;
 			padding-left: calc((100% - 1400px) / 2);
 
 			@media (max-width: 1470px) {
@@ -67,7 +68,7 @@
 			}
 
 			@media #{$media-768} {
-				padding-top: 45px;
+				padding-top: 35px;
 				flex: 1;
 				padding-right: auto;
 				text-align: center;
@@ -78,7 +79,8 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				height: 355px;
+				// height: 355px;
+				height: 420px;
 				width: 100%;
 				overflow: visible;
 				border-radius: 20px;
@@ -90,7 +92,7 @@
 					inset: 0; // shorthand for top: 0; right: 0; bottom: 0; left: 0;
 					background: linear-gradient(
 						90deg,
-						rgba(0, 0, 0, 0.5) 5.7%,
+						rgba(0, 0, 0, 0.5) 100%,
 						rgba(0, 0, 0, 0) 100%
 					);
 					border-radius: inherit; // matches parent’s border-radius
@@ -98,10 +100,18 @@
 					pointer-events: none; // overlay won’t block clicks
 				}
 
+				@media #{$media-1440} {
+					height: 380px;
+				}
+
 				@media #{$media-1024} {
 					position: relative;
 					margin-top: 40px;
 					height: 460px;
+				}
+
+				@media #{$media-768} {
+					margin-top: 30px;
 				}
 
 				video {
@@ -139,7 +149,7 @@
 
 					@media #{$media-768} {
 						width: 60%;
-						transform: translate(-50%, -58%);
+						transform: translate(-50%, -50%);
 					}
 
 					@media #{$media-480} {
@@ -149,7 +159,7 @@
 					.validation-error {
 						font-size: 12px !important;
 						color: red;
-						font-weight: 600;
+						font-weight: 700;
 						margin-top: 1px;
 						display: block;
 						padding-left: 20px;
@@ -157,6 +167,10 @@
 
 						@media #{$media-1200} {
 							font-size: 10px !important;
+						}
+
+						@media #{$media-768} {
+							text-align: left;
 						}
 					}
 
@@ -249,8 +263,16 @@
 								cursor: pointer;
 								box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
+								@media #{$media-1440} {	
+									padding: 6px 20px;
+								}
+
 								@media #{$media-768} {
 									max-height: 50px;
+								}
+
+								@media #{$media-820} {
+									padding: 4px 20px;
 								}
 
 								&:hover {
@@ -300,7 +322,7 @@
 						display: flex;
 						gap: 10px;
 						align-items: center;
-						height: 59px;
+						// height: 59px;
 						margin-bottom: 10px;
 
 						@media #{$media-1440} {
@@ -365,7 +387,7 @@
 		.hero-description {
 			@include text-body-large;
 			margin-bottom: 0;
-			max-width: 516px;
+			// max-width: 516px;
 			line-height: 1.6;
 
 			@media #{$media-768} {
@@ -585,15 +607,15 @@
 	}
 
 	// Responsive Design
-	@media (max-width: 1400px) {
+	@media (max-width: 1440px) {
 		.marquee-separator {
 			font-size: 15px;
 			margin: 0 12px;
 		}
 
 		.marquee-content {
-			gap: 25px;
-			padding: 0 25px;
+			gap: 0;
+			padding: 0;
 		}
 	}
 
@@ -9058,7 +9080,7 @@ body.modal-open {
 	position: relative;
 }
 .property-form .form-group .validation-error {
-	position: absolute;
+	// position: absolute;
 	right: 10px;
 	font-family: "Montserrat", sans-serif;
 	font-size: 11px;
