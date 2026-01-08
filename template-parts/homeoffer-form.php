@@ -35,7 +35,7 @@
 
         <div class="form-row-3">
             <div class="form-group">
-                <select name="community_area" id="community-area" required>
+                <select name="community_area" id="community-area" data-no-choices required>
                     <option value="" selected disabled>Select an Emirate first</option>
                 </select>
                 <div class="validation-error" style="color:red;display:none;font-size:12px;"></div>
@@ -488,50 +488,54 @@
             const communitySelect = document.getElementById('community-area');
 
             if (emirateSelect && communitySelect) {
-                // Function to initialize or reinitialize Choices.js for community select
+                var communityChoicesInstance = null;
+
+                // Initialize Choices.js ONCE and keep it initialized
                 function initCommunityChoices() {
-                    // Check if Choices.js is available
                     if (typeof Choices === 'undefined') {
+                        setTimeout(initCommunityChoices, 100);
                         return;
                     }
 
-                    // Get the native select element (might be wrapped by Choices.js)
+                    // Get native select - always use the original select element
                     var nativeSelect = communitySelect;
-                    var choicesContainer = null;
-                    if (communitySelect.closest('.choices')) {
-                        choicesContainer = communitySelect.closest('.choices');
-                        nativeSelect = choicesContainer.querySelector('select');
-                    }
 
-                    if (!nativeSelect) return;
-
-                    // Destroy existing Choices instance if any
-                    try {
-                        var existingInstance = Choices.getInstance(nativeSelect);
-                        if (existingInstance) {
-                            existingInstance.destroy();
-                        }
-                    } catch (e) {
-                        // Ignore errors
-                    }
-
-                    // Remove disabled attribute and classes before initializing
-                    nativeSelect.disabled = false;
-                    nativeSelect.removeAttribute('disabled');
+                    // If it's already wrapped by Choices.js, unwrap it first
+                    var choicesContainer = communitySelect.closest('.choices');
                     if (choicesContainer) {
-                        choicesContainer.classList.remove('is-disabled');
+                        var wrappedSelect = choicesContainer.querySelector('select');
+                        if (wrappedSelect) {
+                            // Replace the wrapper with the native select
+                            choicesContainer.parentNode.replaceChild(wrappedSelect, choicesContainer);
+                            nativeSelect = wrappedSelect;
+                        }
                     }
 
-                    // Initialize Choices.js regardless of disabled state (to maintain styling)
+                    if (!nativeSelect) {
+                        console.error('Community select not found');
+                        return;
+                    }
+
+                    // Destroy existing instance if any
+                    if (communityChoicesInstance) {
+                        try {
+                            communityChoicesInstance.destroy();
+                            communityChoicesInstance = null;
+                        } catch (e) {
+                            // Ignore
+                        }
+                    }
+
+                    // Initialize Choices.js - always styled
                     try {
                         var placeholderOption = nativeSelect.querySelector('option[selected][disabled]') ||
                             nativeSelect.querySelector('option[disabled]') ||
                             nativeSelect.querySelector('option[value=""]');
                         var placeholder = placeholderOption
                             ? placeholderOption.text
-                            : 'Select Community/Area';
+                            : 'Select an Emirate first';
 
-                        var choices = new Choices(nativeSelect, {
+                        communityChoicesInstance = new Choices(nativeSelect, {
                             placeholder: true,
                             placeholderValue: placeholder,
                             searchEnabled: false,
@@ -540,268 +544,176 @@
                             removeItemButton: false
                         });
 
-                        // If select should be disabled, disable the Choices.js instance
-                        if (communitySelect.disabled || nativeSelect.disabled) {
-                            choices.disable();
-                        } else {
-                            // Explicitly enable it
-                            choices.enable();
-                            // Remove any disabled classes that might have been added
-                            var container = nativeSelect.closest('.choices');
-                            if (container) {
-                                container.classList.remove('is-disabled');
-                                // Also remove from inner element
-                                var inner = container.querySelector('.choices__inner');
-                                if (inner) {
-                                    inner.classList.remove('is-disabled');
-                                }
-                            }
+                        // Keep disabled initially if no emirate is selected
+                        var emirateValue = emirateSelect.value;
+                        if (!emirateValue || emirateValue === '') {
+                            communityChoicesInstance.disable();
                         }
                     } catch (e) {
-                        console.error('Choices.js init error for community select:', e);
+                        console.error('Choices.js init error:', e);
                     }
                 }
 
-                // Initialize Choices.js immediately (even if disabled) to get the styling
+                // Initialize immediately (after global init which runs at 200ms)
                 setTimeout(function () {
                     initCommunityChoices();
-                }, 200);
+                }, 500);
 
+                // Update communities by updating native select and reinitializing Choices.js
                 function updateCommunities(emirate) {
-                    // Get the native select element (might be wrapped by Choices.js)
-                    var nativeSelect = communitySelect;
-                    var choicesInstance = null;
-
-                    if (communitySelect.closest('.choices')) {
-                        nativeSelect = communitySelect.closest('.choices').querySelector('select');
-                    }
-
-                    if (!nativeSelect) {
-                        nativeSelect = communitySelect;
-                    }
-
-                    // Get existing Choices instance if it exists
-                    try {
-                        choicesInstance = Choices.getInstance(nativeSelect);
-                    } catch (e) {
-                        // Ignore
-                    }
-
-                    // Ensure both selects are enabled before updating
-                    communitySelect.disabled = false;
-                    communitySelect.removeAttribute('disabled');
-                    nativeSelect.disabled = false;
-                    nativeSelect.removeAttribute('disabled');
+                    console.log('Updating communities for emirate:', emirate);
 
                     // Get communities for selected emirate
                     const selectedCommunities = communities[emirate] || [];
+                    console.log('Found communities:', selectedCommunities.length);
 
-                    // Always destroy and recreate to ensure clean state and proper option rendering
-                    if (choicesInstance) {
-                        try {
-                            choicesInstance.destroy();
-                        } catch (e) {
-                            // Ignore errors
+                    // Get the native select element (always use the original select, not the Choices wrapper)
+                    var nativeSelect = communitySelect;
+
+                    // If Choices.js has wrapped it, get the native select from inside
+                    var choicesContainer = communitySelect.closest('.choices');
+                    if (choicesContainer) {
+                        var wrappedSelect = choicesContainer.querySelector('select');
+                        if (wrappedSelect) {
+                            nativeSelect = wrappedSelect;
                         }
                     }
 
-                    // Remove Choices.js wrapper if it still exists after destroy
-                    var container = nativeSelect.closest('.choices');
-                    if (container && container.parentNode) {
-                        // Unwrap the select from Choices.js container
-                        container.parentNode.insertBefore(nativeSelect, container);
-                        container.remove();
+                    if (!nativeSelect) {
+                        console.error('Native select not found');
+                        return;
                     }
 
-                    // Clear existing options and add new ones to native select
-                    nativeSelect.innerHTML = '<option value="" selected disabled>Select Community/Area</option>';
+                    // Destroy existing Choices.js instance first
+                    if (communityChoicesInstance) {
+                        try {
+                            communityChoicesInstance.destroy();
+                            communityChoicesInstance = null;
+                            console.log('Destroyed existing Choices instance');
+                        } catch (e) {
+                            console.error('Error destroying Choices instance:', e);
+                            // Try to remove Choices wrapper manually
+                            if (choicesContainer && choicesContainer.parentNode) {
+                                choicesContainer.parentNode.replaceChild(nativeSelect, choicesContainer);
+                            }
+                        }
+                    }
 
-                    // Add new options to native select
+                    // Clear existing options
+                    nativeSelect.innerHTML = '';
+
+                    // Add placeholder option
+                    var placeholderOption = document.createElement('option');
+                    placeholderOption.value = '';
+                    placeholderOption.text = 'Select Community/Area';
+                    placeholderOption.selected = true;
+                    placeholderOption.disabled = true;
+                    nativeSelect.appendChild(placeholderOption);
+
+                    // Add community options
                     selectedCommunities.forEach(function (community) {
-                        const option = document.createElement('option');
+                        var option = document.createElement('option');
                         option.value = community;
-                        option.textContent = community;
+                        option.text = community;
                         nativeSelect.appendChild(option);
                     });
 
-                    // Verify options were added (for debugging)
-                    console.log('Native select options count:', nativeSelect.options.length);
-                    console.log('Native select HTML:', nativeSelect.innerHTML.substring(0, 200));
+                    console.log('Added', selectedCommunities.length, 'community options to native select');
 
-                    // Wait a bit to ensure DOM is updated, then reinitialize Choices.js
+                    // Reinitialize Choices.js with new options
                     setTimeout(function () {
-                        // Ensure select is enabled
-                        if (nativeSelect) {
-                            nativeSelect.disabled = false;
-                            nativeSelect.removeAttribute('disabled');
-                        }
-                        if (communitySelect) {
-                            communitySelect.disabled = false;
-                            communitySelect.removeAttribute('disabled');
-                        }
-
-                        // Make absolutely sure native select is unwrapped from any Choices.js container
-                        var existingContainer = nativeSelect.closest('.choices');
-                        if (existingContainer && existingContainer.parentNode) {
-                            // Unwrap the select
-                            existingContainer.parentNode.insertBefore(nativeSelect, existingContainer);
-                            existingContainer.remove();
-                        }
-
-                        // Verify options are still there before initializing
-                        console.log('Before init - Options count:', nativeSelect.options.length);
-                        if (nativeSelect.options.length < 2) {
-                            console.warn('Options missing! Re-adding...');
-                            // Re-add options if they're missing
-                            nativeSelect.innerHTML = '<option value="" selected disabled>Select Community/Area</option>';
-                            selectedCommunities.forEach(function (community) {
-                                const option = document.createElement('option');
-                                option.value = community;
-                                option.textContent = community;
-                                nativeSelect.appendChild(option);
-                            });
-                        }
-
-                        // Initialize Choices.js directly - it will read all options from native select
-                        if (typeof Choices !== 'undefined') {
-                            try {
-                                // Destroy any existing instance first
-                                try {
-                                    var existing = Choices.getInstance(nativeSelect);
-                                    if (existing) {
-                                        existing.destroy();
-                                        // Wait a bit for destroy to complete
-                                        setTimeout(function () {
-                                            initializeChoices();
-                                        }, 50);
-                                        return;
-                                    }
-                                } catch (e) {
-                                    // No existing instance, continue
-                                }
-
-                                initializeChoices();
-
-                                function initializeChoices() {
-                                    var placeholderOption = nativeSelect.querySelector('option[selected][disabled]') ||
-                                        nativeSelect.querySelector('option[disabled]') ||
-                                        nativeSelect.querySelector('option[value=""]');
-                                    var placeholder = placeholderOption
-                                        ? placeholderOption.text
-                                        : 'Select Community/Area';
-
-                                    console.log('Initializing Choices.js with', nativeSelect.options.length, 'options');
-
-                                    var choices = new Choices(nativeSelect, {
-                                        placeholder: true,
-                                        placeholderValue: placeholder,
-                                        searchEnabled: false,
-                                        itemSelectText: '',
-                                        shouldSort: false,
-                                        removeItemButton: false
-                                    });
-
-                                    // Enable the instance
-                                    choices.enable();
-
-                                    // Remove disabled classes
-                                    var newContainer = nativeSelect.closest('.choices');
-                                    if (newContainer) {
-                                        newContainer.classList.remove('is-disabled');
-                                    }
-
-                                    // Reset to placeholder
-                                    choices.setChoiceByValue('');
-
-                                    console.log('Choices.js initialized successfully. Options in dropdown:', choices._currentState.choices ? choices._currentState.choices.length : 'unknown');
-                                }
-                            } catch (e) {
-                                console.error('Error initializing Choices.js:', e);
+                        initCommunityChoices();
+                        // Enable after initialization
+                        setTimeout(function () {
+                            if (communityChoicesInstance) {
+                                communityChoicesInstance.enable();
+                                communityChoicesInstance.setChoiceByValue('');
+                                console.log('Choices.js reinitialized and enabled');
+                            } else {
+                                console.error('Failed to reinitialize Choices.js');
                             }
-                        }
-                    }, 200);
-                }
-
-                // Disable community select initially if no emirate selected
-                if (!emirateSelect.value || emirateSelect.value === '') {
-                    communitySelect.disabled = true;
-                    communitySelect.innerHTML = '<option value="" selected disabled>Select an Emirate first</option>';
-                } else {
-                    // If emirate is already selected, update communities
-                    const emirateName = emirateMap[emirateSelect.value];
-                    if (emirateName) {
-                        communitySelect.disabled = false;
-                        updateCommunities(emirateName);
-                    }
+                        }, 100);
+                    }, 50);
                 }
 
                 // Listen for emirate changes
-                emirateSelect.addEventListener('change', function () {
-                    const selectedEmirate = this.value;
+                function handleEmirateChange() {
+                    // Get value - handle both regular select and Choices.js
+                    var selectedEmirate = emirateSelect.value;
+
+                    // If emirate select uses Choices.js, get value from instance
+                    var emirateChoicesContainer = emirateSelect.closest('.choices');
+                    if (emirateChoicesContainer) {
+                        var emirateNativeSelect = emirateChoicesContainer.querySelector('select');
+                        if (emirateNativeSelect) {
+                            selectedEmirate = emirateNativeSelect.value;
+                        }
+                    }
+
                     const emirateName = emirateMap[selectedEmirate];
 
                     if (selectedEmirate && selectedEmirate !== '' && emirateName) {
-                        // Enable the native select FIRST (before any Choices.js operations)
-                        communitySelect.disabled = false;
-
-                        // Get native select (might be wrapped by Choices.js)
-                        var nativeSelect = communitySelect;
-                        if (communitySelect.closest('.choices')) {
-                            nativeSelect = communitySelect.closest('.choices').querySelector('select');
-                        }
-
-                        // Enable native select if found
-                        if (nativeSelect) {
-                            nativeSelect.disabled = false;
-
-                            // Destroy existing Choices instance
-                            try {
-                                var existingInstance = Choices.getInstance(nativeSelect);
-                                if (existingInstance) {
-                                    existingInstance.destroy();
-                                }
-                            } catch (e) {
-                                // Ignore errors
-                            }
-                        }
-
-                        // Update communities (this will reinitialize Choices.js)
+                        // Simply update communities - Choices.js stays initialized
                         updateCommunities(emirateName);
                     } else {
-                        // Get native select before disabling
+                        // Reset to placeholder and disable
+                        // Get native select
                         var nativeSelect = communitySelect;
-                        if (communitySelect.closest('.choices')) {
-                            nativeSelect = communitySelect.closest('.choices').querySelector('select');
-                        }
-
-                        // Disable the native select
-                        communitySelect.disabled = true;
-                        if (nativeSelect) {
-                            nativeSelect.disabled = true;
-                        }
-                        communitySelect.value = '';
-                        communitySelect.innerHTML = '<option value="" selected disabled>Select an Emirate first</option>';
-
-                        // Disable Choices.js instance but keep it initialized for styling
-                        if (nativeSelect) {
-                            try {
-                                var existingInstance = Choices.getInstance(nativeSelect);
-                                if (existingInstance) {
-                                    existingInstance.disable();
-                                }
-                            } catch (e) {
-                                // Ignore errors
+                        var choicesContainer = communitySelect.closest('.choices');
+                        if (choicesContainer) {
+                            var wrappedSelect = choicesContainer.querySelector('select');
+                            if (wrappedSelect) {
+                                nativeSelect = wrappedSelect;
                             }
                         }
+
+                        if (nativeSelect) {
+                            // Destroy existing instance
+                            if (communityChoicesInstance) {
+                                try {
+                                    communityChoicesInstance.destroy();
+                                    communityChoicesInstance = null;
+                                } catch (e) {
+                                    // Ignore
+                                }
+                            }
+
+                            // Clear and reset options
+                            nativeSelect.innerHTML = '';
+                            var resetOption = document.createElement('option');
+                            resetOption.value = '';
+                            resetOption.text = 'Select an Emirate first';
+                            resetOption.selected = true;
+                            resetOption.disabled = true;
+                            nativeSelect.appendChild(resetOption);
+
+                            // Reinitialize with disabled state
+                            setTimeout(function () {
+                                initCommunityChoices();
+                                if (communityChoicesInstance) {
+                                    communityChoicesInstance.disable();
+                                }
+                            }, 50);
+                        }
                     }
-                });
+                }
+
+                // Attach event listener to emirate select
+                emirateSelect.addEventListener('change', handleEmirateChange);
+
+                // Also listen for Choices.js change event if emirate select uses Choices
+                var emirateChoicesContainer = emirateSelect.closest('.choices');
+                if (emirateChoicesContainer) {
+                    emirateChoicesContainer.addEventListener('change', handleEmirateChange);
+                }
 
                 // Initialize on page load if emirate is already selected
                 if (emirateSelect.value && emirateSelect.value !== '') {
                     const emirateName = emirateMap[emirateSelect.value];
                     if (emirateName) {
-                        communitySelect.disabled = false;
-                        updateCommunities(emirateName);
+                        setTimeout(function () {
+                            updateCommunities(emirateName);
+                        }, 400);
                     }
                 }
             }
