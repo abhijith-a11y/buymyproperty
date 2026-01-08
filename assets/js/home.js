@@ -1033,7 +1033,7 @@ function initMarqueeSwiper() {
 		loop: true,
 		loopAdditionalSlides: 3, // Increased for better loop
 		loopedSlides: 6, // Match the number of slides we're creating
-		speed: 30000, // Uniform speed for all devices (30 seconds)
+		speed: 40000, // Uniform speed for all devices (30 seconds)
 		autoplay: {
 			delay: 0,
 			disableOnInteraction: false,
