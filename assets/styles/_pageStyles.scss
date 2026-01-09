@@ -590,9 +590,9 @@
 		}
 	}
 
-	// .marquee-text.is-bold {
-	// 	font-weight: 700;
-	// }
+	.marquee-text.is-bold {
+		font-weight: 700;
+	}
 
 	.marquee-separator {
 		font-family: "Poppins", sans-serif;
@@ -639,7 +639,6 @@
 
 		.marquee-content {
 			gap: 15px;
-			padding: 0 15px;
 		}
 	}
 
@@ -4915,6 +4914,11 @@ p {
 					font-size: 16px;
 					font-weight: 700;
 					color: #273035;
+
+					span {
+						font-size: 14px;
+						font-weight: 500;
+					}
 				}
 			}
 		}
@@ -7520,14 +7524,22 @@ p {
 			.submit-btn {
 				border: none;
 				font-family: "Montserrat", sans-serif;
-				font-weight: 600;
-				font-size: 16px;
+				font-weight: 600 !important;
+				font-size: 16px !important;
 				line-height: 1;
 				text-align: center;
 				color: #ffffff;
 				margin-left: auto;
 				margin-top: 15px;
 				width: fit-content !important;
+
+				@media #{$media-1440} {
+					font-size: 14px !important;
+				}
+
+				@media #{$media-820} {
+					font-size: 12px !important;
+				}
 
 				@media #{$media-820} {
 					margin-top: 0px;
@@ -8918,7 +8930,7 @@ body.career-modal-open [class*="iti"][class*="dropdown"],
 body.career-modal-open [class*="country-list"],
 body.career-modal-open [id*="iti"] {
 	z-index: 100000 !important; /* Higher than modal z-index (9999) */
-	position: absolute !important;
+	// position: absolute !important;
 }
 
 /* Global fallback - target ALL intl-tel-input dropdowns (will be overridden by JS) */
