@@ -110,6 +110,10 @@
 					height: 460px;
 				}
 
+				@media #{$media-820} {
+					height: 510px;
+				}
+
 				@media #{$media-768} {
 					margin-top: 30px;
 				}
@@ -148,12 +152,12 @@
 					}
 
 					@media #{$media-768} {
-						width: 60%;
+						width: 90%;
 						transform: translate(-50%, -50%);
 					}
 
 					@media #{$media-480} {
-						width: 90%;
+						width: 94%;
 					}
 
 					.validation-error {
@@ -213,9 +217,9 @@
 							margin-bottom: 10px;
 						}
 
-						@media #{$media-768} {
+						@media #{$media-820} {
 							flex-direction: column;
-							gap: 12px;
+							gap: 10px;
 						}
 
 						.form-group {
@@ -275,6 +279,11 @@
 									padding: 4px 20px;
 								}
 
+								@media #{$media-480} {
+									padding: 12px 16px;
+									font-size: 11px;
+								}
+
 								&:hover {
 									box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 									transform: translateY(-1px);
@@ -295,10 +304,7 @@
 									}
 								}
 
-								@media #{$media-480} {
-									padding: 12px 16px;
-									font-size: 13px;
-								}
+								
 							}
 
 							@media #{$media-768} {
@@ -310,10 +316,34 @@
 					.row-display {
 						#offplan-details-group {
 							display: flex;
-                            gap: 6px;
+                            gap: 10px;
                             margin-bottom: 8px;
                             justify-content: space-between;
 							// flex-wrap: wrap;
+
+							@media #{$media-820} {
+								flex-wrap: wrap;
+							}
+
+							@media #{$media-600} {
+								gap: 5px;
+							}
+
+							> div {
+								width: 25%;
+
+								@media #{$media-820} {
+									width: calc(50% - 6px);
+									
+								}
+
+								@media #{$media-480} {
+									width: calc(50% - 3px);
+									
+								}
+							}
+
+
 						}
 					}
 
@@ -409,6 +439,14 @@
 		min-height: 600px;
 		overflow: hidden;
 		border-radius: 25px;
+
+		@media #{$media-1440} {
+			flex: 0 0 35%;
+		}
+
+		@media #{$media-1200} {
+			flex: 0 0 28%;
+		}
 
 		.overlay {
 			position: absolute;
@@ -8996,6 +9034,7 @@ body.modal-open {
 
 	@media #{$media-820} {
 		min-height: 50px !important;
+		font-size: 11px !important;
 	}
 
 	@media #{$media-480} {
@@ -9107,6 +9146,10 @@ body.modal-open {
 	font-size: 12px !important; /* Specifically set to match your design */
 	font-weight: 500 !important;
 	color: #000000 !important;
+
+	@media #{$media-820} {
+		font-size: 11px !important;
+	}
 }
 
 .choices__list {
@@ -9114,6 +9157,10 @@ body.modal-open {
 	font-size: 12px !important;
 	font-weight: 500 !important;
 	color: #000000 !important;
+
+	@media #{$media-480} {
+		font-size: 11px !important;
+	}
 }
 
 .property-form .form-group {
@@ -9143,4 +9190,9 @@ body.modal-open {
 
 .form.invalid {
 	color: #dc3232 !important;
+}
+
+
+.choices__item--selectable {
+	padding-right: 20px !important;
 }

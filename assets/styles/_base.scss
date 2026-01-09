@@ -41,7 +41,7 @@ a {
 	margin-top: 58px;
 
 	@media (max-width: 820px) {
-		margin-top: 89px;
+		margin-top: 115px;
 	}
 }
 
@@ -60,10 +60,18 @@ textarea {
 	display: flex !important;
 	align-items: center !important;
 	font-family: "Poppins", sans-serif !important;
+
+	@media #{$media-480} {
+		font-size: 11px !important;
+	}
 }
 input {
 	height: 46px;
 	padding: 0 19px 0 19px;
+
+	@media #{$media-480} {
+		padding: 0 9px 0 13px;
+	}
 }
 
 textarea {
