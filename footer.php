@@ -733,16 +733,22 @@
             });
         }
 
-        // Initialize on DOM ready
-        setTimeout(function () {
+        // Initialize immediately on DOM ready (no delay to prevent FOUC)
+        // Native selects are already styled to match Choices.js appearance
+        if (typeof Choices !== 'undefined') {
             initAllSelects();
-        }, 200);
-
-        // Initialize on window load
-        window.addEventListener('load', function () {
+        } else {
+            // If Choices.js isn't loaded yet, retry after a short delay
             setTimeout(function () {
-                initAllSelects();
-            }, 100);
+                if (typeof Choices !== 'undefined') {
+                    initAllSelects();
+                }
+            }, 50);
+        }
+
+        // Also initialize on window load as fallback
+        window.addEventListener('load', function () {
+            initAllSelects();
         });
 
         // Handle resize - Choices.js handles this well

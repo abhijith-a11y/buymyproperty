@@ -267,7 +267,7 @@
 								cursor: pointer;
 								box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-								@media #{$media-1440} {	
+								@media #{$media-1440} {
 									padding: 6px 20px;
 								}
 
@@ -303,8 +303,6 @@
 										position: relative;
 									}
 								}
-
-								
 							}
 
 							@media #{$media-768} {
@@ -316,9 +314,9 @@
 					.row-display {
 						#offplan-details-group {
 							display: flex;
-                            gap: 10px;
-                            margin-bottom: 8px;
-                            justify-content: space-between;
+							gap: 10px;
+							margin-bottom: 8px;
+							justify-content: space-between;
 							// flex-wrap: wrap;
 
 							@media #{$media-820} {
@@ -334,16 +332,12 @@
 
 								@media #{$media-820} {
 									width: calc(50% - 6px);
-									
 								}
 
 								@media #{$media-480} {
 									width: calc(50% - 3px);
-									
 								}
 							}
-
-
 						}
 					}
 
@@ -371,8 +365,6 @@
 							flex-direction: column;
 							gap: 12px;
 						}
-
-						
 
 						.submit-group {
 							flex: 1;
@@ -2090,8 +2082,6 @@ p {
 					font-weight: 500;
 				}
 			}
-
-			
 		}
 	}
 
@@ -6055,10 +6045,10 @@ p {
 
 	.offer-form {
 		// Form Sections
-.wpcf7-spinner {
-	display: none;
-}
-		
+		.wpcf7-spinner {
+			display: none;
+		}
+
 		.form-section {
 			// padding-bottom: 20px;
 
@@ -6945,7 +6935,6 @@ p {
 			gap: 35px;
 			max-width: 100%;
 		}
-
 
 		.trust_stat_item {
 			display: flex;
@@ -8996,6 +8985,52 @@ body.modal-open {
 	height: 100vh;
 }
 
+/* Style native select elements to match Choices.js appearance until initialized */
+/* This prevents FOUC (Flash of Unstyled Content) */
+/* Include data-no-choices selects that will be manually initialized */
+select:not(.choices__input),
+select[data-no-choices] {
+	font-family: "Montserrat", sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: rgba(39, 48, 53, 0.6) !important;
+	background: white !important;
+	border-radius: 50px !important;
+	border: 1px solid #bebebe !important;
+	padding: 15px 20px !important;
+	min-height: 59px !important;
+	width: 100% !important;
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+	background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23393025' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 20px center !important;
+	background-size: 10px 6px !important;
+	padding-right: 45px !important;
+
+	@media #{$media-1440} {
+		min-height: 55px !important;
+	}
+
+	@media #{$media-820} {
+		min-height: 50px !important;
+		font-size: 11px !important;
+	}
+
+	@media #{$media-480} {
+		min-height: 45px !important;
+	}
+}
+
+/* Hide native select once Choices.js is initialized */
+.choices select {
+	opacity: 0 !important;
+	position: absolute !important;
+	pointer-events: none !important;
+	visibility: hidden !important;
+}
+
 .choices {
 	margin-bottom: 0 !important;
 	border-radius: 50px !important;
@@ -9192,12 +9227,10 @@ body.modal-open {
 	color: #dc3232 !important;
 }
 
-
 .choices__item--selectable {
 	padding-right: 20px !important;
 }
 
-
-.xdsoft_noselect  {
+.xdsoft_noselect {
 	z-index: 100 !important;
 }

@@ -581,10 +581,21 @@
                     }
                 }
 
-                // Initialize immediately (after global init which runs at 200ms)
-                setTimeout(function () {
+                // Initialize immediately to prevent FOUC (native select is already styled)
+                // Try immediately, retry if Choices.js isn't loaded yet
+                if (typeof Choices !== 'undefined') {
                     initCommunityChoices();
-                }, 500);
+                } else {
+                    // Retry after short delay if Choices.js isn't ready
+                    setTimeout(function () {
+                        if (typeof Choices !== 'undefined') {
+                            initCommunityChoices();
+                        } else {
+                            // Final retry after longer delay
+                            setTimeout(initCommunityChoices, 100);
+                        }
+                    }, 50);
+                }
 
                 // Update communities by updating native select and reinitializing Choices.js
                 function updateCommunities(emirate) {
