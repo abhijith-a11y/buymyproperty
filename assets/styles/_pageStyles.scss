@@ -144,7 +144,7 @@
 						transform: translate(-50%, -50%);
 					}
 
-					@media #{$media-1400} {
+					@media #{$media-1440} {
 						bottom: 200px;
 						width: 90%;
 						left: 50%;
@@ -9195,4 +9195,9 @@ body.modal-open {
 
 .choices__item--selectable {
 	padding-right: 20px !important;
+}
+
+
+.xdsoft_noselect  {
+	z-index: 100 !important;
 }

@@ -2646,7 +2646,7 @@ body {
 		overflow-x: hidden;
 		padding-left: 50px;
 		padding-right: 60px;
-		max-height: 743px;
+		max-height: 790px;
 		gap: 30px;
 
 		@media #{$media-1200} {
@@ -2793,7 +2793,24 @@ body {
 
 			.default_upload_file {
 				height: 46px;
+
+				.wpcf7-not-valid-tip {
+					font-family: "Poppins", sans-serif;
+					color: #dc3232;
+					font-size: 12px !important;
+					font-weight: normal;
+					display: block;
+					margin-top: 2px;
+					padding-right: 10px;
+					padding-left: 10px;
+
+					@media #{$media-820} {
+						font-size: 11px !important;
+					}
+				}
 			}
+
+			
 		}
 
 		label {
@@ -2952,4 +2969,9 @@ body {
 		height: 300px;
 		border-radius: 15px;
 	}
+}
+
+
+.wpcf7-response-output {
+	display: none !important;
 }
