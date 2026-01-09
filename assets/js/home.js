@@ -1072,7 +1072,7 @@ function initMarqueeSwiper() {
 				// Ensure smooth transitions with linear timing
 				this.wrapperEl.style.transitionTimingFunction = "linear";
 			},
-
+			
 			transitionEnd: function () {
 				// Maintain linear timing after transition
 				this.wrapperEl.style.transitionTimingFunction = "linear";
@@ -1083,8 +1083,8 @@ function initMarqueeSwiper() {
 	// Ensure autoplay is running after Swiper is fully initialized
 	setTimeout(function () {
 		if (swiper && swiper.autoplay) {
-			swiper.autoplay.start();
-		}
+		swiper.autoplay.start();
+	}
 		// Update Swiper to ensure loop is properly calculated
 		if (swiper && swiper.update) {
 			swiper.update();
@@ -1501,7 +1501,7 @@ function initializeBuiltOnTrustAnimation() {
 			// Just switched to desktop - reinitialize animation
 			location.reload(); // Simplest way to reinitialize
 		} else {
-			ScrollTrigger.refresh();
+		ScrollTrigger.refresh();
 		}
 	};
 
