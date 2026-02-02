@@ -315,15 +315,20 @@ get_header();
 
 		const resumeLabel = document.querySelector('.default_upload_file .file-label');
 		const browseBtn = document.querySelector('.default_upload_file .browse-btn');
+		const uploadArea = document.querySelector('.default_upload_file');
 
 		if (!resumeInput) {
 			console.log('Resume file input not found');
 			return;
 		}
 
+		// Store a flag to prevent double-triggering
+		let isOpeningFileDialog = false;
+
 		// Update label on file selection
 		resumeInput.addEventListener('change', function (e) {
 			const files = e.target.files;
+			isOpeningFileDialog = false;
 			if (resumeLabel) {
 				if (files.length > 0) {
 					if (files.length === 1) {
@@ -337,19 +342,63 @@ get_header();
 			}
 		});
 
+		// Prevent any default click behavior on the file input that might open files
+		resumeInput.addEventListener('click', function(e) {
+			// If this is triggered by our browse button, allow it
+			if (!isOpeningFileDialog) {
+				// This is a direct click on the input, prevent any default file opening
+				e.stopPropagation();
+			}
+		}, true);
+
 		// Click on "Browse" opens file dialog
 		if (browseBtn) {
 			browseBtn.addEventListener('click', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
-				if (resumeInput) {
-					resumeInput.click();
+				e.stopImmediatePropagation();
+				
+				// Set flag to indicate we're opening the dialog
+				isOpeningFileDialog = true;
+				
+				// Use requestAnimationFrame to ensure it happens after all event handlers
+				requestAnimationFrame(function() {
+					setTimeout(function() {
+						if (resumeInput && isOpeningFileDialog) {
+							// Directly trigger the file input click
+							resumeInput.focus();
+							resumeInput.click();
+						}
+					}, 0);
+				});
+			});
+		}
+
+		// Also handle clicks on the upload area/label if it exists
+		if (uploadArea && resumeLabel) {
+			resumeLabel.addEventListener('click', function(e) {
+				// If clicking on browse button, let it handle it
+				if (e.target.closest('.browse-btn')) {
+					return;
 				}
+				e.preventDefault();
+				e.stopPropagation();
+				
+				isOpeningFileDialog = true;
+				requestAnimationFrame(function() {
+					setTimeout(function() {
+						if (resumeInput && isOpeningFileDialog) {
+							resumeInput.focus();
+							resumeInput.click();
+						}
+					}, 0);
+				});
 			});
 		}
 
 		// Clear resume field after successful CF7 submission
 		document.addEventListener('wpcf7mailsent', function (event) {
+			isOpeningFileDialog = false;
 			if (resumeInput) {
 				resumeInput.value = ''; // Clear the file input
 			}
