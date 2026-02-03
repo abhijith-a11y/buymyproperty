@@ -2641,7 +2641,7 @@ body {
 		// min-height: 734px;
 		// overflow: auto;
 		// min-height: 734px;
-		height: calc(100vh - 120px);
+		height: calc(100vh - 80px);
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-left: 50px;
@@ -2702,7 +2702,7 @@ body {
 	}
 
 	.modal-right {
-		width: 67%;
+		width: 75%;
 
 		@media #{$media-1024} {
 			width: 100%;
@@ -2974,4 +2974,20 @@ body {
 
 .wpcf7-response-output {
 	display: none !important;
+}
+
+/* Remove border from all CF7 response messages */
+.wpcf7-response-output {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.wpcf7-mail-sent-ok {
+    color: #0f8a5f; /* green */
+}
+
+.wpcf7-validation-errors,
+.wpcf7-mail-sent-ng,
+.wpcf7-spam-blocked {
+    color: #e63946; /* red */
 }

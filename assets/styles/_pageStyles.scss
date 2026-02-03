@@ -4788,6 +4788,12 @@ p {
 		// Form Sections
 		// Note: .choices__inner height override is defined after global .choices__inner styles (see line ~8800)
 
+		#community-area {
+			min-height: 46px !important;
+			max-height: 46px !important;
+			height: 46px !important;
+		}
+
 		.form-section {
 			padding-bottom: 15px;
 			margin-top: 40px;
