@@ -30,7 +30,7 @@
                         </div>
 
                         <!-- Social Media Links -->
-                        <?php if (have_rows('social_links', 'option')): ?>
+                        <?php /* if (have_rows('social_links', 'option')): ?>
                             <div class="footer-social">
                                 <?php while (have_rows('social_links', 'option')):
                                     the_row();
@@ -43,7 +43,7 @@
                                     </a>
                                 <?php endwhile; ?>
                             </div>
-                        <?php endif; ?>
+                        <?php endif; ?> */ ?>
                     </div>
 
                     <!-- Navigation Links -->
@@ -488,6 +488,43 @@
 <script>
     // Dynamic Community/Area Filter based on Emirate Selection
     document.addEventListener('DOMContentLoaded', function () {
+        
+        // Convert text input with datalist to select dropdown if it still exists
+        const communityInput = document.getElementById('community-area');
+        const communityList = document.getElementById('community-list');
+        
+        if (communityInput && communityInput.tagName === 'INPUT' && communityList) {
+            // Find the parent form-group div
+            const formGroup = communityInput.closest('.form-group');
+            if (formGroup) {
+                // Create a new select element
+                const select = document.createElement('select');
+                select.name = communityInput.name || 'community_area';
+                select.id = 'community-area';
+                select.required = communityInput.required;
+                
+                // Add placeholder option
+                const placeholderOption = document.createElement('option');
+                placeholderOption.value = '';
+                placeholderOption.selected = true;
+                placeholderOption.disabled = true;
+                placeholderOption.textContent = 'Select';
+                select.appendChild(placeholderOption);
+                
+                // Copy any classes from the input
+                if (communityInput.className) {
+                    select.className = communityInput.className;
+                }
+                
+                // Replace the input and datalist with the select
+                const label = formGroup.querySelector('label');
+                formGroup.innerHTML = '';
+                if (label) {
+                    formGroup.appendChild(label);
+                }
+                formGroup.appendChild(select);
+            }
+        }
 
         // Community data for each Emirate
         const communities = {
@@ -610,18 +647,14 @@
 
         // Get the form elements
         const emirateSelect = document.getElementById('emirate-select');
-        const communityInput = document.getElementById('community-area');
-        const communityList = document.getElementById('community-list');
+        const communitySelect = document.getElementById('community-area');
 
-        if (emirateSelect && communityInput && communityList) {
+        if (emirateSelect && communitySelect) {
 
             // Function to update community options
             function updateCommunities(emirate) {
-                // Clear existing options
-                communityList.innerHTML = '';
-
-                // Clear the input field
-                communityInput.value = '';
+                // Clear existing options except the first placeholder option
+                communitySelect.innerHTML = '<option value="" selected disabled>Select</option>';
 
                 // Get communities for selected emirate
                 const selectedCommunities = communities[emirate] || [];
@@ -630,22 +663,21 @@
                 selectedCommunities.forEach(function (community) {
                     const option = document.createElement('option');
                     option.value = community;
-                    communityList.appendChild(option);
+                    option.textContent = community;
+                    communitySelect.appendChild(option);
                 });
 
-                // Update placeholder
+                // Enable/disable the select
                 if (emirate && emirate !== 'Select') {
-                    communityInput.placeholder = 'Type or select community in ' + emirate;
+                    communitySelect.disabled = false;
                 } else {
-                    communityInput.placeholder = 'Select an Emirate first';
-                    communityInput.disabled = true;
+                    communitySelect.disabled = true;
                 }
             }
 
-            // Disable community input initially if no emirate selected
+            // Disable community select initially if no emirate selected
             if (!emirateSelect.value || emirateSelect.value === 'Select') {
-                communityInput.disabled = true;
-                communityInput.placeholder = 'Select an Emirate first';
+                communitySelect.disabled = true;
             }
 
             // Listen for emirate changes
@@ -653,13 +685,10 @@
                 const selectedEmirate = this.value;
 
                 if (selectedEmirate && selectedEmirate !== 'Select') {
-                    communityInput.disabled = false;
                     updateCommunities(selectedEmirate);
                 } else {
-                    communityInput.disabled = true;
-                    communityInput.value = '';
-                    communityInput.placeholder = 'Select an Emirate first';
-                    communityList.innerHTML = '';
+                    communitySelect.disabled = true;
+                    communitySelect.innerHTML = '<option value="" selected disabled>Select</option>';
                 }
             });
 

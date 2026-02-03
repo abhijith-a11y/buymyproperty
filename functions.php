@@ -432,10 +432,30 @@ function cf7_auto_hide_success_message() {
     ?>
     <script type="text/javascript">
     document.addEventListener('wpcf7mailsent', function(event) {
-        var response = event.target.querySelector('.wpcf7-response-output');
+        var response = event.target.querySelector('.wpcf7-response-output.wpcf7-mail-sent-ok');
+        if(!response) {
+            // Try to find it without the class
+            var allResponses = event.target.querySelectorAll('.wpcf7-response-output');
+            allResponses.forEach(function(resp) {
+                if (!resp.classList.contains('wpcf7-not-valid') && 
+                    resp.textContent.trim().length > 0) {
+                    response = resp;
+                    response.classList.add('wpcf7-mail-sent-ok');
+                }
+            });
+        }
+        
         if(response) {
+            // Ensure it's visible first
+            response.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; position: relative !important; z-index: 9999 !important;';
+            response.classList.add('wpcf7-mail-sent-ok');
+            
+            // Then hide it after 5 seconds using !important to override inline styles
             setTimeout(function() {
-                response.style.display = 'none';
+                if (response && response.classList.contains('wpcf7-mail-sent-ok')) {
+                    // Use cssText with !important to override previous inline styles
+                    response.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important;';
+                }
             }, 5000); // 5000ms = 5 seconds
         }
     }, false);
@@ -451,22 +471,40 @@ function force_cf7_reset_script() {
         // Get the form
         var form = event.target;
         
+        // IMMEDIATELY ensure success message is visible (don't wait)
+        var successMessage = form.querySelector('.wpcf7-response-output.wpcf7-mail-sent-ok');
+        if (!successMessage) {
+            // Try without the class in case it hasn't been added yet
+            successMessage = form.querySelector('.wpcf7-response-output');
+            if (successMessage && !successMessage.classList.contains('wpcf7-not-valid')) {
+                // This is likely the success message
+                successMessage.classList.add('wpcf7-mail-sent-ok');
+            }
+        }
+        
+        if (successMessage) {
+            // Make it visible immediately
+            successMessage.style.display = 'block';
+            successMessage.style.visibility = 'visible';
+            successMessage.style.opacity = '1';
+            successMessage.style.position = 'relative';
+            successMessage.style.zIndex = '9999';
+            
+            // Remove any hiding classes
+            successMessage.classList.remove('wpcf7-not-valid');
+            successMessage.classList.add('wpcf7-mail-sent-ok');
+            
+            // Scroll to success message so user can see it
+            setTimeout(function() {
+                if (successMessage && successMessage.scrollIntoView) {
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+        
         // Delay reset to ensure success message is displayed first
         setTimeout(function() {
-            // Reset all form inputs, textareas, and selects
-            var inputs = form.querySelectorAll('input:not([type="submit"]):not([type="hidden"]), textarea, select');
-            inputs.forEach(function(input) {
-                if (input.type === 'checkbox' || input.type === 'radio') {
-                    input.checked = false;
-                } else if (input.tagName === 'SELECT') {
-                    input.selectedIndex = 0;
-                    input.value = '';
-                } else {
-                    input.value = '';
-                }
-            });
-            
-            // Reset file inputs
+            // Reset file inputs first
             var fileInputs = form.querySelectorAll('input[type="file"]');
             fileInputs.forEach(function(input) {
                 input.value = '';
@@ -477,53 +515,93 @@ function force_cf7_reset_script() {
                 }
             });
             
-            // Reset Choices.js select elements - must reset underlying select first
-            if (typeof Choices !== 'undefined') {
-                var selects = form.querySelectorAll('select');
-                selects.forEach(function(select) {
-                    // Check if Choices.js is already initialized
-                    if (select.closest('.choices')) {
-                        try {
-                            // First, reset the underlying select element
-                            var placeholderOption = select.querySelector('option[selected][disabled]') || 
-                                                   select.querySelector('option[disabled]') ||
-                                                   select.querySelector('option[value=""]');
+            // Reset all form inputs and textareas (but not selects yet)
+            var inputs = form.querySelectorAll('input:not([type="submit"]):not([type="hidden"]):not([type="file"]), textarea');
+            inputs.forEach(function(input) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+            
+            // Reset ALL select elements (both Choices.js and regular)
+            var selects = form.querySelectorAll('select');
+            selects.forEach(function(select) {
+                // Find placeholder option (first option with empty value, disabled, or selected)
+                var placeholderOption = select.querySelector('option[value=""][selected]') ||
+                                       select.querySelector('option[value=""]') ||
+                                       select.querySelector('option[selected][disabled]') ||
+                                       select.querySelector('option[disabled]') ||
+                                       select.querySelector('option[value=""]');
+                
+                // Check if Choices.js is initialized
+                var isChoices = select.closest('.choices') && typeof Choices !== 'undefined';
+                
+                if (isChoices) {
+                    try {
+                        // Reset underlying select first
+                        if (placeholderOption) {
+                            select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
+                            select.value = placeholderOption.value || '';
+                        } else {
+                            select.selectedIndex = 0;
+                            select.value = select.options[0] ? select.options[0].value : '';
+                        }
+                        
+                        // Then update Choices.js instance
+                        var choicesInstance = Choices.getInstance(select);
+                        if (choicesInstance) {
+                            // Remove all active items
+                            choicesInstance.removeActiveItems();
                             
-                            if (placeholderOption) {
-                                select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
-                                select.value = '';
+                            // Set to placeholder value
+                            if (placeholderOption && placeholderOption.value !== undefined) {
+                                choicesInstance.setChoiceByValue(placeholderOption.value);
                             } else {
-                                select.selectedIndex = 0;
-                                select.value = '';
-                            }
-                            
-                            // Then update Choices.js instance
-                            var choicesInstance = Choices.getInstance(select);
-                            if (choicesInstance) {
-                                // Remove all active items
-                                choicesInstance.removeActiveItems();
-                                
-                                // Set to empty value to show placeholder
-                                choicesInstance.setChoiceByValue('');
-                                
-                                // Force update the display
-                                if (choicesInstance._render) {
-                                    choicesInstance._render();
+                                // Try to set to empty or first option
+                                try {
+                                    choicesInstance.setChoiceByValue('');
+                                } catch(e) {
+                                    // If empty doesn't work, select first option
+                                    if (select.options.length > 0) {
+                                        choicesInstance.setChoiceByValue(select.options[0].value);
+                                    }
                                 }
                             }
-                        } catch (e) {
-                            console.log('Error resetting Choices.js:', e);
-                            // Fallback: just reset the select element
-                            select.selectedIndex = 0;
-                            select.value = '';
+                            
+                            // Force update the display
+                            if (choicesInstance._render) {
+                                choicesInstance._render();
+                            }
                         }
-                    } else {
-                        // For non-Choices selects, just reset normally
-                        select.selectedIndex = 0;
-                        select.value = '';
+                    } catch (e) {
+                        console.log('Error resetting Choices.js:', e);
+                        // Fallback: reset the select element
+                        if (placeholderOption) {
+                            select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
+                            select.value = placeholderOption.value || '';
+                        } else {
+                            select.selectedIndex = 0;
+                            select.value = select.options[0] ? select.options[0].value : '';
+                        }
                     }
-                });
-            }
+                } else {
+                    // For regular selects (not Choices.js)
+                    if (placeholderOption) {
+                        select.selectedIndex = Array.from(select.options).indexOf(placeholderOption);
+                        select.value = placeholderOption.value || '';
+                    } else {
+                        // If no placeholder, select first option
+                        select.selectedIndex = 0;
+                        select.value = select.options[0] ? select.options[0].value : '';
+                    }
+                    
+                    // Trigger change event to ensure any listeners are notified
+                    var changeEvent = new Event('change', { bubbles: true });
+                    select.dispatchEvent(changeEvent);
+                }
+            });
             
             // Reset any custom dropdowns
             var customDropdowns = form.querySelectorAll('.custom-dropdown');
@@ -537,10 +615,22 @@ function force_cf7_reset_script() {
                 dropdown.removeAttribute('data-selected');
             });
             
-            // Remove any validation error messages
+            // Remove any validation error messages (but NOT success messages)
             var errorMessages = form.querySelectorAll('.validation-error, .wpcf7-not-valid-tip, .field-error');
             errorMessages.forEach(function(error) {
-                error.remove();
+                // Make sure we're not removing the success message
+                if (!error.classList.contains('wpcf7-mail-sent-ok') && 
+                    !error.classList.contains('wpcf7-response-output')) {
+                    error.remove();
+                }
+            });
+            
+            // Also remove error response outputs, but keep success ones
+            var errorResponses = form.querySelectorAll('.wpcf7-response-output.wpcf7-not-valid');
+            errorResponses.forEach(function(error) {
+                if (!error.classList.contains('wpcf7-mail-sent-ok')) {
+                    error.remove();
+                }
             });
             
             // Remove error styling from fields
@@ -559,12 +649,71 @@ function force_cf7_reset_script() {
                 }
             }
             
-        }, 500); // Small delay to ensure success message is visible, then reset everything
+            // DO NOT remove or hide the success message - let it stay visible
+            // The auto-hide function will handle hiding it after 5 seconds
+            
+        }, 3000); // Longer delay (3 seconds) to ensure success message is fully visible before reset
     }, false);
     </script>
     <?php
 }
 add_action('wp_footer', 'force_cf7_reset_script');
+
+// Immediate success message visibility handler - runs first
+function cf7_immediate_success_message() {
+    ?>
+    <script type="text/javascript">
+    // Use DOMContentLoaded to ensure this runs early
+    document.addEventListener('DOMContentLoaded', function() {
+        // Listen for form submission success
+        document.addEventListener('wpcf7mailsent', function(event) {
+            var form = event.target;
+            
+            // Use multiple methods to find and show success message
+            function showSuccessMessage() {
+                // Method 1: Look for success class
+                var successMsg = form.querySelector('.wpcf7-response-output.wpcf7-mail-sent-ok');
+                
+                // Method 2: Look for any response output that's not an error
+                if (!successMsg) {
+                    var allResponses = form.querySelectorAll('.wpcf7-response-output');
+                    allResponses.forEach(function(response) {
+                        if (!response.classList.contains('wpcf7-not-valid') && 
+                            response.textContent.trim().length > 0) {
+                            successMsg = response;
+                            successMsg.classList.add('wpcf7-mail-sent-ok');
+                        }
+                    });
+                }
+                
+                if (successMsg) {
+                    // Force visibility
+                    successMsg.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; position: relative !important; z-index: 9999 !important;';
+                    successMsg.classList.add('wpcf7-mail-sent-ok');
+                    successMsg.classList.remove('wpcf7-not-valid');
+                    
+                    // Scroll into view
+                    setTimeout(function() {
+                        if (successMsg.scrollIntoView) {
+                            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 50);
+                }
+            }
+            
+            // Try immediately
+            showSuccessMessage();
+            
+            // Try again after a short delay in case CF7 hasn't added it yet
+            setTimeout(showSuccessMessage, 50);
+            setTimeout(showSuccessMessage, 100);
+            setTimeout(showSuccessMessage, 200);
+        }, false);
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'cf7_immediate_success_message', 5); // Priority 5 to run early
 
 
 
@@ -582,8 +731,50 @@ add_shortcode('noautop', 'remove_wpautop_shortcode');
 // Disable automatic formatting (p and br tags) for all Contact Form 7 forms
 add_filter('wpcf7_autop_or_not', '__return_false');
 
+// Convert Community/Area text input with datalist to select dropdown
+add_filter('wpcf7_form_elements', function($form) {
+    // Pattern 1: Full form-group structure with label
+    $form = preg_replace_callback(
+        '/<div class="form-group">\s*<label>Community\s*\/\s*Area<\/label>\s*<input[^>]*id="community-area"[^>]*list="community-list"[^>]*>.*?<datalist id="community-list">.*?<\/datalist>\s*<\/div>/is',
+        function($matches) {
+            return '<div class="form-group">
+            <label>Community / Area</label>
+            <select name="community_area" id="community-area" required>
+                <option value="" selected disabled>Select</option>
+            </select>
+        </div>';
+        },
+        $form
+    );
+    
+    // Pattern 2: Just the input and datalist (without form-group wrapper)
+    $form = preg_replace_callback(
+        '/<input[^>]*id="community-area"[^>]*list="community-list"[^>]*>.*?<datalist id="community-list">.*?<\/datalist>/is',
+        function($matches) {
+            return '<select name="community_area" id="community-area" required>
+                <option value="" selected disabled>Select</option>
+            </select>';
+        },
+        $form
+    );
+    
+    // Pattern 3: Handle span wrapper from CF7
+    $form = preg_replace_callback(
+        '/<span[^>]*>.*?<input[^>]*id="community-area"[^>]*list="community-list"[^>]*>.*?<datalist id="community-list">.*?<\/datalist>.*?<\/span>/is',
+        function($matches) {
+            return '<span class="wpcf7-form-control-wrap community_area">
+            <select name="community_area" id="community-area" class="wpcf7-form-control wpcf7-select" required>
+                <option value="" selected disabled>Select</option>
+            </select>
+        </span>';
+        },
+        $form
+    );
+    
+    return $form;
+}, 10, 1);
 
-// Allow only digits and plus sign & add validation message
+/* // Allow only digits and plus sign & add validation message
 add_action('wp_footer', function () {
     ?>
     <script>
@@ -603,7 +794,7 @@ add_action('wp_footer', function () {
                 form.addEventListener('submit', function (e) {
                     if (phoneField.value.trim() === '' || /[^0-9+]/.test(phoneField.value)) {
                         e.preventDefault(); // Stop form submission
-                        alert('Please enter a valid phone number with digits only (and optional +).');
+                       // alert('Please enter a valid phone number with digits only (and optional +).');
                         phoneField.focus();
                     }
                 });
@@ -612,7 +803,7 @@ add_action('wp_footer', function () {
     });
     </script>
     <?php
-});
+}); */
 
 
     
@@ -1156,3 +1347,124 @@ function property_form_inline_script()
     <?php
 }
 
+
+// Security Headers
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'wp_shortlink_wp_head');
+remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
+remove_action('wp_head', 'wp_oembed_add_host_js');
+remove_action('wp_head', 'feed_links', 2);
+remove_action('wp_head', 'wp_resource_hints', 2);
+remove_action('wp_head', 'index_rel_link');
+remove_action('wp_head', 'feed_links_extra', 3);
+remove_action('wp_head', 'start_post_rel_link', 10, 0);
+remove_action('wp_head', 'parent_post_rel_link', 10, 0);
+remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0);
+remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+remove_action('rest_api_init', 'wp_oembed_register_route');
+remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
+
+function pagely_security_headers($headers) {
+    $headers['X-Frame-Options'] = 'deny';
+    $headers['X-XSS-Protection'] = '1; mode=block';
+    $headers['X-Content-Type-Options'] = 'nosniff';
+ $headers['Content-Security-Policy'] = "default-src 'self';
+     script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+     font-src 'self' https://fonts.gstatic.com;
+     img-src 'self' data: https:;
+     connect-src 'self';";
+    $headers['Referrer-Policy'] = 'no-referrer-when-downgrade';
+    $headers['Expect-CT'] = 'max-age=7776000, enforce';
+    $headers['Permissions-Policy'] = null;
+    $headers['Cross-Origin-Embedder-Policy'] = 'unsafe-none';
+    $headers['Cross-Origin-Resource-Policy'] = 'same-site';
+    $headers['Cross-Origin-Opener-Policy'] = 'same-origin';
+    $headers['Strict-Transport-Security'] = 'max-age=31536000;';
+    $headers['Developed-By'] = 'Element8';
+    return $headers;
+}
+add_filter('wp_headers', 'pagely_security_headers');
+
+
+add_action( 'wp_footer', 'mycustom_wp_footer' );  
+
+function mycustom_wp_footer() {
+?>
+<script>
+        document.addEventListener( 'wpcf7submit', function( event ) { 
+            jQuery(".wpcf7-response-output").fadeIn('fast');
+            
+            setTimeout(function() {
+                jQuery(".wpcf7-response-output").fadeOut('slow');
+             //   window.location.reload(); // ✅ correct
+            }, 5000);  
+            setTimeout(function() {               
+                window.location.reload(); // ✅ correct
+            }, 3000);  
+        }, false );
+
+     // validation for muttiple click for button error msg
+        jQuery(document).ready(function($) {
+            var form = $('form.wpcf7-form');
+            var submitButton = form.find('input[type="submit"]');
+
+            // Disable the submit button to prevent multiple clicks when submitting
+            form.on('submit', function() {
+                submitButton.prop('disabled', true);
+            });
+
+            // Re-enable the submit button after a successful form submission
+            $(document).on('wpcf7mailsent wpcf7invalid wpcf7spam wpcf7error', function() {
+                submitButton.prop('disabled', false);
+            });
+
+            // Re-enable the submit button when the user interacts with any input
+            form.find('input, select, textarea').on('input', function() {
+                submitButton.prop('disabled', false);
+            });
+        });   
+
+</script>
+
+<script>
+    // nummber only script
+    jQuery('input[type="tel"],input[name="phone"]').keypress(function(e) {
+        var a = [];
+        var k = e.which;
+        
+        for (i = 48; i < 58; i++)
+            a.push(i);
+        
+        if (!(a.indexOf(k)>=0))
+            e.preventDefault();
+        
+        
+    });
+</script>
+
+<script>
+    // space cf7 validation
+    jQuery(".wpcf7-email,.wpcf7-text,.wpcf7-textarea,.woocommerce-Input").on("keypress", function(e) {
+        if (e.which === 32 && !this.value.length)
+            e.preventDefault();
+    });
+    jQuery('input[type="search"]').attr("required", "required");
+    // email
+    jQuery('input[type="email"]').attr("pattern", "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+    //  billing symobols   
+    jQuery(
+            '.validate-name,  #firstname, #lastname,#fname, #lname')
+        .attr("onkeydown", "return /[a-zA-Z ]/.test(event.key)");
+</script>
+<script>
+    function goBack() {
+    window.location.href = document.referrer;
+    }
+</script>	
+
+
+<?php
+}

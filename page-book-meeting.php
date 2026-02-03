@@ -91,6 +91,168 @@ get_header();
 
 </main>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to set minDate on datetime picker
+    function restrictPreviousDates() {
+        const datetimeInput = document.querySelector('.walcf7-datetimepicker');
+        
+        if (!datetimeInput) {
+            return false;
+        }
+        
+        // Check if Flatpickr is available and input is initialized
+        if (typeof flatpickr !== 'undefined' && datetimeInput._flatpickr) {
+            const today = new Date();
+            // Set minDate to current date/time
+            datetimeInput._flatpickr.set('minDate', today);
+            
+            // Also disable past dates in the calendar
+            const calendar = datetimeInput._flatpickr.calendarContainer;
+            if (calendar) {
+                const pastDays = calendar.querySelectorAll('.flatpickr-day.flatpickr-disabled, .flatpickr-day.prev-month-day');
+                pastDays.forEach(function(day) {
+                    const dayDate = new Date(day.dateObj);
+                    if (dayDate < today) {
+                        day.classList.add('flatpickr-disabled');
+                    }
+                });
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    // Function to initialize or update date-time picker
+    function initDateTimePicker() {
+        const datetimeInput = document.querySelector('.walcf7-datetimepicker');
+        
+        if (!datetimeInput) {
+            return;
+        }
+        
+        // If already initialized, just update minDate
+        if (datetimeInput._flatpickr) {
+            restrictPreviousDates();
+            return;
+        }
+        
+        // Check if Flatpickr is available
+        if (typeof flatpickr !== 'undefined') {
+            // Get current config if any
+            const currentConfig = datetimeInput._flatpickr ? datetimeInput._flatpickr.config : {};
+            
+            // Initialize or reinitialize with minDate
+            const today = new Date();
+            const config = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                minDate: today, // Restrict previous dates
+                time_24hr: true,
+                minuteIncrement: 15,
+                ...currentConfig // Preserve existing config
+            };
+            
+            // If already initialized, update config
+            if (datetimeInput._flatpickr) {
+                datetimeInput._flatpickr.set('minDate', today);
+            } else {
+                // Initialize new instance
+                flatpickr(datetimeInput, config);
+            }
+        } else {
+            // If Flatpickr is not loaded yet, wait and try again
+            setTimeout(initDateTimePicker, 100);
+        }
+    }
+    
+    // Initialize immediately
+    initDateTimePicker();
+    
+    // Also try to restrict dates periodically in case picker is initialized later
+    let initAttempts = 0;
+    const maxAttempts = 50; // Try for 5 seconds (50 * 100ms)
+    const initInterval = setInterval(function() {
+        if (restrictPreviousDates() || initDateTimePicker()) {
+            clearInterval(initInterval);
+        } else {
+            initAttempts++;
+            if (initAttempts >= maxAttempts) {
+                clearInterval(initInterval);
+            }
+        }
+    }, 100);
+    
+    // Watch for form changes
+    const formContainer = document.querySelector('#propertyOfferForm');
+    if (formContainer) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes.length) {
+                    setTimeout(function() {
+                        initDateTimePicker();
+                        restrictPreviousDates();
+                    }, 100);
+                }
+            });
+        });
+        
+        observer.observe(formContainer, {
+            childList: true,
+            subtree: true
+        });
+    }
+    
+    // Listen for CF7 form events
+    document.addEventListener('wpcf7mailsent', function(event) {
+        setTimeout(function() {
+            initDateTimePicker();
+            restrictPreviousDates();
+        }, 100);
+    });
+    
+    // Prevent manual entry of past dates
+    const datetimeInput = document.querySelector('.walcf7-datetimepicker');
+    if (datetimeInput) {
+        datetimeInput.addEventListener('change', function() {
+            if (this.value) {
+                const selectedDate = new Date(this.value);
+                const today = new Date();
+                
+                if (selectedDate < today) {
+                    alert('Please select a future date and time.');
+                    this.value = '';
+                    
+                    // If Flatpickr is initialized, clear it
+                    if (this._flatpickr) {
+                        this._flatpickr.clear();
+                    }
+                }
+            }
+        });
+        
+        // Also check on blur
+        datetimeInput.addEventListener('blur', function() {
+            if (this.value) {
+                const selectedDate = new Date(this.value);
+                const today = new Date();
+                
+                if (selectedDate < today) {
+                    alert('Please select a future date and time.');
+                    this.value = '';
+                    
+                    if (this._flatpickr) {
+                        this._flatpickr.clear();
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
 <?php
 get_footer();
 ?>

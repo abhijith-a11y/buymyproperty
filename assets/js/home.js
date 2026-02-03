@@ -6,7 +6,7 @@
  * @version 1.0
  */
 
-console.log("🚀 Yakult Main.js - Loading all modules by path...");
+// console.log("🚀 Yakult Main.js - Loading all modules by path...");
 
 // =============================================================================
 // DYNAMIC SCRIPT LOADER
@@ -18,7 +18,7 @@ function loadScript(src, callback) {
 	script.async = true;
 
 	script.onload = function () {
-		console.log("✅ Loaded:", src);
+		// console.log("✅ Loaded:", src);
 		if (callback) callback();
 	};
 
@@ -46,7 +46,7 @@ const jsFiles = [
 ];
 
 // Load all JavaScript files
-console.log("📦 Loading JavaScript modules...");
+// console.log("📦 Loading JavaScript modules...");
 
 let loadedCount = 0;
 const totalFiles = jsFiles.length;
@@ -54,10 +54,10 @@ const totalFiles = jsFiles.length;
 jsFiles.forEach((file) => {
 	loadScript(file, function () {
 		loadedCount++;
-		console.log(`📊 Progress: ${loadedCount}/${totalFiles} files loaded`);
+		// console.log(`📊 Progress: ${loadedCount}/${totalFiles} files loaded`);
 
 		if (loadedCount === totalFiles) {
-			console.log("🎉 All JavaScript modules loaded successfully!");
+			// console.log("🎉 All JavaScript modules loaded successfully!");
 
 			// Initialize any global functionality after all scripts are loaded
 			if (typeof initializeAllModules === "function") {
@@ -84,7 +84,7 @@ function startMarqueeAfterBottles() {
 	}, 5000); // 5 seconds delay to wait for bottle animation
 }
 
-console.log("📋 Main.js setup complete - modules will load asynchronously");
+// console.log("📋 Main.js setup complete - modules will load asynchronously");
 
 // Check if DOM is already loaded and initialize
 if (document.readyState === "loading") {
@@ -181,10 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Product Swiper Initialization
-console.log("🛍️ Product Swiper module loaded");
+// console.log("🛍️ Product Swiper module loaded");
 
 function initializeProductSwiper() {
-	console.log("🔄 Attempting to initialize Product Swiper...");
+	// console.log("🔄 Attempting to initialize Product Swiper...");
 
 	// Check if Swiper is available
 	if (typeof Swiper === "undefined") {
@@ -197,11 +197,11 @@ function initializeProductSwiper() {
 	// Check if product swiper container exists
 	const productContainer = document.querySelector(".product-swiper");
 	if (!productContainer) {
-		console.log("ℹ️ Product swiper container not found on this page");
+		// console.log("ℹ️ Product swiper container not found on this page");
 		return false;
 	}
 
-	console.log("✅ Initializing Product Swiper...");
+	// console.log("✅ Initializing Product Swiper...");
 
 	try {
 		// Check if RTL is active
@@ -287,7 +287,7 @@ function initializeProductSwiper() {
 
 // Try to initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
-	console.log("📄 DOM loaded - checking for Product Swiper...");
+	// console.log("📄 DOM loaded - checking for Product Swiper...");
 
 	// Wait a bit for other scripts to load
 	setTimeout(function () {
@@ -353,10 +353,10 @@ var swiper = new Swiper(".our-products-swiper", {
 
 function loadSwiperForProducts() {
 	if (typeof Swiper === "undefined") {
-		console.log("❌ Swiper JS not found for products slider");
+		// console.log("❌ Swiper JS not found for products slider");
 		return;
 	} else {
-		console.log("✅ Swiper JS found - initializing products slider");
+		// console.log("✅ Swiper JS found - initializing products slider");
 		initProductsSwiper();
 	}
 }
@@ -408,7 +408,7 @@ function initProductsSwiper() {
 		watchSlidesVisibility: true,
 	});
 
-	console.log("✅ Products slider initialized with Swiper");
+	// console.log("✅ Products slider initialized with Swiper");
 }
 
 var swiper = new Swiper(".experts-swiper", {
@@ -441,7 +441,7 @@ function initializeRecentlyClosedDealsSlider() {
 	const dealsSwiper = document.querySelector(".recently-closed-deals-swiper");
 
 	if (!dealsSwiper) {
-		console.log("Recently closed deals slider not found on this page");
+		// console.log("Recently closed deals slider not found on this page");
 		return;
 	}
 
@@ -449,7 +449,7 @@ function initializeRecentlyClosedDealsSlider() {
 	if (typeof Swiper !== "undefined") {
 		initRecentlyClosedDealsSwiper();
 	} else {
-		console.log("❌ Swiper not available for recently closed deals slider");
+		// console.log("❌ Swiper not available for recently closed deals slider");
 	}
 }
 
@@ -547,7 +547,7 @@ function initializeTestimonialsSlider() {
 	const testimonialsSwiper = document.querySelector(".testimonials-swiper");
 
 	if (!testimonialsSwiper) {
-		console.log("Testimonials slider not found on this page");
+		// console.log("Testimonials slider not found on this page");
 		return;
 	}
 
@@ -555,7 +555,7 @@ function initializeTestimonialsSlider() {
 	if (typeof Swiper !== "undefined") {
 		initTestimonialsSwiper();
 	} else {
-		console.log("❌ Swiper not available for testimonials slider");
+		// console.log("❌ Swiper not available for testimonials slider");
 	}
 }
 
@@ -663,7 +663,7 @@ function initTestimonialsSwiper() {
 		// },
 	});
 
-	console.log("✅ Testimonials slider initialized with Swiper");
+	// console.log("✅ Testimonials slider initialized with Swiper");
 }
 
 // =============================================================================
@@ -674,7 +674,7 @@ function initializeWhySellSlider() {
 	const whySellSwiper = document.querySelector(".why-sell-swiper");
 
 	if (!whySellSwiper) {
-		console.log("Why Sell to Us slider not found on this page");
+		// console.log("Why Sell to Us slider not found on this page");
 		return;
 	}
 
@@ -682,7 +682,7 @@ function initializeWhySellSlider() {
 	if (typeof Swiper !== "undefined") {
 		initWhySellSwiper();
 	} else {
-		console.log("❌ Swiper not available for Why Sell to Us slider");
+		// console.log("❌ Swiper not available for Why Sell to Us slider");
 	}
 }
 
@@ -760,11 +760,11 @@ function initWhySellSwiper() {
 				indicatorLine.style.transform = `translateY(${translateY}%)`;
 			}
 
-			console.log(
-				`🎯 Indicator updated: slide ${activeIndex + 1}/4, translateY: ${
-					activeIndex * 25
-				}%`
-			);
+			// console.log(
+			// 	`🎯 Indicator updated: slide ${activeIndex + 1}/4, translateY: ${
+			// 		activeIndex * 25
+			// 	}%`
+			// );
 		}
 	}
 
@@ -797,7 +797,7 @@ function initWhySellSwiper() {
 	updateIndicatorPosition(0);
 	updatePaginationNumbers(0);
 
-	console.log("✅ Why Sell to Us slider initialized with vertical transitions");
+	// console.log("✅ Why Sell to Us slider initialized with vertical transitions");
 }
 
 // =============================================================================
@@ -808,7 +808,7 @@ function initializeThreeStepSlider() {
 	const threeStepSwiper = document.querySelector(".three-step-swiper");
 
 	if (!threeStepSwiper) {
-		console.log("Three Step Process slider not found on this page");
+		// console.log("Three Step Process slider not found on this page");
 		return;
 	}
 
@@ -816,7 +816,7 @@ function initializeThreeStepSlider() {
 	if (typeof Swiper !== "undefined") {
 		initThreeStepSwiper();
 	} else {
-		console.log("❌ Swiper not available for Three Step Process slider");
+		// console.log("❌ Swiper not available for Three Step Process slider");
 	}
 }
 
@@ -938,9 +938,9 @@ function initThreeStepSwiper() {
 		}
 	});
 
-	console.log(
-		"✅ Three Step Process slider initialized with responsive breakpoints"
-	);
+	// console.log(
+	// 	"✅ Three Step Process slider initialized with responsive breakpoints"
+	// );
 }
 
 // =============================================================================
@@ -963,7 +963,7 @@ function initializeHowItWorksMobileSwiper() {
 		}
 
 		if (typeof Swiper === "undefined") {
-			console.log("❌ Swiper not available for How It Works mobile slider");
+			// console.log("❌ Swiper not available for How It Works mobile slider");
 			return;
 		}
 
@@ -1006,7 +1006,7 @@ function initializeMarqueeSlider() {
 	const marqueeSwiper = document.querySelector(".marquee-swiper");
 
 	if (!marqueeSwiper) {
-		console.log("Marquee slider not found on this page");
+		// console.log("Marquee slider not found on this page");
 		return;
 	}
 
@@ -1014,7 +1014,7 @@ function initializeMarqueeSlider() {
 	if (typeof Swiper !== "undefined") {
 		initMarqueeSwiper();
 	} else {
-		console.log("❌ Swiper not available for Marquee slider");
+		// console.log("❌ Swiper not available for Marquee slider");
 	}
 }
 
@@ -1117,7 +1117,7 @@ function initMarqueeSwiper() {
 		}
 	});
 
-	console.log("✅ Marquee slider initialized with continuous scrolling");
+	// console.log("✅ Marquee slider initialized with continuous scrolling");
 }
 
 // =============================================================================
@@ -1130,7 +1130,7 @@ function initializeHeroSection() {
 	const fileLabel = document.querySelector(".file-upload-label span");
 
 	if (!heroForm) {
-		console.log("Hero form not found on this page");
+		// console.log("Hero form not found on this page");
 		return;
 	}
 
@@ -1189,13 +1189,13 @@ function initializeHeroSection() {
 			submitBtn.disabled = false;
 		}, 2000);
 
-		console.log("Hero form submitted:", {
-			location,
-			area,
-			priceRange,
-			propertyType,
-			imageCount: images.length,
-		});
+		// console.log("Hero form submitted:", {
+		// 	location,
+		// 	area,
+		// 	priceRange,
+		// 	propertyType,
+		// 	imageCount: images.length,
+		// });
 	});
 
 	// Handle video loading and fallback
@@ -1211,7 +1211,7 @@ function initializeHeroSection() {
 		});
 	}
 
-	console.log("✅ Hero section initialized");
+	// console.log("✅ Hero section initialized");
 }
 
 // =============================================================================
@@ -1222,7 +1222,7 @@ function initializePropertyTypesSlider() {
 	const propertyTypesSwiper = document.querySelector(".property-types-swiper");
 
 	if (!propertyTypesSwiper) {
-		console.log("Property types slider not found on this page");
+		// console.log("Property types slider not found on this page");
 		return;
 	}
 
@@ -1230,7 +1230,7 @@ function initializePropertyTypesSlider() {
 	if (typeof Swiper !== "undefined") {
 		initPropertyTypesSwiper();
 	} else {
-		console.log("❌ Swiper not available for property types slider");
+		// console.log("❌ Swiper not available for property types slider");
 	}
 }
 
@@ -1381,7 +1381,7 @@ function initPropertyTypesSwiper() {
 			},
 		});
 
-		console.log("✅ Property types slider initialized with Swiper");
+		// console.log("✅ Property types slider initialized with Swiper");
 	}
 }
 
@@ -1393,15 +1393,15 @@ function initializeBuiltOnTrustAnimation() {
 	const trustSection = document.querySelector("#built-on-trust-section");
 
 	if (!trustSection) {
-		console.log("Built on Trust section not found on this page");
+		// console.log("Built on Trust section not found on this page");
 		return;
 	}
 
 	// Check if GSAP and ScrollTrigger are available
 	if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
-		console.log(
-			"❌ GSAP or ScrollTrigger not available for Built on Trust animation"
-		);
+		// console.log(
+		// 	"❌ GSAP or ScrollTrigger not available for Built on Trust animation"
+		// );
 		return;
 	}
 
@@ -1409,9 +1409,9 @@ function initializeBuiltOnTrustAnimation() {
 	const isMobile = window.innerWidth < 768;
 
 	if (isMobile) {
-		console.log(
-			"📱 Mobile device detected - Built on Trust animation disabled, showing full content"
-		);
+		// console.log(
+		// 	"📱 Mobile device detected - Built on Trust animation disabled, showing full content"
+		// );
 		// Ensure content is visible and not translated on mobile
 		const rightContent = trustSection.querySelector(".trust_right_content");
 		if (rightContent) {
@@ -1424,7 +1424,7 @@ function initializeBuiltOnTrustAnimation() {
 		return; // Exit early on mobile
 	}
 
-	console.log("✅ Initializing Built on Trust ScrollTrigger animation...");
+	// console.log("✅ Initializing Built on Trust ScrollTrigger animation...");
 
 	// Register ScrollTrigger plugin
 	gsap.registerPlugin(ScrollTrigger);
@@ -1433,7 +1433,7 @@ function initializeBuiltOnTrustAnimation() {
 	const rightContent = trustSection.querySelector(".trust_right_content");
 
 	if (!rightContent) {
-		console.log("❌ Required animation elements not found");
+		// console.log("❌ Required animation elements not found");
 		return;
 	}
 
@@ -1455,19 +1455,19 @@ function initializeBuiltOnTrustAnimation() {
 			anticipatePin: 1,
 			refreshPriority: -1,
 			onEnter: () => {
-				console.log("🎯 Built on Trust section pinned");
+				// console.log("🎯 Built on Trust section pinned");
 				trustSection.classList.add("pinned");
 			},
 			onLeave: () => {
-				console.log("🎯 Built on Trust section unpinned");
+				// console.log("🎯 Built on Trust section unpinned");
 				trustSection.classList.remove("pinned");
 			},
 			onEnterBack: () => {
-				console.log("🎯 Built on Trust section re-pinned (scrolling up)");
+				// console.log("🎯 Built on Trust section re-pinned (scrolling up)");
 				trustSection.classList.add("pinned");
 			},
 			onLeaveBack: () => {
-				console.log("🎯 Built on Trust section unpinned (scrolling up)");
+				// console.log("🎯 Built on Trust section unpinned (scrolling up)");
 				trustSection.classList.remove("pinned");
 			},
 			markers: false, // Set to true for debugging
@@ -1507,9 +1507,9 @@ function initializeBuiltOnTrustAnimation() {
 
 	window.addEventListener("resize", handleResize);
 
-	console.log(
-		"✅ Built on Trust ScrollTrigger animation initialized with translateY animation"
-	);
+	// console.log(
+	// 	"✅ Built on Trust ScrollTrigger animation initialized with translateY animation"
+	// );
 }
 
 // =============================================================================
@@ -1520,7 +1520,7 @@ function initializeHowItWorksSwiper() {
 	const howItWorksSwiper = document.querySelector(".how-it-works-swiper");
 
 	if (!howItWorksSwiper) {
-		console.log("How It Works swiper not found on this page");
+		// console.log("How It Works swiper not found on this page");
 		return;
 	}
 
@@ -1528,7 +1528,7 @@ function initializeHowItWorksSwiper() {
 	if (typeof Swiper !== "undefined") {
 		initHowItWorksSwiper();
 	} else {
-		console.log("❌ Swiper not available for How It Works swiper");
+		// console.log("❌ Swiper not available for How It Works swiper");
 	}
 }
 
@@ -1577,7 +1577,7 @@ function initHowItWorksSwiper() {
 				clickable: true,
 			},
 		});
-		console.log("✅ How It Works swiper initialized");
+		// console.log("✅ How It Works swiper initialized");
 	}
 
 	// Handle window resize to show/hide desktop vs mobile layout
@@ -1603,7 +1603,7 @@ function initializeMadeDifferenceSlider() {
 	);
 
 	if (!madeDifferenceSwiper) {
-		console.log("Made Difference slider not found on this page");
+		// console.log("Made Difference slider not found on this page");
 		return;
 	}
 
@@ -1611,7 +1611,7 @@ function initializeMadeDifferenceSlider() {
 	if (typeof Swiper !== "undefined") {
 		initMadeDifferenceSwiper();
 	} else {
-		console.log("❌ Swiper not available for Made Difference slider");
+		// console.log("❌ Swiper not available for Made Difference slider");
 	}
 }
 
@@ -1661,7 +1661,7 @@ function initMadeDifferenceSwiper() {
 		watchSlidesVisibility: true,
 	});
 
-	console.log("✅ Made Difference slider initialized with Swiper");
+	// console.log("✅ Made Difference slider initialized with Swiper");
 }
 
 function customeDropdown() {
@@ -1752,8 +1752,8 @@ function customeDropdown() {
 			notes: document.getElementById("notes").value,
 		};
 
-		console.log("Form Data:", formData);
-		alert("Form submitted successfully! Check console for data.");
+		// console.log("Form Data:", formData);
+		// alert("Form submitted successfully! Check console for data.");
 	});
 }
 
@@ -1784,7 +1784,7 @@ function initializeInteractiveSliderSwiper() {
 	);
 
 	if (!interactiveSwiper) {
-		console.log("Interactive slider swiper not found on this page");
+		// console.log("Interactive slider swiper not found on this page");
 		return;
 	}
 
@@ -1792,7 +1792,7 @@ function initializeInteractiveSliderSwiper() {
 	if (typeof Swiper !== "undefined") {
 		initInteractiveSliderSwiper();
 	} else {
-		console.log("❌ Swiper not available for Interactive slider swiper");
+		// console.log("❌ Swiper not available for Interactive slider swiper");
 	}
 }
 
@@ -1843,7 +1843,7 @@ function initInteractiveSliderSwiper() {
 			// No pagination on mobile
 			pagination: false,
 		});
-		console.log("✅ Interactive slider swiper initialized for mobile");
+		// console.log("✅ Interactive slider swiper initialized for mobile");
 	}
 
 	// Handle window resize to show/hide desktop vs mobile layout
@@ -1886,7 +1886,7 @@ function initializeCareerApplyModal() {
 		document.getElementById("careerApplyModal") ||
 		document.querySelector(".career-apply-modal");
 	if (!modal) {
-		console.log("Career Apply modal not found on this page");
+		// console.log("Career Apply modal not found on this page");
 		return;
 	}
 
@@ -1935,5 +1935,5 @@ function initializeCareerApplyModal() {
 		}
 	});
 
-	console.log("✅ Career Apply modal initialized");
+	// console.log("✅ Career Apply modal initialized");
 }

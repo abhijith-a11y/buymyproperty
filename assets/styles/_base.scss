@@ -2641,12 +2641,12 @@ body {
 		// min-height: 734px;
 		// overflow: auto;
 		// min-height: 734px;
-		height: calc(100vh - 150px);
+		height: calc(100vh - 120px);
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-left: 50px;
 		padding-right: 60px;
-		max-height: 790px;
+		max-height: 820px;
 		gap: 30px;
 
 		@media #{$media-1200} {

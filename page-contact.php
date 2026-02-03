@@ -54,7 +54,7 @@ get_header();
                     </div>
 
                     <!-- Social Media Links -->
-                    <?php if (have_rows('social_links', 'option')): ?>
+                    <?php /* if (have_rows('social_links', 'option')): ?>
                         <div class="contact-social">
                             <?php while (have_rows('social_links', 'option')):
                                 the_row();
@@ -67,7 +67,7 @@ get_header();
                                 </a>
                             <?php endwhile; ?>
                         </div>
-                    <?php endif; ?>
+                    <?php endif; */ ?>
 
 
                 </div>
